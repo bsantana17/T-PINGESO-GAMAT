@@ -1,5 +1,8 @@
 package usach.cl.gamatbackend.repositories;
 
-public interface UserRepository {
+import usach.cl.gamatbackend.entities.User;
+import org.springframework.data.repository.PagingAndSortingRepository;
+
+public interface UserRepository extends PagingAndSortingRepository<User, Integer> {
 
 }
