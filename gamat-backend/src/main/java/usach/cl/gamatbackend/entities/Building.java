@@ -1,5 +1,7 @@
 package usach.cl.gamatbackend.entities;
 
+import java.util.Date;
+
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
@@ -15,4 +17,14 @@ public class Building {
 	@NotNull
 	@Column(name = "address")
 	private String address;
+	
+	@Column(name="create_at")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date date;
+	
+	@PrePersist
+	public void Prepersit(){
+		
+		date=new Date();
+	}
 }

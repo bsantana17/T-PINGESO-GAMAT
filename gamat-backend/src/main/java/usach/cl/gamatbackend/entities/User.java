@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -23,4 +24,13 @@ public class User {
 	@NotNull
 	@Column(name = "password")
 	private String password;
+	@Column(name="create_at")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date date;
+	
+	@PrePersist
+	public void Prepersit(){
+		
+		date=new Date();
+	}
 }
