@@ -21,7 +21,31 @@ public class BudgetState {
 	@Column(name="create_at")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date date;
-	
+
+	public int getIdBudgetState() {
+		return idBudgetState;
+	}
+
+	public void setIdBudgetState(int idBudgetState) {
+		this.idBudgetState = idBudgetState;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
 	@PrePersist
 	public void Prepersit(){
 		

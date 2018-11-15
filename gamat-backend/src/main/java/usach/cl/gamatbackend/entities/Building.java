@@ -21,7 +21,43 @@ public class Building {
 	@Column(name="create_at")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date date;
-	
+
+	@ManyToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+	@JoinColumn(name="company_id")
+	private Company company;
+
+	public int getIdBuilding() {
+		return idBuilding;
+	}
+
+	public void setIdBuilding(int idBuilding) {
+		this.idBuilding = idBuilding;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public Company getCompany() {
+		return company;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
+	}
+
 	@PrePersist
 	public void Prepersit(){
 		
