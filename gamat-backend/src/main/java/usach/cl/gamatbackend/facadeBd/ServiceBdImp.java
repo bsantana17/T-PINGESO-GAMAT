@@ -3,10 +3,13 @@ package usach.cl.gamatbackend.facadeBd;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import usach.cl.gamatbackend.entities.Request;
 import usach.cl.gamatbackend.repositories.RequestRepository;
 
+
+@Service
 public class ServiceBdImp implements IServiceBd {
 	
 	//conexion repositorios

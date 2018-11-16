@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import usach.cl.gamatbackend.entities.Request;
 import usach.cl.gamatbackend.facadeBd.IServiceBd;
 import usach.cl.gamatbackend.repositories.RequestRepository;
+import usach.cl.gamatbackend.serviceMail.IServiceMail;
 
 @CrossOrigin
 @RestController
@@ -22,11 +23,16 @@ public class RequestService {
 	
 	@Autowired
 	private IServiceBd serviceBd;
+	@Autowired IServiceMail mailService;
 	
 	@GetMapping("/create")
 	public Request createRequest(@RequestBody Request request) {
+	
 		if(request != null) {
-			return serviceBd.saveNewRequest(request);
+			Request newRequest= serviceBd.saveNewRequest(request);
+			// datos aprobador 
+			mailService.sendMailNotification("", "", "");
+			return newRequest;
 		}
 		return null;
 		
