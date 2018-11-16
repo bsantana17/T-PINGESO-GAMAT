@@ -31,14 +31,16 @@ public class ServiceBdImp implements IServiceBd {
 
 	@Override
 	public Request updateRequest(Request newRequest, Integer idRequest) {
-		// TODO Auto-generated method stub
-		return null;
+		// no recuerdo si actualia automaticamente
+		return requestRepository.save(newRequest);
+		
 	}
 
 	@Override
 	public boolean deleteRequest(Integer idRequest) {
-		// TODO Auto-generated method stub
-		return false;
+		Request request = requestRepository.findById(idRequest).orElse(null);
+		requestRepository.delete(request);
+		return true;
 	}
 	
 	// operaciones Request
