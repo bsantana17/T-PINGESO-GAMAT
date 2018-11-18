@@ -7,6 +7,9 @@ import usach.cl.gamatbackend.entities.Budget;
 import usach.cl.gamatbackend.facadeBd.IServiceBd;
 import usach.cl.gamatbackend.repositories.BudgetRepository;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @CrossOrigin
 @RestController
 @RequestMapping("/budgets")
@@ -19,6 +22,19 @@ public class BudgetService {
     @ResponseBody
     public Iterable<Budget> getAllBudgets(){
         return repository.findAll();
+    }
+
+    @RequestMapping(value = "/approved", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Budget> getApprovedBudgets(){
+        Iterable<Budget> budgets = repository.findAll();
+        List<Budget> approved = new ArrayList<Budget>();
+        for (Budget budget: budgets) {
+            if(budget.getBudgetState().getIdBudgetState() == 1){
+                approved.add(budget);
+            }
+        }
+        return approved;
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
