@@ -15,11 +15,20 @@ public class BudgetService {
     @Autowired
     private BudgetRepository repository;
 
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @ResponseBody
+    public Iterable<Budget> getAllBudgets(){
+        return repository.findAll();
+    }
+
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public Budget createRequest(@RequestBody Budget resource) {
-        return repository.save(resource);
+        if(resource != null) {
+            return repository.save(resource);
+        }
+        return null;
 
     }
 }
