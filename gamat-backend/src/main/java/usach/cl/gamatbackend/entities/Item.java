@@ -19,7 +19,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name="items")
+@Table(name="item")
 public class Item {
 	private static final long serialVersionUID = 1L;
 	
@@ -35,7 +35,11 @@ public class Item {
 	
 	@NotNull
 	private int quantity;
-	
+
+	@ManyToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+	@JoinColumn(name="user_id")
+	private User driver;
+
 	@ManyToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
 	@JoinColumn(name="distributor_id")
 	private Distributor distributor;
@@ -87,6 +91,14 @@ public class Item {
 		this.quantity = quantity;
 	}
 
+	public User getDriver() {
+		return driver;
+	}
+
+	public void setDriver(User driver) {
+		this.driver = driver;
+	}
+
 	public Distributor getDistributor() {
 		return distributor;
 	}
@@ -114,6 +126,5 @@ public class Item {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
-	
+
 }

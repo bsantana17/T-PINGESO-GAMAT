@@ -22,7 +22,7 @@ import javax.validation.constraints.NotNull;
 
 
 @Entity
-@Table(name="requests")
+@Table(name="request")
 public class Request {
 	
 	@Id
