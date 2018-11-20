@@ -25,12 +25,13 @@ public class RequestService {
 	private IServiceBd serviceBd;
 	@Autowired 
 	private IServiceMail mailService;
-	
+
 	@GetMapping("/create")
 	public Request createRequest(@RequestBody Request request) {
 	
 		if(request != null) {
 			Request newRequest= serviceBd.saveNewRequest(request);
+			
 			// datos aprobador 
 			//mailService.sendMailNotification("", "", "");
 			return newRequest;
