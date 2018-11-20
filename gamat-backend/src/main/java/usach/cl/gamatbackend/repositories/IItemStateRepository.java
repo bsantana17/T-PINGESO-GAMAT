@@ -1,5 +1,9 @@
 package usach.cl.gamatbackend.repositories;
 
-public interface IItemStateRepository {
+import org.springframework.data.repository.CrudRepository;
+
+import usach.cl.gamatbackend.entities.ItemState;
+
+public interface IItemStateRepository extends CrudRepository<Integer,ItemState> {
 
 }
