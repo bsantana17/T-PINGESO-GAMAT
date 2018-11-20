@@ -27,7 +27,7 @@ public interface IServiceBd {
 	
 	public Set<Building> getAllBuilding();
 	
-	public Set<Request> getRequestOfBuilding();
+	public Set<Request> getRequestOfBuilding(Integer id);
 	
 	public Building saveBuilding(Building building);
 	

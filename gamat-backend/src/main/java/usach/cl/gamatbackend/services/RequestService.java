@@ -23,7 +23,8 @@ public class RequestService {
 	
 	@Autowired
 	private IServiceBd serviceBd;
-	@Autowired IServiceMail mailService;
+	@Autowired 
+	private IServiceMail mailService;
 	
 	@GetMapping("/create")
 	public Request createRequest(@RequestBody Request request) {
@@ -31,17 +32,17 @@ public class RequestService {
 		if(request != null) {
 			Request newRequest= serviceBd.saveNewRequest(request);
 			// datos aprobador 
-			mailService.sendMailNotification("", "", "");
+			//mailService.sendMailNotification("", "", "");
 			return newRequest;
 		}
 		return null;
 		
 	}
 	
-	@PutMapping("/update/{id}")
-	public Request editRequest(@RequestBody Request request,@PathVariable("id") Integer idRequest ) {
+	@PutMapping("/update")
+	public Request editRequest(@RequestBody Request request) {
 		if(request!=null) {
-			return serviceBd.updateRequest(request, idRequest);
+			return serviceBd.updateRequest(request);
 		}
 		return null;
 		

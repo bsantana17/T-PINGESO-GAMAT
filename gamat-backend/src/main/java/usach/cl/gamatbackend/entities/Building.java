@@ -1,6 +1,7 @@
 package usach.cl.gamatbackend.entities;
 
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -25,6 +26,9 @@ public class Building {
 	@ManyToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
 	@JoinColumn(name="company_id")
 	private Company company;
+	
+	@OneToMany(mappedBy="seccion",fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+	private Set<Request> requests;
 
 	public int getIdBuilding() {
 		return idBuilding;
@@ -56,6 +60,15 @@ public class Building {
 
 	public void setCompany(Company company) {
 		this.company = company;
+	}
+	
+
+	public Set<Request> getRequests() {
+		return requests;
+	}
+
+	public void setRequests(Set<Request> requests) {
+		this.requests = requests;
 	}
 
 	@PrePersist

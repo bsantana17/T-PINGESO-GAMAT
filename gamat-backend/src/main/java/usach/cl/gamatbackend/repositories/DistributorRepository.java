@@ -4,6 +4,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import usach.cl.gamatbackend.entities.Distributor;
 
-public interface IDistributorRepository extends CrudRepository<Integer,Distributor>{
+public interface DistributorRepository extends CrudRepository<Distributor,Integer>{
 
 }

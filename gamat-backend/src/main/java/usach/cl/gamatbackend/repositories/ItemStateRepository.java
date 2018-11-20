@@ -4,6 +4,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import usach.cl.gamatbackend.entities.ItemState;
 
-public interface IItemStateRepository extends CrudRepository<Integer,ItemState> {
+public interface ItemStateRepository extends CrudRepository<ItemState,Integer> {
 
 }

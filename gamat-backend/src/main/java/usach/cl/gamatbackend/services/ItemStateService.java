@@ -44,7 +44,7 @@ public class ItemStateService {
 		return null;
 	}
 	
-	@DeleteMapping
+	@DeleteMapping("/id")
 	public HttpStatus deleteItemState(@PathVariable("id") Integer idItemState) {
 		if(serviceBd.deleteItemState(idItemState))
 			return HttpStatus.OK;
