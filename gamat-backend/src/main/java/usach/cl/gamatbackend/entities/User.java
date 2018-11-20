@@ -40,6 +40,10 @@ public class User {
 			inverseJoinColumns = { @JoinColumn(name = "userType_id") })
 	private Set<UserType> roles;
 
+	@OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+	@JoinColumn(name="bulding_id")
+	private Set<Building> buildings;
+	
 	public int getIdUser() {
 		return idUser;
 	}
