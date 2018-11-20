@@ -35,10 +35,10 @@ public class BuildingService {
 		return serviceBd.getAllBuilding();
 	}
 	// esto es para obtener las request de una determina obra, por parte de un aprobador
-	@GetMapping("/requests")
+	@GetMapping("/requests/{id}")
 	@ResponseBody
-	public Set<Request> getAllRequest(){
-		return serviceBd.getRequestOfBuilding();
+	public Set<Request> getAllRequest(@PathVariable("id") Integer idBuilding){
+		return serviceBd.getRequestOfBuilding(idBuilding);
 	}
 	
 	@PostMapping
