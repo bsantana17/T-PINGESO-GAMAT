@@ -8,13 +8,14 @@ class AddItemModal extends React.Component {
       modal: false,
       name: '',
       quantity: '',
-      urgency: null,
+      urgency: false,
       description: ''
     };
 
     this.toggle = this.toggle.bind(this);
     this.inputHandler = this.inputHandler.bind(this);
     this.radioHandler = this.radioHandler.bind(this);
+    this.submitHandler = this.submitHandler.bind(this);
   }
 
   toggle() {
@@ -31,7 +32,6 @@ class AddItemModal extends React.Component {
   }
 
   radioHandler (e) {
-    console.log(this.state.urgency);
     if(e.target.value === "si"){
       console.log('entra en si');
       this.setState({
@@ -44,8 +44,11 @@ class AddItemModal extends React.Component {
         urgency : false
       })
     }
+  }
 
-    console.log(this.state.urgency);
+  submitHandler(){
+    console.log('en submitHandler', this.state)
+    this.props.onAddItem(this.state); 
   }
 
 
@@ -71,8 +74,8 @@ class AddItemModal extends React.Component {
                 <FormGroup>
                     <Label for="urgency">Urgencia</Label>
                     <div>
-                        <CustomInput type="radio" id="urgency1" name="urgency" label="Si" value="si" checked={this.state.urgency == true}  inline onChange={this.radioHandler}/>
-                        <CustomInput type="radio" id="urgency2" name="urgency" label="No" value="no" checked={this.state.urgency == false} inline onChange={this.radioHandler}/>
+                        <CustomInput type="radio" id="urgency1" name="urgency" label="Si" value="si" checked={this.state.urgency === true}  inline onChange={this.radioHandler}/>
+                        <CustomInput type="radio" id="urgency2" name="urgency" label="No" value="no" checked={this.state.urgency === false} inline onChange={this.radioHandler}/>
                     </div>
                 </FormGroup>
 
@@ -85,7 +88,7 @@ class AddItemModal extends React.Component {
 
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={this.addItemHandler}>Agregar</Button>{' '}
+            <Button color="primary" onClick={this.submitHandler}>Agregar</Button>{' '}
             <Button color="secondary" onClick={this.toggle}>Volver</Button>
           </ModalFooter>
         </Modal>

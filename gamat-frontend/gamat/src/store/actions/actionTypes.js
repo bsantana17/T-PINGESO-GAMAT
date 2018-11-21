@@ -1,0 +1,9 @@
+export const ADD_ITEM = 'ADD_ITEM';
+export const REMOVE_ITEM = 'REMOVE_ITEM';
+
+
+
+export const ADD_REQUEST = 'ADD_REQUEST';
+export const ADD_REQUEST_START = 'ADD_REQUEST_START';
+export const ADD_REQUEST_FAIL = 'ADD_REQUEST_FAIL';
+export const ADD_REQUEST_SUCCESS = 'ADD_REQUEST_SUCCESS';
