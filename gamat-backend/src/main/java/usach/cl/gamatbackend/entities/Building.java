@@ -27,7 +27,7 @@ public class Building {
 	@JoinColumn(name="company_id")
 	private Company company;
 	
-	@OneToMany(mappedBy="seccion",fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="building",fetch=FetchType.LAZY,cascade=CascadeType.ALL)
 	private Set<Request> requests;
 
 	@ManyToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
