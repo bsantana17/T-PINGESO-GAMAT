@@ -1,11 +1,29 @@
 import React, { Component } from 'react';
 import AddItemModal from './AddItemModal';
-import { Card, Button, CardTitle, CardText, Row, Col } from 'reactstrap';
 import ItemCard from './ItemCard';
+import {requests} from '../../../requests.json'
 
 
 export default class NewRequest extends Component {
+
+  state = {
+    request : requests[0],
+    items: [],
+  }
+
   render() {
+    //console.log(this.state.request);
+    const items = this.state.items.map((item, index) => {
+      return <ItemCard 
+                key={index}
+                number={index} 
+                name={item.name} 
+                quantity={item.quantity} 
+                description={item.description} 
+                urgency={item.urgency} 
+                />
+    })
+
     return (
       <div>
         <div className="d-flex">
@@ -15,7 +33,7 @@ export default class NewRequest extends Component {
         
         <h4>Items agregados:</h4>
         <div className="row">
-            <ItemCard/>
+            {items}
         </div>
         <button className="btn btn-primary">Enviar Solicitud</button>{' '}<button className="btn btn-secondary">Volver</button>
 

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Card, Button, CardTitle, CardText, Row, Col } from 'reactstrap';
 
 const ItemCard = (props) => {
   return (
@@ -7,24 +6,24 @@ const ItemCard = (props) => {
         <div className="card">
             <div className="card-body">
             <div className="row">
-                    <div className="col-4">Item 1</div>
+                    <div className="col-4"><b>Item #{props.number}</b></div>
                     <div className="col-8"></div>
                 </div>
                 <div className="row">
                     <div className="col-5 col-lg-4">Nombre:</div>
-                    <div className="col-7 col-lg-8"> Tornillo</div>
+                    <div className="col-7 col-lg-8"> {props.name} </div>
                 </div>
                 <div className="row">
                     <div className="col-5 col-lg-4">Cantidad:</div>
-                    <div className="col-7 col-lg-8"> 200</div>
+                    <div className="col-7 col-lg-8"> {props.quantity} </div>
                 </div>
                 <div className="row">
                     <div className="col-5 col-lg-4">Urgencia:</div>
-                    <div className="col-7 col-lg-8"> No</div>
+                    <div className="col-7 col-lg-8"> {props.urgency ? 'Si' : 'No' }</div>
                 </div>
                 <div className="row">
                     <div className="col-5 col-lg-4">Descripcion:</div>
-                    <div className="col-7 col-lg-8"> Aasdasd asd asdasdas asd adadaad</div>
+                    <div className="col-7 col-lg-8"> {props.description}</div>
                 </div>
             </div>
         </div>

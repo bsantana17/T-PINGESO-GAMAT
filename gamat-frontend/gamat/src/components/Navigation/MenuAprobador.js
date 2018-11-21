@@ -7,7 +7,7 @@ import {
   DropdownItem } from 'reactstrap';
   import {Link}from 'react-router-dom';
 
-  const MenuJefeDeObra = () => (
+  const MenuAprobador = () => (
 
             <Nav className="" navbar>
               <UncontrolledDropdown nav inNavbar>
@@ -15,18 +15,24 @@ import {
                   Solicitudes
                 </DropdownToggle>
                 <DropdownMenu left='true' >
-                  <DropdownItem>
+                <DropdownItem>
                     <Link to='/new-request'>Ingresar Nueva Solicitud</Link>
                   </DropdownItem>
                   <DropdownItem>
                     <Link to=''>Confirmar Recepción</Link>
                   </DropdownItem>
                   <DropdownItem>
-                    <Link to='/requests'>Historial de Solicitudes </Link>
+                    <Link to=''>Aprobar Solicitud</Link>
+                  </DropdownItem>
+                  <DropdownItem>
+                    <Link to=''>Aprobar Cotizacion</Link>
+                  </DropdownItem>
+                  <DropdownItem>
+                    <Link to=''>Historial de Solicitudes </Link>
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
             </Nav>
   )
 
-  export default MenuJefeDeObra;
+  export default MenuAprobador;
