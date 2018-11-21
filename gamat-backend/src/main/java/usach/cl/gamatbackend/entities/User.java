@@ -43,7 +43,27 @@ public class User {
 	@OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
 	@JoinColumn(name="bulding_id")
 	private Set<Building> buildings;
-	
+
+	@OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+	@JoinColumn(name="request_id")
+	private Set<Request> requests;
+
+	public Set<Building> getBuildings() {
+		return buildings;
+	}
+
+	public void setBuildings(Set<Building> buildings) {
+		this.buildings = buildings;
+	}
+
+	public Set<Request> getRequests() {
+		return requests;
+	}
+
+	public void setRequests(Set<Request> requests) {
+		this.requests = requests;
+	}
+
 	public int getIdUser() {
 		return idUser;
 	}
