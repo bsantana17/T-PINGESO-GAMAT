@@ -47,6 +47,12 @@ public class ServiceBdImp implements IServiceBd {
 	}
 
 	@Override
+	public Iterable<Request> findAllRequest() {
+		// TODO Auto-generated method stub
+		return requestRepository.findAll();
+	}
+
+	@Override
 	public Request saveNewRequest(Request request) {
 		// TODO Auto-generated method stub
 		request.setState("Pendiente por revisar");

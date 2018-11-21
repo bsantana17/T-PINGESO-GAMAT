@@ -16,6 +16,8 @@ public interface IServiceBd {
 
 	//operaciones request
 	public List<Request> findRequestByState(String state, Integer idAprobador, Integer idBuilding);
+
+	public Iterable<Request> findAllRequest();
 	
 	public Request saveNewRequest(Request request);
 	

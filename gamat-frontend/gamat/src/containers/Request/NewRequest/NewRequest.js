@@ -1,14 +1,24 @@
 import React, { Component } from 'react';
 import AddItemModal from './AddItemModal';
 import ItemCard from './ItemCard';
-import {requests} from '../../../requests.json'
+import { requests } from '../../../requests.json';
+import { connect } from 'react-redux';
+import * as actions from '../../../store/actions/index';
 
 
-export default class NewRequest extends Component {
+class NewRequest extends Component {
 
   state = {
     request : requests[0],
-    items: [],
+    items : []
+  }
+
+
+  addItemHandler (item){
+    console.log('en addItemHandles', item)
+    this.setState({
+      items: this.state.items.concat(item) 
+    },()=> console.log('el nuevo estado de items',this.state.items))
   }
 
   render() {
@@ -22,13 +32,14 @@ export default class NewRequest extends Component {
                 description={item.description} 
                 urgency={item.urgency} 
                 />
-    })
+    });
+
 
     return (
       <div>
         <div className="d-flex">
           <div className="mr-3"><h3>Nueva solicitud</h3></div>
-          <div><AddItemModal/></div>
+          <div><AddItemModal onAddItem={(e) => this.addItemHandler(e)}/></div>
         </div>
         
         <h4>Items agregados:</h4>
@@ -42,3 +53,16 @@ export default class NewRequest extends Component {
     )
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    items: state.items
+  };
+}
+const mapDispatchToProps = dispatch => {
+  return{
+     onRequestAdded: (requestData) => dispatch(actions.addRequest(requestData))  
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(NewRequest);
