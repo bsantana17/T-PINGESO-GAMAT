@@ -35,6 +35,7 @@ export default class Navigation extends React.Component {
           <Collapse isOpen={this.state.isOpen} navbar>
             <MenuJefeDeObra/>
             <Nav className="ml-auto" navbar>
+              <NavLink href="/login/">Iniciar Sesión</NavLink>
                 <NavLink href="/components/">Cerrar Sesión</NavLink>
             </Nav>
           </Collapse>
