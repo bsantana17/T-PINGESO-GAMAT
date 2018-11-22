@@ -1,5 +1,7 @@
 package usach.cl.gamatbackend.services;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +20,22 @@ public class UserService {
     @ResponseBody
     public Iterable<User> getAllUsers(){
         return userRepository.findAll();
+    }
+    
+    @RequestMapping(value="/login", method = RequestMethod.POST)
+    @ResponseBody
+    public User autentificar(@RequestBody String json) throws JSONException {
+        JSONObject response = new JSONObject(json);
+        String email= response.getString("email");
+        String password=response.getString("password");
+
+        User user=userRepository.findByEmail(email);
+
+        if(user==null || !user.getPassword().equals(password)) {
+            return null;
+        }
+
+        return user;
     }
 
     @RequestMapping(value = "/{id}")
