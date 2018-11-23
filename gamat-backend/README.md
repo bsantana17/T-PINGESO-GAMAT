@@ -131,6 +131,7 @@ T/PINGESO GAMAT
 -/request/update (put): actualiza una determinada request, recibe un objto request con los nuevos datos ( este servicio seria principalmente para el cambio de estado)
 
 -/request/delete/{id} (delete) : elimina una detemrinada request 
+**-/requests/{idJefeObra} (get) : se obtiene las requets creadas por un jefe de obra
 
 ## Building
 (5)-/buildings/{idAprobador} (get): retorna las obras asignadas a un aprobador
@@ -155,6 +156,22 @@ password:1234
 datos usuario jefe de obra:
 email:nicolas.roman@usach.cl
 password:1234
+
+ejemplo json :
+{
+    "idUser": 6,
+    "email": "nicolas.roman@usach.cl",
+    "password": "1234",
+    "nombre": "Soy otro jefe de obra",
+    "date": null,
+    "roles": [
+        {
+            "idUserType": 2,
+            "name": "jefe de obra",
+            "date": null
+        }
+    ]
+}
 
 *demas usuarios se pueden ver en el import.sql (ubicado en resource)
 ##Budget

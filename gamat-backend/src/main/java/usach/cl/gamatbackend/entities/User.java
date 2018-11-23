@@ -51,8 +51,8 @@ public class User implements Serializable{
 	private Set<Building> buildings;
 
 	@JsonIgnore
-	@OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
-	@JoinColumn(name="request_id")
+	
+	@OneToMany(mappedBy="user",fetch=FetchType.LAZY,cascade=CascadeType.ALL)
 	private Set<Request> requests;
 
 	public Set<Building> getBuildings() {

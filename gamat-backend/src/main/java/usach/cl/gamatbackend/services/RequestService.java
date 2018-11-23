@@ -15,6 +15,7 @@ import usach.cl.gamatbackend.serviceMail.IServiceMail;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @CrossOrigin
 @RestController
@@ -65,12 +66,19 @@ public class RequestService  implements Serializable {
 	public Iterable<Request> getAllRequests(){
 		return serviceBd.findAllRequest();
 	}*/
-
+	@GetMapping("/{idUser}")
+	@ResponseBody
+	public Set<Request> getRequestJefeObra(@PathVariable("idUser") Integer id){
+		User user = serviceBd.getUserById(id);
+		return user.getRequests();
+		
+	}
 	@RequestMapping(value = "/{idUser}/owned", method = RequestMethod.GET)
 	@ResponseBody
 	public List<Request> listRequest(@PathVariable("idUser") Integer idUser){
 		User user = userRepository.findById(idUser).get();
 		List<Request> requests = new ArrayList<>();
+		
 		if (user.getIdUser() == 1){ //Jefe de obra
 			for (Request request:user.getRequests()){
 				requests.add(request);
