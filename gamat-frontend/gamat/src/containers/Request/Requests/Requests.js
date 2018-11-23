@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Table, Button } from 'reactstrap';
+import Moment from 'moment';
 // Redux
 import { connect } from 'react-redux';
 import * as actions from '../../../store/actions/index';
@@ -13,20 +14,26 @@ class Requests extends Component {
   }
 
   render() {
-     let requests = <h1>loading</h1>
-    console.log(this.props.loading)
-    if ( this.props.loading ) {
+    let requests = <tr><td>cargando</td></tr>
+    console.log(this.props.requests)
+    if (!this.props.loading ) {
       //console.log(this.props.requests)
        requests = this.props.requests.map( request => (
-          <h1>request.id</h1>
+        <tr key={request.idRequest}>
+        <th scope="row">{request.idRequest}</th>
+        <td>???</td>
+        <td>{Moment(request.date).format("DD/MM/YYYY")}
+        </td>
+        <td>{request.state}</td> 
+        <td><Button color="primary" id="ver">
+                Ver
+            </Button>
+        </td>
+        </tr>
       ) )
   }
     return (
-      
       <div>
-
-
-        {requests}
         <Table hover>
         <thead>
         <tr>
@@ -38,49 +45,7 @@ class Requests extends Component {
         </tr> 
         </thead>
         <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td> 
-            <td><Button color="primary" id="ver">
-                    Ver
-                </Button>
-                <Button color="danger" id="borrar">
-                Borrar
-                </Button>
-                <Button color="primary" id="editar">
-                    Editar
-                </Button> </td>
-            </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-            <td><Button color="primary" id="ver">
-                    Ver
-                </Button></td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>@twitter</td>
-            <td>
-
-            
-                <Button color="success" id="pedir">
-                    Pedir
-                </Button>
-
-                <Button color="warning" id="cotizar">
-                    Pedir
-                </Button>
-            </td>
-          </tr>
-
-
+          {requests}
         </tbody>
       </Table>
       </div>
