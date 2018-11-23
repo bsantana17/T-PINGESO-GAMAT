@@ -66,43 +66,26 @@ public class RequestService  implements Serializable {
 	public Iterable<Request> getAllRequests(){
 		return serviceBd.findAllRequest();
 	}*/
-	@GetMapping("/{idUser}")
+	@GetMapping("/{idUser}/manager")
 	@ResponseBody
 	public Set<Request> getRequestJefeObra(@PathVariable("idUser") Integer id){
 		User user = serviceBd.getUserById(id);
 		return user.getRequests();
 		
 	}
-	@RequestMapping(value = "/{idUser}/owned", method = RequestMethod.GET)
+
+	@GetMapping("/{idUser}/approver")
 	@ResponseBody
-	public List<Request> listRequest(@PathVariable("idUser") Integer idUser){
-		User user = userRepository.findById(idUser).get();
-		List<Request> requests = new ArrayList<>();
-		
-		if (user.getIdUser() == 1){ //Jefe de obra
-			for (Request request:user.getRequests()){
-				requests.add(request);
-			}
-		}
+	public Set<Request> getRequestAprobador(@PathVariable("idUser") Integer id){
+		User user = serviceBd.getUserById(id);
+		return user.getRequests();
+	}
 
-		else if(user.getIdUser() == 2){//Aprobador
-			for(Request request:user.getRequests()){
-				for (Building building:user.getBuildings()){
-					if(request.getBuilding() == building){
-						requests.add(request);
-					}
-				}
-			}
-		}
-
-		else if(user.getIdUser() == 3){//Comprador
-			for(Request request:serviceBd.findAllRequest()){
-				if(request.getState() == "Aprobado"){
-					requests.add(request);
-				}
-			}
-		}
-		return requests;
+	@GetMapping("/{idUser}/buyer")
+	@ResponseBody
+	public Set<Request> getrequestComprador(@PathVariable("idUser") Integer id){
+		User user = serviceBd.getUserById(id);
+		return user.getRequests();
 	}
 	
 	@PutMapping("/update")

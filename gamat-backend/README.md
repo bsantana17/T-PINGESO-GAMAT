@@ -131,7 +131,9 @@ T/PINGESO GAMAT
 -/request/update (put): actualiza una determinada request, recibe un objto request con los nuevos datos ( este servicio seria principalmente para el cambio de estado)
 
 -/request/delete/{id} (delete) : elimina una detemrinada request 
-**-/requests/{idJefeObra} (get) : se obtiene las requets creadas por un jefe de obra
+**-/requests/{idUser}/manager (get) : se obtiene las requets creadas por un jefe de obra
+**-/requests/{idUser}/approver (get) : se obtiene las requets asociadas a un aprobador
+**-/requests/{idUser}/buyer (get) : se obtiene las requets asociadas un comprador
 
 ## Building
 (5)-/buildings/{idAprobador} (get): retorna las obras asignadas a un aprobador
