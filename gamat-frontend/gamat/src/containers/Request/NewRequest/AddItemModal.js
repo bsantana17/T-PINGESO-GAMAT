@@ -48,8 +48,10 @@ class AddItemModal extends React.Component {
 
   submitHandler(){
     console.log('en submitHandler', this.state)
-    this.props.onAddItem(this.state); 
+    this.props.onAddItem(this.state);
+    return this.toggle
   }
+
 
 
   render() {

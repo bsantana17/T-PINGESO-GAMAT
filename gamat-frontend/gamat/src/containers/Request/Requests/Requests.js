@@ -1,29 +1,32 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Table, Button } from 'reactstrap';
+// Redux
+import { connect } from 'react-redux';
+import * as actions from '../../../store/actions/index';
 
-export default class Requests extends Component {
+class Requests extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-        data: {} //Deberia responder 
-        //idUser :  //Deberia utilizar el Id:User para el servicio rest
-      };
+  componentDidMount(){
+
+    this.props.onFetchRequests();
   }
 
-  handleGetData() {
-    //var urlTest = "http://0.0.0.0:8080/requests/" + this.state.idUser + "/owned";
-    var urlTest = "http://0.0.0.0:8080/requests/2/owned";
-    axios.get(urlTest)
-        .then(res => {
-            const datos = res.data;
-            this.setState({ datos });
-        });
-}
   render() {
+     let requests = <h1>loading</h1>
+    console.log(this.props.loading)
+    if ( this.props.loading ) {
+      //console.log(this.props.requests)
+       requests = this.props.requests.map( request => (
+          <h1>request.id</h1>
+      ) )
+  }
     return (
+      
       <div>
+
+
+        {requests}
         <Table hover>
         <thead>
         <tr>
@@ -84,3 +87,20 @@ export default class Requests extends Component {
     )
   }
 }
+
+const mapStateToProps = state => {
+  return {
+      requests: state.requests,
+      loading: state.loading,
+      // token: state.auth.token,
+      // userId: state.auth.userId
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+      onFetchRequests: () => dispatch( actions.fetchRequests() )
+  };
+};
+
+export default connect( mapStateToProps, mapDispatchToProps )( Requests, axios );

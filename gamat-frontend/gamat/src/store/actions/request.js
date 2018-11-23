@@ -1,4 +1,7 @@
 import * as actionTypes from './actionTypes';
+import axios from '../../axios-config';
+
+
 
 export const addRequestSuccess = ( id, requestData ) => {
     return {
@@ -21,8 +24,28 @@ export const addRequestStart = () => {
     };
 };
 
+export const fetchRequestsSuccess = ( requests ) => {
+    return {
+        type: actionTypes.FETCH_REQUESTS_SUCCESS,
+        requests: requests
+    };
+};
+
+export const fetchRequestsFail = ( error ) => {
+    return {
+        type: actionTypes.FETCH_REQUESTS_FAIL,
+        error: error
+    };
+};
+
+export const fetchRequestsStart = () => {
+    return {
+        type: actionTypes.FETCH_REQUESTS_START
+    };
+};
+
 export const addRequest = ( requestData ) => {
-    return dispatch => {
+     return dispatch => {
         // dispatch( addRequestStart() );
         // axios.post( '/orders.json', orderData )
         //     .then( response => {
@@ -32,5 +55,21 @@ export const addRequest = ( requestData ) => {
         //     .catch( error => {
         //         dispatch( addRequestFail( error ) );
         //     } );
+    };
+};
+
+export const fetchRequests = () => {
+    return dispatch => {
+        dispatch(fetchRequestsStart());
+        axios.get( 'https://pingeso-back.herokuapp.com/requests/1/owned')
+            .then( res => {
+                const fetchedRequests = res.data;
+
+    
+                dispatch(fetchRequestsSuccess(fetchedRequests));
+            } )
+            .catch( err => {
+                dispatch(fetchRequestsFail(err));
+            } );
     };
 };
