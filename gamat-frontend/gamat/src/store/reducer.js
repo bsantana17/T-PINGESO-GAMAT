@@ -1,31 +1,32 @@
 import * as actionTypes from './actions/actionTypes';
+import { updateObject } from './utility';
 
-const initialState = {
-    item: {
-        name: '',
-        quantity: '',
-        urgency: false,
-        description: ''
-    }
+const requestsInitialState = {
+    requests: [],
+    loading: false 
 };
 
-const reducer = (state = initialState, action) => {
-    switch(action.type){
-        case actionTypes.ADD_ITEM:
-            return{
-                ...state,
-                item: {
-                    ...state.item,
-                    [action.itemName]: state.item[action.itemName] + ' holi'
+const fetchRequestsStart = ( state, action ) => {
+    return updateObject( state, { loading: true } );
+};
 
-                }
-            };
-        case actionTypes.REMOVE_ITEM:
-            return{
+const fetchRequestsSuccess = ( state, action ) => {
+    return updateObject( state, {
+        requests: action.requests,
+        loading: false
+    } );
+};
 
-            };
-        default: 
-            return state;
+const fetchRequestsFail = ( state, action ) => {
+    return updateObject( state, { loading: false } );
+};
+
+const reducer = ( state = requestsInitialState, action ) => {
+    switch ( action.type ) {
+        case actionTypes.FETCH_REQUESTS_START: return fetchRequestsStart( state, action );
+        case actionTypes.FETCH_REQUESTS_SUCCESS: return fetchRequestsSuccess( state, action );
+        case actionTypes.FETCH_REQUESTS_FAIL: return fetchRequestsFail( state, action );
+        default: return state;
     }
 };
 

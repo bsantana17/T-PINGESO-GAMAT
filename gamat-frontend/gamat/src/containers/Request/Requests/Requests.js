@@ -1,27 +1,37 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Table, Button } from 'reactstrap';
+import Moment from 'moment';
+// Redux
+import { connect } from 'react-redux';
+import * as actions from '../../../store/actions/index';
 
-export default class Requests extends Component {
+class Requests extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-        data: {} //Deberia responder 
-        //idUser :  //Deberia utilizar el Id:User para el servicio rest
-      };
+  componentDidMount(){
+
+    this.props.onFetchRequests();
   }
 
-  handleGetData() {
-    //var urlTest = "http://0.0.0.0:8080/requests/" + this.state.idUser + "/owned";
-    var urlTest = "http://0.0.0.0:8080/requests/2/owned";
-    axios.get(urlTest)
-        .then(res => {
-            const datos = res.data;
-            this.setState({ datos });
-        });
-}
   render() {
+    let requests = <tr><td>cargando</td></tr>
+    console.log(this.props.requests)
+    if (!this.props.loading ) {
+      //console.log(this.props.requests)
+       requests = this.props.requests.map( request => (
+        <tr key={request.idRequest}>
+        <th scope="row">{request.idRequest}</th>
+        <td>???</td>
+        <td>{Moment(request.date).format("DD/MM/YYYY")}
+        </td>
+        <td>{request.state}</td> 
+        <td><Button color="primary" id="ver">
+                Ver
+            </Button>
+        </td>
+        </tr>
+      ) )
+  }
     return (
       <div>
         <Table hover>
@@ -35,52 +45,27 @@ export default class Requests extends Component {
         </tr> 
         </thead>
         <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td> 
-            <td><Button color="primary" id="ver">
-                    Ver
-                </Button>
-                <Button color="danger" id="borrar">
-                Borrar
-                </Button>
-                <Button color="primary" id="editar">
-                    Editar
-                </Button> </td>
-            </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-            <td><Button color="primary" id="ver">
-                    Ver
-                </Button></td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>@twitter</td>
-            <td>
-
-            
-                <Button color="success" id="pedir">
-                    Pedir
-                </Button>
-
-                <Button color="warning" id="cotizar">
-                    Pedir
-                </Button>
-            </td>
-          </tr>
-
-
+          {requests}
         </tbody>
       </Table>
       </div>
     )
   }
 }
+
+const mapStateToProps = state => {
+  return {
+      requests: state.requests,
+      loading: state.loading,
+      // token: state.auth.token,
+      // userId: state.auth.userId
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+      onFetchRequests: () => dispatch( actions.fetchRequests() )
+  };
+};
+
+export default connect( mapStateToProps, mapDispatchToProps )( Requests, axios );
