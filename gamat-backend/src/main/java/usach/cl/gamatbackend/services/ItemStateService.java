@@ -1,5 +1,6 @@
 package usach.cl.gamatbackend.services;
 
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class ItemStateService {
 	private IServiceBd serviceBd;
 	
 	@GetMapping
-	public Set<ItemState> getAll(){
+	public List<ItemState> getAll(){
 		return serviceBd.getItemStates();
 	}
 	

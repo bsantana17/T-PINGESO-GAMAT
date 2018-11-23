@@ -1,5 +1,6 @@
 package usach.cl.gamatbackend.entities;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
@@ -18,9 +19,11 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name="item")
-public class Item {
+public class Item  implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -44,7 +47,8 @@ public class Item {
 	@JoinColumn(name="distributor_id")
 	private Distributor distributor;
 	
-	@ManyToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+	
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="item_state_id")
 	private ItemState itemState;
 	

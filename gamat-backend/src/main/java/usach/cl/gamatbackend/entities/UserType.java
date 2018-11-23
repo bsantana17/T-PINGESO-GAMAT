@@ -6,6 +6,8 @@ import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "UserType")
 public class UserType {
@@ -29,6 +31,7 @@ public class UserType {
 					CascadeType.MERGE
 			},
 			mappedBy = "roles")
+	@JsonIgnore
 	private Set<User> users;
 
 	public int getIdUserType() {

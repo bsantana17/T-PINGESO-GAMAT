@@ -5,13 +5,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "user")
-public class User {
+public class User implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,25 +26,31 @@ public class User {
 	@NotNull
 	@Column(name = "password")
 	private String password;
+	
+	@NotNull
+	@Column(name="nombre")
+	private String nombre;
 
 	@Column(name="create_at")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date date;
 
-	@ManyToMany(fetch = FetchType.LAZY,
-			cascade = {
-					CascadeType.PERSIST,
-					CascadeType.MERGE
-			})
+	@ManyToMany(fetch = FetchType.LAZY,cascade = {
+			CascadeType.PERSIST,
+			CascadeType.MERGE
+	})
 	@JoinTable(name = "user_has_usertype",
+			
 			joinColumns = { @JoinColumn(name = "user_id") },
 			inverseJoinColumns = { @JoinColumn(name = "userType_id") })
 	private Set<UserType> roles;
-
-	@OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
-	@JoinColumn(name="bulding_id")
+	
+	@JsonIgnore
+	@OneToMany(mappedBy="user",fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+	
 	private Set<Building> buildings;
 
+	@JsonIgnore
 	@OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
 	@JoinColumn(name="request_id")
 	private Set<Request> requests;
@@ -102,6 +109,15 @@ public class User {
 
 	public void setRoles(Set<UserType> roles) {
 		this.roles = roles;
+	}
+	
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 
 	@PrePersist

@@ -1,5 +1,6 @@
 package usach.cl.gamatbackend.services;
 
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import usach.cl.gamatbackend.entities.Building;
 import usach.cl.gamatbackend.entities.Request;
+import usach.cl.gamatbackend.entities.User;
 import usach.cl.gamatbackend.facadeBd.IServiceBd;
 
 @CrossOrigin
@@ -31,14 +33,24 @@ public class BuildingService {
 	
 	@GetMapping
 	@ResponseBody
-	public Set<Building> getAll(){
+	public List<Building> getAll(){
 		return serviceBd.getAllBuilding();
 	}
 	// esto es para obtener las request de una determina obra, por parte de un aprobador
 	@GetMapping("/requests/{id}")
 	@ResponseBody
-	public Set<Request> getAllRequest(@PathVariable("id") Integer idBuilding){
+	public List<Request> getAllRequest(@PathVariable("id") Integer idBuilding){
 		return serviceBd.getRequestOfBuilding(idBuilding);
+	}
+	
+	@GetMapping("/{idAprobador}")
+	public Set<Building> getBuildingUserAprobador(@PathVariable("idAprobador") Integer id){
+		User user= serviceBd.getUserById(id);
+		System.out.println(user.getBuildings());
+		if(user != null) {
+			return  user.getBuildings();
+		}
+		return null;
 	}
 	
 	@PostMapping

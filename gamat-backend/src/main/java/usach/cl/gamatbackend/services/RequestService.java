@@ -12,13 +12,14 @@ import usach.cl.gamatbackend.repositories.RequestRepository;
 import usach.cl.gamatbackend.repositories.UserRepository;
 import usach.cl.gamatbackend.serviceMail.IServiceMail;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin
 @RestController
 @RequestMapping("/requests")
-public class RequestService {
+public class RequestService  implements Serializable {
 	
 	@Autowired
 	private IServiceBd serviceBd;
@@ -27,17 +28,35 @@ public class RequestService {
 	@Autowired 
 	private IServiceMail mailService;
 
-	@GetMapping("/create")
-	public Request createRequest(@RequestBody Request request) {
-	
+	@PostMapping("/create/{idUser}/{idBuilding}")
+	public Request createRequest(
+			@RequestBody Request request,
+			@PathVariable("idUser") Integer idUser,
+			@PathVariable("idBuilding") Integer idBuilding) {
 		if(request != null) {
-			Request newRequest= serviceBd.saveNewRequest(request);
+		User user = serviceBd.getUserById(idUser);
+		Building building = serviceBd.getBuildingById(idBuilding);	
+		request.setBuilding(building);
+		request.setUser(user);
+		request.setState("pendiente por revisar");
+			Request newRequest= serviceBd.saveRequest(request);
 			// datos aprobador 
 			//mailService.sendMailNotification("", "", "");
 			return newRequest;
 		}
 		return null;
 		
+	}
+	
+	@GetMapping("/approve/{idRequest}")
+	public HttpStatus aprobarRequest(@PathVariable("idRequest") Integer id) {
+		Request request = serviceBd.getRequestById(id);
+		if (request != null) {
+			request.setState("Aprobado");
+			serviceBd.saveRequest(request);
+			return HttpStatus.OK;
+		}
+		return HttpStatus.INTERNAL_SERVER_ERROR;
 	}
 
 	/*//Método para el comprador

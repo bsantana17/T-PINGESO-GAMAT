@@ -24,7 +24,7 @@ public class UserService {
     
     @RequestMapping(value="/login", method = RequestMethod.POST)
     @ResponseBody
-    public User autentificar(@RequestBody String json) throws JSONException {
+    public Object autentificar(@RequestBody String json) throws JSONException {
         JSONObject response = new JSONObject(json);
         String email= response.getString("email");
         String password=response.getString("password");
@@ -32,7 +32,7 @@ public class UserService {
         User user=userRepository.findByEmail(email);
 
         if(user==null || !user.getPassword().equals(password)) {
-            return null;
+            return HttpStatus.NOT_FOUND;
         }
 
         return user;

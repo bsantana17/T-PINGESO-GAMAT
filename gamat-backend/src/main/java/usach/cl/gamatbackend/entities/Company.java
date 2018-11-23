@@ -23,9 +23,9 @@ public class Company {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date date;
 
-	@OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
-	@JoinColumn(name="user_id")
-	private List<User> users;
+//	@OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+//	@JoinColumn(name="building_id")
+//	private List<Building> buildings;
 
 	public int getIdCompany() {
 		return idCompany;
@@ -51,15 +51,15 @@ public class Company {
 		this.date = date;
 	}
 
-	public List<User> getUsers() {
-		return users;
-	}
+	
+//	public List<Building> getBuildings() {
+//		return buildings;
+//	}
+//
+//	public void setBuildings(List<Building> buildings) {
+//		this.buildings = buildings;
+//	}
 
-	public void setUsers(List<User> users) {
-		this.users = users;
-	}
-
-	@PrePersist
 	public void Prepersit(){
 		
 		date=new Date();

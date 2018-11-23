@@ -7,6 +7,7 @@ import usach.cl.gamatbackend.entities.Distributor;
 import usach.cl.gamatbackend.entities.Item;
 import usach.cl.gamatbackend.entities.ItemState;
 import usach.cl.gamatbackend.entities.Request;
+import usach.cl.gamatbackend.entities.User;
 
 import java.util.List;
 import java.util.Set;
@@ -19,17 +20,20 @@ public interface IServiceBd {
 
 	public Iterable<Request> findAllRequest();
 	
-	public Request saveNewRequest(Request request);
+	public Request saveRequest(Request request);
 	
 	public Request updateRequest(Request newRequest);
 	
 	public boolean deleteRequest (Integer idRequest);
 	
+	public Request getRequestById(Integer id);
+	
 	//operaciones Building
+	public Building getBuildingById(Integer idBuilding);
 	
-	public Set<Building> getAllBuilding();
+	public List<Building> getAllBuilding();
 	
-	public Set<Request> getRequestOfBuilding(Integer id);
+	public List<Request> getRequestOfBuilding(Integer id);
 	
 	public Building saveBuilding(Building building);
 	
@@ -55,13 +59,21 @@ public interface IServiceBd {
 	
 	// operaciones itemState
 	
-	public Set<ItemState>getItemStates();
+	public List<ItemState>getItemStates();
 	
 	public ItemState createItemState(ItemState itemState);
 	
 	public ItemState updateItemState(ItemState itemState);
 	
 	public boolean deleteItemState(Integer idItemState);
+	
+	
+	// operaciones User
+
+	public User getUserById(Integer idUser);
+
+
+
 	
 	
 	

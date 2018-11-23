@@ -11,11 +11,13 @@ import usach.cl.gamatbackend.entities.Distributor;
 import usach.cl.gamatbackend.entities.Item;
 import usach.cl.gamatbackend.entities.ItemState;
 import usach.cl.gamatbackend.entities.Request;
+import usach.cl.gamatbackend.entities.User;
 import usach.cl.gamatbackend.repositories.BuildingRepository;
 import usach.cl.gamatbackend.repositories.DistributorRepository;
 import usach.cl.gamatbackend.repositories.ItemRepository;
 import usach.cl.gamatbackend.repositories.ItemStateRepository;
 import usach.cl.gamatbackend.repositories.RequestRepository;
+import usach.cl.gamatbackend.repositories.UserRepository;
 
 
 @Service
@@ -37,9 +39,20 @@ public class ServiceBdImp implements IServiceBd {
 	@Autowired
 	private BuildingRepository buildingRepository;
 	
+	@Autowired
+	private UserRepository userRepository;
+	
 	
 	
 	// operaciones Request
+	
+	@Override
+	public Request getRequestById(Integer id) {
+		// TODO Auto-generated method stub
+		return requestRepository.findById(id).orElse(null);
+	}
+	
+	
 	@Override
 	public List<Request> findRequestByState(String state, Integer idAprobador, Integer idBuilding) {
 		// TODO Auto-generated method stub
@@ -53,9 +66,9 @@ public class ServiceBdImp implements IServiceBd {
 	}
 
 	@Override
-	public Request saveNewRequest(Request request) {
+	public Request saveRequest(Request request) {
 		// TODO Auto-generated method stub
-		request.setState("Pendiente por revisar");
+		
 		return requestRepository.save(request);
 	}
 
@@ -74,18 +87,23 @@ public class ServiceBdImp implements IServiceBd {
 	}
 
 	//Building
-
 	@Override
-	public Set<Building> getAllBuilding() {
+	public Building getBuildingById(Integer idBuilding) {
 		// TODO Auto-generated method stub
-		return  (Set<Building>) buildingRepository.findAll();
+		return buildingRepository.findById(idBuilding).orElse(null);
 	}
 
 	@Override
-	public Set<Request> getRequestOfBuilding(Integer id) {
+	public List<Building> getAllBuilding() {
+		// TODO Auto-generated method stub
+		return   (List<Building>) buildingRepository.findAll();
+	}
+
+	@Override
+	public List<Request> getRequestOfBuilding(Integer id) {
 		Building building = buildingRepository.findById(id).orElse(null);
 		// TODO Auto-generated method stub
-		return building.getRequests();
+		return (List<Request>) building.getRequests();
 	}
 
 	@Override
@@ -167,9 +185,9 @@ public class ServiceBdImp implements IServiceBd {
 	//ItemState
 	
 	@Override
-	public Set<ItemState> getItemStates() {
+	public List<ItemState> getItemStates() {
 		// TODO Auto-generated method stub
-		return (Set<ItemState>) itemStateRepository.findAll();
+		return (List<ItemState>) itemStateRepository.findAll();
 	}
 
 	@Override
@@ -194,6 +212,17 @@ public class ServiceBdImp implements IServiceBd {
 		}
 		return false;
 	}
+
+
+	
+	//User 
+	
+	@Override
+	public User getUserById(Integer idUser) {
+		// TODO Auto-generated method stub
+		return userRepository.findById(idUser).orElse(null);
+	}
+
 	
 	
 	
