@@ -90,7 +90,7 @@ public class RequestService  implements Serializable {
 		for(UserType rol:user.getRoles()){
 			if(rol.getIdUserType() == 2){
 				for (Request request:user.getRequests()){
-					if (request.getState() == "Pendiente"){
+					if (request.getState() == "Pendiente por aprobar"){
 						requests.add(request);
 					}
 				}
