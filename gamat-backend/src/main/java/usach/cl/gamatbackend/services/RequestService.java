@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import usach.cl.gamatbackend.entities.Building;
 import usach.cl.gamatbackend.entities.Request;
 import usach.cl.gamatbackend.entities.User;
+import usach.cl.gamatbackend.entities.UserType;
 import usach.cl.gamatbackend.facadeBd.IServiceBd;
 import usach.cl.gamatbackend.repositories.RequestRepository;
 import usach.cl.gamatbackend.repositories.UserRepository;
@@ -68,24 +69,51 @@ public class RequestService  implements Serializable {
 	}*/
 	@GetMapping("/{idUser}/manager")
 	@ResponseBody
-	public Set<Request> getRequestJefeObra(@PathVariable("idUser") Integer id){
+	public List<Request> getRequestJefeObra(@PathVariable("idUser") Integer id){
 		User user = serviceBd.getUserById(id);
-		return user.getRequests();
+		Iterable<Request> requests = serviceBd.findAllRequest();
+		List<Request> createdRequests = new ArrayList<>();
+		for (Request request:requests){
+			if(request.getUser() == user){
+				createdRequests.add(request);
+			}
+		}
+		return createdRequests;
 		
 	}
 
 	@GetMapping("/{idUser}/approver")
 	@ResponseBody
-	public Set<Request> getRequestAprobador(@PathVariable("idUser") Integer id){
+	public List<Request> getRequestAprobador(@PathVariable("idUser") Integer id){
 		User user = serviceBd.getUserById(id);
-		return user.getRequests();
+		List<Request> requests = new ArrayList<>();
+		for(UserType rol:user.getRoles()){
+			if(rol.getIdUserType() == 2){
+				for (Request request:user.getRequests()){
+					if (request.getState() == "Pendiente"){
+						requests.add(request);
+					}
+				}
+			}
+		}
+		return requests;
 	}
 
 	@GetMapping("/{idUser}/buyer")
 	@ResponseBody
-	public Set<Request> getrequestComprador(@PathVariable("idUser") Integer id){
+	public List<Request> getrequestComprador(@PathVariable("idUser") Integer id){
 		User user = serviceBd.getUserById(id);
-		return user.getRequests();
+		List<Request> requests = new ArrayList<>();
+		for(UserType rol:user.getRoles()){
+			if(rol.getIdUserType() == 3){
+				for (Request request:user.getRequests()){
+					if (request.getState() == "Aprobado"){
+						requests.add(request);
+					}
+				}
+			}
+		}
+		return requests;
 	}
 	
 	@PutMapping("/update")
