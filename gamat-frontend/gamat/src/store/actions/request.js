@@ -61,7 +61,7 @@ export const addRequest = ( requestData ) => {
 export const fetchRequests = () => {
     return dispatch => {
         dispatch(fetchRequestsStart());
-        axios.get( 'https://pingeso-back.herokuapp.com/requests/1/owned')
+        axios.get( 'http://pingeso-back.herokuapp.com/requests/6/manager')
             .then( res => {
                 const fetchedRequests = res.data;
 

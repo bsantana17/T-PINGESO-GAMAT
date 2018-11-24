@@ -19,32 +19,30 @@ export default class Login extends React.Component {
       }
     
       handleSubmit = event => {
+        event.preventDefault();
+        var Urlapi = "http://pingeso-back.herokuapp.com/users/login";
+        //var urlTest = "http://0.0.0.0:8080/users/login";
         
-        //var Urlapi = "http://pingeso-back.herokuapp.com/buildings/";
-        var urlTest = "http://0.0.0.0:8080/users/login";
-        
-        
-
         console.log("El state es: " + JSON.stringify(this.state));
-        fetch(urlTest,{
+        fetch(Urlapi,{
             method: 'POST',
             body: this.state
         })
             .then(function(response){
                 console.log("Work, el json es:" + response);
-                window.alert("La respuesta es: " + response);
+                window.alert("La respuesta es: " + JSON.stringify(response));
             })
             .catch(function(error){
                 console.log("Fail: El codigo es:" + error);
 
             });
-            //event.preventDefault();
+            
             
       }
     
 
     validarForm() {
-        if( this.state.email.length > 0 && this.state.password.length > 0 && this.state.password < 20){
+        if( this.state.email.length > 0 && this.state.password.length > 0){
             return 1;
         }
         return 0;
