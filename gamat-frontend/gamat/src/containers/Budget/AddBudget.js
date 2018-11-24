@@ -48,16 +48,26 @@ class AddBudget extends Component {
                         Item N#
                     </CardHeader>
                     <CardText>
-                        <pre>Nombre                   Cantidad                    Urgencia</pre>
-                        Descripcion: 
+                    <div class="container">
+                    <div class="row">
+                        <div class="col-sm-4">Nombre: {}</div>
+                        <div class="col-sm-4">Cantidad: {}</div>
+                        <div class="col-sm-4">Urgencia: {} </div>
+                    </div>
+                    <br />
+                    <div>
+                        <p>Descripción:</p>
+                    </div>
+                    </div>
+
                     </CardText>
                     
                 </Card>
                 <br /><br />
                 <Card body style={{ backgroundColor: '#D3D3D3', borderColor: '#333' }}> 
                     <CardText>
-                    <Form>
                     <div class="row">
+                      
                         <div class="col-md-12">
                             <div class="row">
                                 <div class="col-md-6">
@@ -144,7 +154,7 @@ class AddBudget extends Component {
                             </div>
                         </div>
                     </div>
-                    </Form>
+                    
                     </CardText>
                 </Card>
                 <br />
