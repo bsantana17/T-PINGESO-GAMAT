@@ -14,7 +14,7 @@ export const addRequestSuccess = ( id, requestData ) => {
 export const addRequestFail = ( error ) => {
     return {
         type: actionTypes.ADD_REQUEST_FAIL,
-        error: error
+        requestError: error
     };
 }
 
@@ -34,7 +34,7 @@ export const fetchRequestsSuccess = ( requests ) => {
 export const fetchRequestsFail = ( error ) => {
     return {
         type: actionTypes.FETCH_REQUESTS_FAIL,
-        error: error
+        requestError: error
     };
 };
 
@@ -61,7 +61,7 @@ export const addRequest = ( requestData ) => {
 export const fetchRequests = () => {
     return dispatch => {
         dispatch(fetchRequestsStart());
-        axios.get( 'http://pingeso-back.herokuapp.com/requests/6/manager')
+        axios.get( 'https://pingeso-back.herokuapp.com/requests/6/manager')
             .then( res => {
                 const fetchedRequests = res.data;
 

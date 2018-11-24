@@ -5,6 +5,8 @@ import NewRequest from './containers/Request/NewRequest/NewRequest';
 import Requests from './containers/Request/Requests/Requests';
 import Login from './containers/Login/Login';
 import AddBudget from './containers/Budget/AddBudget';
+import Logout from './containers/Login/Logout';
+
 
 class App extends Component {
   render() {
@@ -15,6 +17,8 @@ class App extends Component {
             <Route path="/requests" exact component={ Requests }></Route>
             <Route path="/login" exact component={ Login }></Route>
             <Route path="/addbudget" exact component= {AddBudget}></Route>
+            <Route path="/logout" exact component={ Logout }></Route>
+
           </Layout>
         </div>
     );

@@ -5,26 +5,27 @@ import Moment from 'moment';
 // Redux
 import { connect } from 'react-redux';
 import * as actions from '../../../store/actions/index';
+import Spinner from '../../../components/UI/Spinner'
 
 class Requests extends Component {
 
   componentDidMount(){
-
     this.props.onFetchRequests();
   }
 
   render() {
-    let requests = <tr><td>cargando</td></tr>
-    console.log(this.props.requests)
-    if (!this.props.loading ) {
-      //console.log(this.props.requests)
-       requests = this.props.requests.map( request => (
+    let spinner = <Spinner/>
+    let requests = null
+    if (!this.props.requestLoading ) {
+        spinner = null
+        requests = this.props.requests.map( request => (
         <tr key={request.idRequest}>
         <th scope="row">{request.idRequest}</th>
         <td>???</td>
         <td>{Moment(request.date).format("DD/MM/YYYY")}
         </td>
         <td>{request.state}</td> 
+        <td>{request.observation}</td> 
         <td><Button color="primary" id="ver">
                 Ver
             </Button>
@@ -34,6 +35,7 @@ class Requests extends Component {
   }
     return (
       <div>
+        {spinner}
         <Table hover>
         <thead>
         <tr>
@@ -41,6 +43,7 @@ class Requests extends Component {
           <th>Solicitante</th>
           <th>Fecha</th>
           <th>Estado</th>
+          <th>Observación</th>
           <th>Acciones</th>
         </tr> 
         </thead>
@@ -56,7 +59,7 @@ class Requests extends Component {
 const mapStateToProps = state => {
   return {
       requests: state.requests,
-      loading: state.loading,
+      requestLoading: state.requestLoading,
       // token: state.auth.token,
       // userId: state.auth.userId
   };
