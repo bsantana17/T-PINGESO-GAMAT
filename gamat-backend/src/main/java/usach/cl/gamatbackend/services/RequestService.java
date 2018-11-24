@@ -87,15 +87,15 @@ public class RequestService  implements Serializable {
 	public List<Request> getRequestAprobador(@PathVariable("idUser") Integer id){
 		User user = serviceBd.getUserById(id);
 		List<Request> requests = new ArrayList<>();
-		for(UserType rol:user.getRoles()){
-			if(rol.getIdUserType() == 2){
+		//for(UserType rol:user.getRoles()){
+			if(user.getRol().getIdUserType() == 1){
 				for (Request request:user.getRequests()){
 					if (request.getState() == "Pendiente por aprobar"){
 						requests.add(request);
 					}
 				}
 			}
-		}
+		//}
 		return requests;
 	}
 
@@ -104,15 +104,15 @@ public class RequestService  implements Serializable {
 	public List<Request> getrequestComprador(@PathVariable("idUser") Integer id){
 		User user = serviceBd.getUserById(id);
 		List<Request> requests = new ArrayList<>();
-		for(UserType rol:user.getRoles()){
-			if(rol.getIdUserType() == 3){
+		//for(UserType rol:user.getRoles()){
+			if(user.getRol().getIdUserType() == 3){
 				for (Request request:user.getRequests()){
 					if (request.getState() == "Aprobado"){
 						requests.add(request);
 					}
 				}
 			}
-		}
+		//}
 		return requests;
 	}
 	

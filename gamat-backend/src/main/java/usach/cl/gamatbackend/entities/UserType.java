@@ -24,7 +24,7 @@ public class UserType {
 	@Column(name="create_at")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date date;
-
+/*Por si acaso
 	@ManyToMany(fetch = FetchType.LAZY,
 			cascade = {
 					CascadeType.PERSIST,
@@ -32,7 +32,7 @@ public class UserType {
 			},
 			mappedBy = "roles")
 	@JsonIgnore
-	private Set<User> users;
+	private Set<User> users;*/
 
 	public int getIdUserType() {
 		return idUserType;
@@ -57,14 +57,14 @@ public class UserType {
 	public void setDate(Date date) {
 		this.date = date;
 	}
-
+/*
 	public Set<User> getUsers() {
 		return users;
 	}
 
 	public void setUsers(Set<User> users) {
 		this.users = users;
-	}
+	}*/
 
 	@PrePersist
 	public void Prepersit(){

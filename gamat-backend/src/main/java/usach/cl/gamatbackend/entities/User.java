@@ -35,6 +35,7 @@ public class User implements Serializable{
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date date;
 
+	/*Por si acaso
 	@ManyToMany(fetch = FetchType.LAZY,cascade = {
 			CascadeType.PERSIST,
 			CascadeType.MERGE
@@ -43,8 +44,12 @@ public class User implements Serializable{
 			
 			joinColumns = { @JoinColumn(name = "user_id") },
 			inverseJoinColumns = { @JoinColumn(name = "userType_id") })
-	private Set<UserType> roles;
-	
+	private Set<UserType> roles;*/
+
+	@ManyToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+	@JoinColumn(name="userType_id")
+	private UserType rol;
+
 	@JsonIgnore
 	@OneToMany(mappedBy="user",fetch=FetchType.LAZY,cascade=CascadeType.ALL)
 	
@@ -102,7 +107,7 @@ public class User implements Serializable{
 	public void setDate(Date date) {
 		this.date = date;
 	}
-
+/*
 	public Set<UserType> getRoles() {
 		return roles;
 	}
@@ -110,7 +115,7 @@ public class User implements Serializable{
 	public void setRoles(Set<UserType> roles) {
 		this.roles = roles;
 	}
-	
+	*/
 
 	public String getNombre() {
 		return nombre;
@@ -118,6 +123,14 @@ public class User implements Serializable{
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+
+	public UserType getRol() {
+		return rol;
+	}
+
+	public void setRol(UserType rol) {
+		this.rol = rol;
 	}
 
 	@PrePersist
