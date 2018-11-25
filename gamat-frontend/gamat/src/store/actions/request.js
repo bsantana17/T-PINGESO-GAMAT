@@ -58,14 +58,12 @@ export const addRequest = ( requestData ) => {
     };
 };
 
-export const fetchRequests = () => {
+export const fetchRequests = (userId) => {
     return dispatch => {
         dispatch(fetchRequestsStart());
-        axios.get( 'https://pingeso-back.herokuapp.com/requests/6/manager')
+        axios.get( '/requests/'+userId+'/manager')
             .then( res => {
                 const fetchedRequests = res.data;
-
-    
                 dispatch(fetchRequestsSuccess(fetchedRequests));
             } )
             .catch( err => {

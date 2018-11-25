@@ -1,14 +1,20 @@
 import React, { Component } from 'react';
 import Layout from './components/Layout/Layout';
-import {Route}from 'react-router-dom';
+import {Route, withRouter}from 'react-router-dom';
 import NewRequest from './containers/Request/NewRequest/NewRequest';
 import Requests from './containers/Request/Requests/Requests';
 import Login from './containers/Login/Login';
 import newBudget from './containers/Budget/NewBudget';
 import Logout from './containers/Login/Logout';
-
+import { connect } from 'react-redux';
+import * as actions from './store/actions/index';
 
 class App extends Component {
+
+  componentDidMount () {
+    this.props.onTryAutoSignup();
+  }
+
   render() {
     return (
         <div>
@@ -25,4 +31,16 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    isAuthenticated: state.userType !== null
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onTryAutoSignup: () => dispatch( actions.loginCheckState() )
+  };
+};
+
+export default withRouter( connect( mapStateToProps, mapDispatchToProps )( App ) );

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import { Table, Button } from 'reactstrap';
 import Moment from 'moment';
 // Redux
@@ -10,7 +9,7 @@ import Spinner from '../../../components/UI/Spinner'
 class Requests extends Component {
 
   componentDidMount(){
-    this.props.onFetchRequests();
+    this.props.onFetchRequests(this.props.userId);
   }
 
   render() {
@@ -60,15 +59,14 @@ const mapStateToProps = state => {
   return {
       requests: state.requests,
       requestLoading: state.requestLoading,
-      // token: state.auth.token,
-      // userId: state.auth.userId
+      userId: state.userId
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-      onFetchRequests: () => dispatch( actions.fetchRequests() )
+      onFetchRequests: (userId) => dispatch( actions.fetchRequests(userId) )
   };
 };
 
-export default connect( mapStateToProps, mapDispatchToProps )( Requests, axios );
+export default connect( mapStateToProps, mapDispatchToProps )( Requests );

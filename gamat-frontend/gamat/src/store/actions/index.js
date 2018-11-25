@@ -4,5 +4,6 @@ export {
 } from './request';
 export {
     logout,
-    login
+    login,
+    loginCheckState
 } from './login';

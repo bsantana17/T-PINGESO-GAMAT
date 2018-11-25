@@ -4,6 +4,8 @@ import "./Login.css";
 import * as actions from '../../store/actions/index';
 import {connect} from 'react-redux';
 import Spinner from '../../components/UI/Spinner'
+import { Redirect } from 'react-router-dom';
+
 
 class Login extends React.Component {
     constructor(props) {
@@ -35,6 +37,11 @@ class Login extends React.Component {
     }
 
     render() {
+
+        let loginRedirect = null
+        if (this.props.isLogged){
+            loginRedirect = <Redirect to='/' />
+        }
 
         let form = <Form onSubmit= {this.handleSubmit}>
                         <FormGroup>
@@ -81,6 +88,7 @@ class Login extends React.Component {
 
         return (
             <div>
+                {loginRedirect}
                 {errorMessage}
                 <div className="col-12 col-lg-3 mb-3 center-div">
                     {form}
@@ -94,7 +102,8 @@ class Login extends React.Component {
 const mapStateLoading = state => {
     return {
         loading: state.loginLoading,
-        error: state.loginError
+        error: state.loginError,
+        isLogged : state.userId !== null,
     };
 }
 

@@ -7,6 +7,7 @@ const initialState = {
     requests: [],
     requestLoading: false,
     userType: null,
+    userId: null,
     loginLoading: false,
     loginError: null,
 };
@@ -35,6 +36,7 @@ const fetchLoginSuccess = ( state, action ) => {
         loginLoading: false,
         error: null,
         userType: action.userType,
+        userId: action.userId
      } );
 };
 
