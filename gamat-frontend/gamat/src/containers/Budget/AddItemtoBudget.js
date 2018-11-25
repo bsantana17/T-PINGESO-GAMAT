@@ -61,6 +61,7 @@ class AddItemtoBudget extends Component {
         }) 
     }
     /*Handler que sube todo al final */
+    /*Este debe generar en el json los valores solicitados*/
     submitHandler(){
         console.log('en submitHandler', this.state)
         this.props.onAddItem(this.state);
@@ -91,7 +92,7 @@ class AddItemtoBudget extends Component {
                     <Label for="totalprice">Precio Total</Label>
                     <InputGroup>
                     <InputGroupAddon addonType="append">$</InputGroupAddon>
-                    <Input disabled name="totalprice" id="totalprice" >{this.totalHandler}</Input>
+                    <Input disabled name="totalprice" id="totalprice"></Input>
                     </InputGroup>
                 </FormGroup>
                 </div>
