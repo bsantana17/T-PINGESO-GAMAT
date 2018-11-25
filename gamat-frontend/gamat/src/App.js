@@ -4,7 +4,7 @@ import {Route}from 'react-router-dom';
 import NewRequest from './containers/Request/NewRequest/NewRequest';
 import Requests from './containers/Request/Requests/Requests';
 import Login from './containers/Login/Login';
-import AddBudget from './containers/Budget/AddBudget';
+import newBudget from './containers/Budget/NewBudget';
 import Logout from './containers/Login/Logout';
 
 
@@ -16,7 +16,7 @@ class App extends Component {
             <Route path="/new-request" exact component={ NewRequest }></Route>
             <Route path="/requests" exact component={ Requests }></Route>
             <Route path="/login" exact component={ Login }></Route>
-            <Route path="/addbudget" exact component= {AddBudget}></Route>
+            <Route path="/new-budget" exact component= {newBudget}></Route>
             <Route path="/logout" exact component={ Logout }></Route>
 
           </Layout>
