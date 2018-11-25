@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import {InputGroup, InputGroupText, InputGroupAddon, Input, 
     Button, Form, FormGroup, Label,
-    Modal, ModalBody, ModalFooter ,ModalHeader,
-    InputGroupButtonDropdown, DropdownItem, DropdownMenu, DropdownToggle} from 'reactstrap';
+    Modal, ModalBody, ModalFooter ,ModalHeader} from 'reactstrap';
 import './AddBudget.css';
 
 
@@ -71,44 +70,57 @@ class AddItemtoBudget extends Component {
     render(){
         return(
         <div>
-            <Button color="danger" onClick={this.toggle}>Hacer Cotización</Button>
+            <Button size ="sm" color="danger" onClick={this.toggle}>Hacer Cotización</Button>
             <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
             <ModalHeader toggle={this.toggle}>Cotizar Item</ModalHeader>
             <ModalBody> 
             <Form>
-            <div class="row">
-                <div class="col-md-6">     
+            <div className="row">
+                <div className="col-md-6">     
                 <FormGroup>
+                    
                     <Label for="price">Precio Unitario</Label>
-                    <Input name="price" id="price" onChange={this.inputHandler}></Input>
+                    <InputGroup>
+                    <InputGroupAddon addonType="append">$</InputGroupAddon>
+                    <Input type="number" min="0" name="price" id="price" onChange={this.inputHandler}></Input>
+                    </InputGroup>
                 </FormGroup>
                 </div>
-                <div class="col-md-6">
+                <div className="col-md-6">
                 <FormGroup>
                     <Label for="totalprice">Precio Total</Label>
-                    <Input disabled name="totalprice" id="totalprice" value={this.totalHandler}></Input>
+                    <InputGroup>
+                    <InputGroupAddon addonType="append">$</InputGroupAddon>
+                    <Input disabled name="totalprice" id="totalprice" >{this.totalHandler}</Input>
+                    </InputGroup>
                 </FormGroup>
                 </div>
             </div>  
-            <div class="row">
-                <div class="col-md-6">
+            <div className="row">
+                <div className="col-md-6">
                 <FormGroup>
                     <Label for="weight">Peso Unitario</Label>
-                    <Input name="weight" id="weight" onChange={this.inputHandler}></Input>
+                    <InputGroup>
+                    <Input type="number" min="0" name="weight" id="weight" onChange={this.inputHandler}></Input>
+                    <InputGroupAddon addonType="append">Kg</InputGroupAddon>
+                    </InputGroup>
                 </FormGroup>
                 </div>
-                <div class="col-md-6">
+                <div className="col-md-6">
                 <FormGroup>
                     <Label for="totalweight">Peso Total</Label>
-                    <Input disabled name="totalweight" id="totalweight" value={this.totalHandler}></Input>
+                    <InputGroup>
+                    <Input disabled name="totalweight" id="totalweight" ></Input>
+                    <InputGroupAddon addonType="append">Kg</InputGroupAddon>
+                    </InputGroup>
                 </FormGroup>
                 </div>
             </div>                
             
 
             <br />
-            <div class="row">
-                <div class="col-md-12">
+            <div className="row">
+                <div className="col-md-12">
                 <InputGroup size="md">
                 <InputGroupAddon addonType="prepend">
                     <InputGroupText>Proveedor</InputGroupText>
@@ -119,8 +131,8 @@ class AddItemtoBudget extends Component {
                 
             </div>
             <br/>
-            <div class="row">
-                <div class="col-md-12">
+            <div className="row">
+                <div className="col-md-12">
                 <FormGroup>
                 <Label for="state">Estado</Label>
                 <Input type="select" name="state" id="state">
@@ -134,8 +146,8 @@ class AddItemtoBudget extends Component {
                 </div>
                 
             </div>
-            <div class="row">
-                <div class="col-md-12">
+            <div className="row">
+                <div className="col-md-12">
                 <InputGroup size="">
                 <InputGroupAddon addonType="prepend">
                     <InputGroupText>Comentarios</InputGroupText>
