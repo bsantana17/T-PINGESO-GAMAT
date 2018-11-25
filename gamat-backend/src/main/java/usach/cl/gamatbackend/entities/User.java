@@ -1,5 +1,6 @@
 package usach.cl.gamatbackend.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -45,10 +46,15 @@ public class User implements Serializable{
 			joinColumns = { @JoinColumn(name = "user_id") },
 			inverseJoinColumns = { @JoinColumn(name = "userType_id") })
 	private Set<UserType> roles;*/
-
-	@ManyToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+//
+//	@ManyToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+//	@JoinColumn(name="userType_id")
+//	private UserType rol;
+	
+//	@JsonBackReference
+	@ManyToOne
 	@JoinColumn(name="userType_id")
-	private UserType rol;
+private UserType rol;
 
 	@JsonIgnore
 	@OneToMany(mappedBy="user",fetch=FetchType.LAZY,cascade=CascadeType.ALL)
