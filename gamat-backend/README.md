@@ -177,10 +177,10 @@ ejemplo json :
 
 *demas usuarios se pueden ver en el import.sql (ubicado en resource)
 ##Budget
--/budgets (get) : retorna toda las cotizaciones
+-/budgets/ (get) : retorna toda las cotizaciones
 -/budgets/approved (get): retorna  coizaciones aprobadas 
 -/budgets/create (post) : crear una nueva cotizacion  
--/driver/{id} (put): enviar contizacion
+-/driver/{id} (put): enviar contizacion a chofer
 
 ##item-state
 (2) -/item-states (get) : retorna los estados disponibles para items (este se debe usar para asignar estado inicial a los items)

@@ -2,12 +2,7 @@ package usach.cl.gamatbackend.facadeBd;
 
 
 
-import usach.cl.gamatbackend.entities.Building;
-import usach.cl.gamatbackend.entities.Distributor;
-import usach.cl.gamatbackend.entities.Item;
-import usach.cl.gamatbackend.entities.ItemState;
-import usach.cl.gamatbackend.entities.Request;
-import usach.cl.gamatbackend.entities.User;
+import usach.cl.gamatbackend.entities.*;
 
 import java.util.List;
 import java.util.Set;
@@ -71,6 +66,10 @@ public interface IServiceBd {
 	// operaciones User
 
 	public User getUserById(Integer idUser);
+
+	// operaciones budgetState
+
+	public BudgetState getBudgetStateById(Integer idBudgetState);
 
 
 

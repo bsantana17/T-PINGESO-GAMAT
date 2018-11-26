@@ -6,18 +6,8 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import usach.cl.gamatbackend.entities.Building;
-import usach.cl.gamatbackend.entities.Distributor;
-import usach.cl.gamatbackend.entities.Item;
-import usach.cl.gamatbackend.entities.ItemState;
-import usach.cl.gamatbackend.entities.Request;
-import usach.cl.gamatbackend.entities.User;
-import usach.cl.gamatbackend.repositories.BuildingRepository;
-import usach.cl.gamatbackend.repositories.DistributorRepository;
-import usach.cl.gamatbackend.repositories.ItemRepository;
-import usach.cl.gamatbackend.repositories.ItemStateRepository;
-import usach.cl.gamatbackend.repositories.RequestRepository;
-import usach.cl.gamatbackend.repositories.UserRepository;
+import usach.cl.gamatbackend.entities.*;
+import usach.cl.gamatbackend.repositories.*;
 
 
 @Service
@@ -41,6 +31,9 @@ public class ServiceBdImp implements IServiceBd {
 	
 	@Autowired
 	private UserRepository userRepository;
+
+	@Autowired
+	private BudgetStateRepository budgetStateRepository;
 	
 	
 	
@@ -224,8 +217,11 @@ public class ServiceBdImp implements IServiceBd {
 	}
 
 	
-	
-	
-	
+	//BudgetState
 
+
+	@Override
+	public BudgetState getBudgetStateById(Integer idBudgetState) {
+		return budgetStateRepository.findById(idBudgetState).orElse(null);
+	}
 }
