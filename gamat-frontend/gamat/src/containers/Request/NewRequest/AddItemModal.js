@@ -33,13 +33,11 @@ class AddItemModal extends React.Component {
 
   radioHandler (e) {
     if(e.target.value === "si"){
-      console.log('entra en si');
       this.setState({
         urgency : true
       })
     }
     else if(e.target.value === "no"){
-      console.log('entra en no');
       this.setState({
         urgency : false
       })
@@ -47,12 +45,19 @@ class AddItemModal extends React.Component {
   }
 
   submitHandler(){
-    console.log('en submitHandler', this.state)
     this.props.onAddItem(this.state);
-    return this.toggle
+    return this.toggle()
   }
 
-
+  validForm() {
+    if( this.state.name.length > 0 && this.state.quantity.length > 0){
+      // eslint-disable-next-line  
+      if(this.state.quantity == parseInt(this.state.quantity, 10)){ // si quantity es un valor entero NO CAMBIAR
+        return false;
+      }
+    }
+    return true;
+}
 
   render() {
     return (
@@ -65,12 +70,12 @@ class AddItemModal extends React.Component {
               <Form>
                 <FormGroup>
                 <Label for="name">Nombre</Label>
-                <Input type="name" name="name" id="name" onChange={this.inputHandler}/>
+                <Input type="text" name="name" id="name" onChange={this.inputHandler}/>
                 </FormGroup>
 
                 <FormGroup>
                 <Label for="quantity">Cantidad</Label>
-                <Input type="quantity" name="quantity" id="quantity" onChange={this.inputHandler}/>
+                <Input type="number" name="quantity" id="quantity" onChange={this.inputHandler}/>
                 </FormGroup>
 
                 <FormGroup>
@@ -83,14 +88,14 @@ class AddItemModal extends React.Component {
 
                 <FormGroup>
                     <Label for="description">Descripción</Label>
-                    <Input type="textarea" name="text" id="description" onChange={this.inputHandler} />
+                    <Input type="textarea" name="description" id="description" onChange={this.inputHandler} />
                 </FormGroup>
 
             </Form>
 
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={this.submitHandler}>Agregar</Button>{' '}
+            <Button color="primary" onClick={this.submitHandler} disabled={this.validForm()}>Agregar</Button>{' '}
             <Button color="secondary" onClick={this.toggle}>Volver</Button>
           </ModalFooter>
         </Modal>

@@ -10,7 +10,27 @@ const initialState = {
     userId: null,
     loginLoading: false,
     loginError: null,
+    loading: false,
+    requestSent: false
 };
+
+const addRequestStart = ( state, action ) => {
+    return updateObject( state, { loading: true } );
+};
+
+const addRequestSuccess = ( state, action ) => {
+    const newRequest = updateObject( action.requestData, { id: action.requestId } );
+    return updateObject( state, {
+        loading: false,
+        requestSent: true,
+        requests: state.concat( newRequest )
+    } );
+};
+
+const addRequestFail = ( state, action ) => {
+    return updateObject( state, { loading: false } );
+};
+
 
 const fetchRequestsStart = ( state, action ) => {
     return updateObject( state, { requestLoading: true } );

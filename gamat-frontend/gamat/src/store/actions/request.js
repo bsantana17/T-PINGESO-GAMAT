@@ -44,18 +44,21 @@ export const fetchRequestsStart = () => {
     };
 };
 
-export const addRequest = ( requestData ) => {
-     return dispatch => {
-        // dispatch( addRequestStart() );
-        // axios.post( '/orders.json', orderData )
-        //     .then( response => {
-        //         console.log( response.data );
-        //         dispatch( addRequestSuccess( response.data.name, orderData ) );
-        //     } )
-        //     .catch( error => {
-        //         dispatch( addRequestFail( error ) );
-        //     } );
-    };
+export const addRequest = ( requestData, userId ) => {
+
+  return dispatch => {
+        //console.log('Datos a enviar: ' + requestData);
+        //console.log('Al user: '+ userId);
+        dispatch( addRequestStart() );
+        axios.post( '/request/create/'+userId+'/1', requestData )
+            .then( response => {
+                console.log( response.data );
+                //dispatch( addRequestSuccess( response.data, requestData ) );
+            } )
+            .catch( error => {
+                dispatch( addRequestFail( error ) );
+           } );
+        };
 };
 
 export const fetchRequests = (userId) => {
