@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/requests")
 public class RequestService  implements Serializable {
@@ -36,11 +36,11 @@ public class RequestService  implements Serializable {
 			@PathVariable("idUser") Integer idUser,
 			@PathVariable("idBuilding") Integer idBuilding) {
 		if(request != null) {
-		User user = serviceBd.getUserById(idUser);
-		Building building = serviceBd.getBuildingById(idBuilding);	
-		request.setBuilding(building);
-		request.setUser(user);
-		request.setState("pendiente por revisar");
+			User user = serviceBd.getUserById(idUser);
+			Building building = serviceBd.getBuildingById(idBuilding);
+			request.setBuilding(building);
+			request.setUser(user);
+			request.setState("Pendiente por revisar");
 			Request newRequest= serviceBd.saveRequest(request);
 			// datos aprobador 
 			//mailService.sendMailNotification("", "", "");
