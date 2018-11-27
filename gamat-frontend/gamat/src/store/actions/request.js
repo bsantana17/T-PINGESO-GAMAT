@@ -50,7 +50,7 @@ export const addRequest = ( requestData, userId ) => {
         //console.log('Datos a enviar: ' + requestData);
         //console.log('Al user: '+ userId);
         dispatch( addRequestsStart() );
-        axios.post( '/requests/create/'+userId+'/1', requestData )
+        axios.post( '/requests/create/'+userId, requestData )
             .then( response => {
                 console.log( response.data );
                 dispatch( addRequestsSuccess( response.data.idRequest, requestData ) );
