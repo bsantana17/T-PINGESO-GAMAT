@@ -187,7 +187,7 @@ class NewBudget extends Component {
 const mapStateToProps = state => {
     return {
       requests: state.request,
-      requestsLoading: state.requestLoading
+      loading: state.loading
     };
   }
   const mapDispatchToProps = dispatch => {

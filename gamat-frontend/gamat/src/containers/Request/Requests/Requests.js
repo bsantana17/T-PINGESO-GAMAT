@@ -4,7 +4,7 @@ import Moment from 'moment';
 import { connect } from 'react-redux';
 import * as actions from '../../../store/actions/index';
 import Spinner from '../../../components/UI/Spinner';
-import { Table, Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Table, Button} from 'reactstrap';
 import {Link} from 'react-router-dom';
 
 class Requests extends Component {
@@ -36,13 +36,13 @@ class Requests extends Component {
     }
 
     let requests = null
-    if (!this.props.requestLoading ) {
+    if (!this.props.loading ) {
         spinner = null
         requests = this.props.requests.map( request => (
         <tr key={request.idRequest}>
-          <td scope="row">{request.idRequest}</td>
+          <td>{request.idRequest}</td>
           <td>???</td>
-          <td>{Moment(request.date).format("DD/MM/YYYY")}</td>
+          <td>{Moment(request.date).format("DD/MM/YYYY hh:mm")}</td>
           <td>{request.state}</td> 
           <td>{request.observation}</td> 
           {/* <td><Link to={'/view-request/'+request.idRequest}><Button color="primary" id="ver">Ver</Button></Link> </td> */}
@@ -52,9 +52,10 @@ class Requests extends Component {
   }
 
     return (
-      <div>
+      <div className="container">
         {spinner}
-        <Table hover>
+        <h2>Historial de solicitudes: </h2>
+        <Table hover className="table-responsive">
         <thead>
         <tr>
           <th>#</th>
@@ -79,7 +80,7 @@ class Requests extends Component {
 const mapStateToProps = state => {
   return {
       requests: state.request.requests,
-      requestLoading: state.request.loading,
+      loading: state.request.loading,
       userId: state.login.userId,
       userType: state.login.userType
   };

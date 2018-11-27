@@ -4,6 +4,8 @@ import axios from '../../axios-config';
 
 
 export const addRequestsSuccess = ( id, requestData ) => {
+    console.log( 'entra en success' + id)
+    console.log( requestData )
     return {
         type: actionTypes.ADD_REQUESTS_SUCCESS,
         requestId: id,
@@ -12,9 +14,10 @@ export const addRequestsSuccess = ( id, requestData ) => {
 };
 
 export const addRequestsFail = ( error ) => {
+    console.log( 'entra en fail' )
     return {
         type: actionTypes.ADD_REQUESTS_FAIL,
-        requestError: error
+        error: error
     };
 }
 
@@ -34,7 +37,7 @@ export const fetchRequestsSuccess = ( requests ) => {
 export const fetchRequestsFail = ( error ) => {
     return {
         type: actionTypes.FETCH_REQUESTS_FAIL,
-        requestError: error
+        error: error
     };
 };
 
@@ -52,10 +55,11 @@ export const addRequest = ( requestData, userId ) => {
         dispatch( addRequestsStart() );
         axios.post( '/requests/create/'+userId, requestData )
             .then( response => {
-                console.log( response.data );
+                console.log( 'obtiene response' );
                 dispatch( addRequestsSuccess( response.data.idRequest, requestData ) );
             } )
             .catch( error => {
+                console.log( 'entra en catch' )
                 dispatch( addRequestsFail( error ) );
            } );
         };

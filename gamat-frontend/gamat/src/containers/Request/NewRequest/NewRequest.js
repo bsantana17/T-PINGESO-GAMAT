@@ -3,8 +3,9 @@ import AddItemModal from './AddItemModal';
 import ItemCard from './ItemCard';
 //import { requests } from '../../../requests.json';
 import { connect } from 'react-redux';
+import Spinner from '../../../components/UI/Spinner';
 import * as actions from '../../../store/actions/index';
-
+import { Link, Redirect } from 'react-router-dom';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input } from 'reactstrap';
 
 
@@ -13,7 +14,7 @@ class NewRequest extends Component {
     super(props);
     this.state = {
       modal: false,
-      observation: 'Observacion de prueba',
+      observation: '',
       items : []
     };
 
@@ -36,9 +37,8 @@ class NewRequest extends Component {
   }
 
   addItemHandler (item){
-    //console.log('en addItemHandles', item)
     this.setState({
-      items: this.state.items.concat(item) 
+      items: this.state.items.concat(item),
     })
   }
 
@@ -52,7 +52,12 @@ class NewRequest extends Component {
   }
 
   render() {
-    //console.log(this.state.request);
+
+    let redirect = null
+    if (this.props.requestSent){
+        redirect = <Redirect to='/requests' />
+    }
+
     const items = this.state.items.map((item, index) => {
       return <ItemCard 
                 key={index}
@@ -71,7 +76,6 @@ class NewRequest extends Component {
             </tr>
     });
 
-
     return (
       <div>
         <div className="d-flex">
@@ -84,11 +88,14 @@ class NewRequest extends Component {
             {items}
         </div>
 
-        <button className="btn btn-primary" disabled={!this.state.items.length > 0} onClick={this.toggle} >Enviar Solicitud</button>{' '}<button className="btn btn-secondary">Volver</button>
+        <button className="btn btn-primary" disabled={!this.state.items.length > 0} onClick={this.toggle} >Enviar Solicitud</button>{' '}
+        <Link to='/'><button className="btn btn-secondary">Volver</button></Link>
        
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
           <ModalHeader toggle={this.toggle}>Enviar Solicitud</ModalHeader>
           <ModalBody>
+            {redirect}
+            {this.props.loading ? <Spinner/> : 
               <div>
                 Los items a enviar son los siguientes:
                 <table className="table table-sm">
@@ -102,7 +109,8 @@ class NewRequest extends Component {
                     {itemsRow}
                   </tbody>
                 </table>
-              </div>
+              
+            
               <Form>
                 <FormGroup>
                     <Label for="description">Agregar observaciones (opcional): </Label>
@@ -110,10 +118,11 @@ class NewRequest extends Component {
                 </FormGroup>
 
             </Form>
-
+            </div>
+            }
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={this.sendHandler} >Enviar</Button>{' '}
+            <Button color="primary" disabled={this.props.loading} onClick={this.sendHandler} >Enviar</Button>{' '}
             <Button color="secondary" onClick={this.toggle}>Cancelar</Button>
           </ModalFooter>
         </Modal>
@@ -125,7 +134,9 @@ class NewRequest extends Component {
 
 const mapStateToProps = state => {
   return {
-    userId : state.login.userId
+    requestSent: state.request.requestSent,
+    loading: state.request.loading,
+    userId : state.login.userId,
   };
 }
 const mapDispatchToProps = dispatch => {
