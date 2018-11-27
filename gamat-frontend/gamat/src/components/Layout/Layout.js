@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Aux from '../../hoc/Aux';
+import Auxiliar from '../../hoc/Auxiliar';
 import Navigation from '../Navigation/Navigation';
 import { connect } from 'react-redux';
 
@@ -7,12 +7,12 @@ class Layout extends Component {
 
     render (){
         return(
-            <Aux>
+            <Auxiliar>
             <Navigation type={this.props.userType} />
             <main className='p-4'> 
                 {this.props.children}
             </main>
-        </Aux>
+        </Auxiliar>
         )
     }
 }
