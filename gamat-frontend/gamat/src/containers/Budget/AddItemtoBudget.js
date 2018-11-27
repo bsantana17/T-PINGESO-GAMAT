@@ -11,33 +11,27 @@ class AddItemtoBudget extends Component {
         super(props);
         this.state = {
             modal: false,
-            idItem: '',
-            price: '',
+            idItem: {},
+            price: 0,
             totalprice: '',
-            weight: '',
+            weight: 0,
             totalweight: '',
             providers: '',
             state: '',
             comments: '',
-            dropdownOpen: false,    
 
 
         };
 
         this.toggle = this.toggle.bind(this);
         this.inputHandler = this.inputHandler.bind(this);
-        this.toggleDropDown =this.toggleDropDown.bind(this);
         this.totalHandler = this.totalHandler.bind(this);
         this.submitHandler = this.submitHandler.bind(this);
+        this.printeando = this.printeando.bind(this);
     }
 
 
-    /*Funcion que abre o cierra el dropdown */
-    toggleDropDown() {
-    this.setState({
-      dropdownOpen: !this.state.dropdownOpen
-    });
-    }
+
 
     /*Funcion que muestra el modal */
     toggle() {
@@ -47,10 +41,12 @@ class AddItemtoBudget extends Component {
     }
     /*Funcion que cambia los estados de los imputs*/
     inputHandler (e) {
+        
         const {value, name} = e.target;
         this.setState({
             [name] : value
         })
+        
     }
 
     /*Funcion que calcula el total de los valores y pesos */
@@ -63,16 +59,22 @@ class AddItemtoBudget extends Component {
     /*Handler que sube todo al final */
     /*Este debe generar en el json los valores solicitados*/
     submitHandler(){
-        console.log('en submitHandler', this.state)
+        console.log('en submitHandler en AItB', this.state)
         this.props.onAddItem(this.state);
-        return this.toggle
+        this.toggle();
       }
 
+    printeando(){
+        console.log("Button:" + this.state)
+    }
+
+    
     render(){
         return(
+        
         <div>
-            <Button size ="sm" color="danger" onClick={this.toggle}>Hacer Cotización</Button>
-            <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
+            <Button size ="sm" color="danger" onClick={this.toggle}>+</Button>
+            <Modal isOpen={this.state.modal} toggle={this.toggle}>
             <ModalHeader toggle={this.toggle}>Cotizar Item</ModalHeader>
             <ModalBody> 
             <Form>
@@ -92,7 +94,7 @@ class AddItemtoBudget extends Component {
                     <Label for="totalprice">Precio Total</Label>
                     <InputGroup>
                     <InputGroupAddon addonType="append">$</InputGroupAddon>
-                    <Input disabled name="totalprice" id="totalprice"></Input>
+                    <Input disabled name="totalprice" id="totalprice"  onChange={this.inputHandler} value={this.props.cantidad*this.state.price}></Input>
                     </InputGroup>
                 </FormGroup>
                 </div>
@@ -111,7 +113,7 @@ class AddItemtoBudget extends Component {
                 <FormGroup>
                     <Label for="totalweight">Peso Total</Label>
                     <InputGroup>
-                    <Input disabled name="totalweight" id="totalweight" ></Input>
+                    <Input disabled min='0'name="totalweight" id="totalweight" value={this.props.cantidad*this.state.weight} onChange={this.inputHandler} ></Input>
                     <InputGroupAddon addonType="append">Kg</InputGroupAddon>
                     </InputGroup>
                 </FormGroup>
@@ -162,6 +164,8 @@ class AddItemtoBudget extends Component {
             <ModalFooter>
             <Button color="primary" onClick={this.submitHandler}>Agregar</Button>{' '}
             <Button color="secondary" onClick={this.toggle}>Volver</Button>
+            <Button color="warning" onClick={this.printeando}>print</Button>
+
             </ModalFooter>
             </Modal>
         </div>

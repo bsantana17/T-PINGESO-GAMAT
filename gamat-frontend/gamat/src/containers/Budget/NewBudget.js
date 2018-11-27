@@ -14,35 +14,90 @@ import * as actions from '../../store/actions/index';
 
 class NewBudget extends Component {
 
-    state = {
-          request: requests[0],
-          items: [],
-          //Deberian todos los elementos de una budget
 
-        };
+/* El formato de la vista NewBudget es.
+        Componentes ItemRows -> Cada fila tiene los elementos de las requests.
+                             -> Cada ItemRows tiene dos botones. Crear y Ver.
+        El boton Crear abre el componente AddItemtoBudget.
+        El boton Ver abre el componente SeeBudgetForItem.
+
+        El hijo ItemRows recoge de buena manera el state de AddItemtoBudget,
+        y al recibirlo, envia inmediatamente los datos a la vista NewBudget. 
+        Eso si, faltaria implementar que cada ItemRow tiene una Key. y que no 
+        se sobreescribe, si no se que se agrega una.  
+*/
+
+    constructor(props) {
+    super(props);    
+    this.state = {
+        request: requests[0],
+        items: [],
         
-        /* Agrega elementos a state.items*/ 
+            date: '',
+            expiration: '',
+            total_price: 0,
+            administration_price: 0,
+            shipping_price: 0,
+            true_price: 0
+
+
+        
+        //Deberian todos los elementos de una budget
+        
+
+      };
+
+      this.addItemHandler = this.addItemHandler.bind(this);
+      this.calculatePrices = this.calculatePrices.bind(this);
+    }
+    
+        
+    
+    
 
 /*
     //Cuando monta el DOM, entonces deberia realizar esto
     componentDidMount(){
         //Carga los elementos de una request
         this.props.onFetchRequest();
-
-    
-        //Sirve para  filas para cada uno de los items del cache
+        
+        
     }
 */
 
     /* Esta función deberia agregar a la budget los valores de cada item!*/
     addItemHandler (item){
-        console.log('en addItemHandles', item)
+        console.log('en addItemHandles en NB:', item)
+        //Aqui se deberia hacer append
         this.setState({
             items: this.state.items.concat(item) 
-        },()=> console.log('el nuevo estado de items',this.state.items))
+        },()=> console.log('el nuevo estado de items en NB',this.state.items))
+        this.calculatePrices();
         }
+    
+    
 
-  
+    calculatePrices(){
+        console.log("Entro a calculatePrices en NB");
+        var totalprice = 0;
+        for(var i=0;i < this.state.items.length;i++){
+            totalprice += parseInt(this.state.items[i].price);
+        }
+        console.log("El VALOR NETO ES: ", totalprice);
+        //Calculo la sumatoria (VALOR NETO)
+        //Aqui calculo todos los valores que van en budget
+        this.setState({
+            total_price: totalprice,
+            //El precio de despacho sera un 10% del precio total.
+            shipping_price: totalprice*0.1,
+            //El precio de administracion sera un 1% del precio total.
+            administration_price: totalprice*0.01,
+            //El VALOR TOTAL sera el precio total + un 19% (IVA)
+            true_price: totalprice+(totalprice*0.19)
+        });
+
+
+    }
     
 
    
@@ -53,9 +108,9 @@ class NewBudget extends Component {
         /*Esta funcion toma los items de los request (que por ahora viene en request.json) 
           los pone en un ItemRow (que entrega una fila) y lo guarda en la variable prueba*/
         var prueba = this.state.request.items.map((person, i) => 
-                <ItemRow key = {i}  data = {person} />)
+                <ItemRow key = {i}  datosRequest = {person} onItemHandlerIR={this.addItemHandler}/>)
 
-        //console.log(prueba);
+        
 
         return (
             
@@ -115,11 +170,11 @@ class NewBudget extends Component {
                     <CardText>
                     <li className="lista">Numero: </li>
                         <li>Peso Total: </li>
-                        <li>Despacho: </li>
-                        <li>Administración: </li>
-                        <li>Valor Neto: </li>
-                        <li><b>IVA:</b></li>
-                        <li><b>VALOR TOTAL:</b></li>
+                        <li>Despacho: {this.state.shipping_price}</li>
+                        <li>Administración: {this.state.administration_price}</li>
+                        <li>Valor Neto: {this.state.total_price}</li>
+                        <li><b>IVA: 19%</b></li>
+                        <li><b>VALOR TOTAL:{this.state.true_price}</b></li>
                     </CardText>
                 </Card> 
                 <br/>
