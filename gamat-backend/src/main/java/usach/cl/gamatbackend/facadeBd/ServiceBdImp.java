@@ -34,6 +34,9 @@ public class ServiceBdImp implements IServiceBd {
 
 	@Autowired
 	private BudgetStateRepository budgetStateRepository;
+
+	@Autowired
+	private BudgetRepository budgetRepository;
 	
 	
 	
@@ -223,5 +226,22 @@ public class ServiceBdImp implements IServiceBd {
 	@Override
 	public BudgetState getBudgetStateById(Integer idBudgetState) {
 		return budgetStateRepository.findById(idBudgetState).orElse(null);
+	}
+
+	//Budget
+
+	@Override
+	public List<Budget> findAllBudget() {
+		return (List<Budget>) budgetRepository.findAll();
+	}
+
+	@Override
+	public Budget findBudgetById(Integer id) {
+		return budgetRepository.findById(id).get();
+	}
+
+	@Override
+	public Budget saveBudget(Budget budget) {
+		return budgetRepository.save(budget);
 	}
 }

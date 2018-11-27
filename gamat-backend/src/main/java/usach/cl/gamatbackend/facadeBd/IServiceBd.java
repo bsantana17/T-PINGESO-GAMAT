@@ -22,6 +22,14 @@ public interface IServiceBd {
 	public boolean deleteRequest (Integer idRequest);
 	
 	public Request getRequestById(Integer id);
+
+	//budget
+
+	public Iterable<Budget> findAllBudget();
+
+	public Budget findBudgetById(Integer id);
+
+	public Budget saveBudget(Budget budget);
 	
 	//operaciones Building
 	public Building getBuildingById(Integer idBuilding);

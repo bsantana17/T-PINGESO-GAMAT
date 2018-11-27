@@ -32,6 +32,12 @@ public class BudgetService {
     public Iterable<Budget> getAllBudgets(){
         return repository.findAll();
     }
+    
+    @GetMapping("/{id}")
+    @ResponseBody
+    public  Budget getBudgetById(@PathVariable Integer id){
+        return serviceBd.findBudgetById(id);
+    }
 
     //Comprador ve las cotizaciones aprobadas
     @RequestMapping(value = "/approved", method = RequestMethod.GET)
@@ -72,5 +78,14 @@ public class BudgetService {
             item.setDriver(userRepository.findById(id).get());
             itemRepository.save(item);
         }
+    }
+
+    @RequestMapping(value = "/accept/{id}", method = RequestMethod.PUT)
+    @ResponseBody
+    public void approveBudget(@PathVariable("id") Integer id){
+        Budget budget = serviceBd.findBudgetById(id);
+        BudgetState state = serviceBd.getBudgetStateById(2);//Aprobado
+        budget.setBudgetState(state);
+        serviceBd.saveBudget(budget);
     }
 }
