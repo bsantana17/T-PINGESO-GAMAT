@@ -3,24 +3,24 @@ import axios from '../../axios-config';
 
 
 
-export const addRequestSuccess = ( id, requestData ) => {
+export const addRequestsSuccess = ( id, requestData ) => {
     return {
-        type: actionTypes.ADD_REQUEST_SUCCESS,
+        type: actionTypes.ADD_REQUESTS_SUCCESS,
         requestId: id,
         requestData: requestData
     };
 };
 
-export const addRequestFail = ( error ) => {
+export const addRequestsFail = ( error ) => {
     return {
-        type: actionTypes.ADD_REQUEST_FAIL,
+        type: actionTypes.ADD_REQUESTS_FAIL,
         requestError: error
     };
 }
 
-export const addRequestStart = () => {
+export const addRequestsStart = () => {
     return {
-        type: actionTypes.ADD_REQUEST_START
+        type: actionTypes.ADD_REQUESTS_START
     };
 };
 
@@ -49,14 +49,14 @@ export const addRequest = ( requestData, userId ) => {
   return dispatch => {
         //console.log('Datos a enviar: ' + requestData);
         //console.log('Al user: '+ userId);
-        dispatch( addRequestStart() );
-        axios.post( '/request/create/'+userId+'/1', requestData )
+        dispatch( addRequestsStart() );
+        axios.post( '/requests/create/'+userId+'/1', requestData )
             .then( response => {
                 console.log( response.data );
-                //dispatch( addRequestSuccess( response.data, requestData ) );
+                dispatch( addRequestsSuccess( response.data.idRequest, requestData ) );
             } )
             .catch( error => {
-                dispatch( addRequestFail( error ) );
+                dispatch( addRequestsFail( error ) );
            } );
         };
 };

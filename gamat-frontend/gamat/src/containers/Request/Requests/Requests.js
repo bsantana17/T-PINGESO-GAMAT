@@ -14,6 +14,13 @@ class Requests extends Component {
 
   render() {
     let spinner = <Spinner/>
+
+    let buttons = <Button color="primary" id="ver">Ver</Button>
+    if(this.props.userType === '2' || this.props.userType === 2){
+      buttons = <div><Button color="primary" id="ver">Ver</Button> <Button color="primary" id="ver">Aprobar</Button></div>
+    }
+  
+
     let requests = null
     if (!this.props.requestLoading ) {
         spinner = null
@@ -25,13 +32,14 @@ class Requests extends Component {
         </td>
         <td>{request.state}</td> 
         <td>{request.observation}</td> 
-        <td><Button color="primary" id="ver">
-                Ver
-            </Button>
+        <td>
+          {buttons}
         </td>
         </tr>
       ) )
   }
+
+
     return (
       <div>
         {spinner}
@@ -57,9 +65,10 @@ class Requests extends Component {
 
 const mapStateToProps = state => {
   return {
-      requests: state.requests,
-      requestLoading: state.requestLoading,
-      userId: state.userId
+      requests: state.request.requests,
+      requestLoading: state.request.loading,
+      userId: state.login.userId,
+      userType: state.login.userType
   };
 };
 

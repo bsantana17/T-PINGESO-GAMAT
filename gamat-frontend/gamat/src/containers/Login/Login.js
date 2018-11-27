@@ -101,9 +101,9 @@ class Login extends React.Component {
 
 const mapStateLoading = state => {
     return {
-        loading: state.loginLoading,
-        error: state.loginError,
-        isLogged : state.userId !== null,
+        loading: state.login.loading,
+        error: state.login.error,
+        isLogged : state.login.userId !== null,
     };
 }
 

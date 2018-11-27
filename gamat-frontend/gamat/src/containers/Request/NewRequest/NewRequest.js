@@ -125,7 +125,7 @@ class NewRequest extends Component {
 
 const mapStateToProps = state => {
   return {
-    userId : state.userId
+    userId : state.login.userId
   };
 }
 const mapDispatchToProps = dispatch => {
