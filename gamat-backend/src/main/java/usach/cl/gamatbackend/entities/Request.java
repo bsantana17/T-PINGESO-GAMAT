@@ -37,6 +37,7 @@ public class Request {
 	private String observation;
 	
 	
+	
 	@Column(name="create_at")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date date;
@@ -119,6 +120,8 @@ public class Request {
 	public void setBuilding(Building building) {
 		this.building = building;
 	}
+
+	
 	
 	
 

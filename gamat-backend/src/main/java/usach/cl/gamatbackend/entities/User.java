@@ -1,5 +1,6 @@
 package usach.cl.gamatbackend.entities;
 
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -54,12 +55,17 @@ public class User implements Serializable{
 //	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name="userType_id")
-private UserType rol;
+	private UserType rol;
 
 	@JsonIgnore
 	@OneToMany(mappedBy="user",fetch=FetchType.LAZY,cascade=CascadeType.ALL)
 	
 	private Set<Building> buildings;
+	
+	@OneToOne
+	@JoinColumn(name="building_id")
+//	@JsonIgnore
+	private Building building;
 
 	@JsonIgnore
 	
@@ -137,6 +143,16 @@ private UserType rol;
 
 	public void setRol(UserType rol) {
 		this.rol = rol;
+	}
+	
+	
+
+	public Building getBuilding() {
+		return building;
+	}
+
+	public void setBuilding(Building building) {
+		this.building = building;
 	}
 
 	@PrePersist

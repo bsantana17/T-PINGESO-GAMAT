@@ -7,6 +7,7 @@ import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -40,6 +41,11 @@ public class Building {
 	@ManyToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
 	@JoinColumn(name="user_id")
 	private User user;
+	
+
+	@OneToOne(fetch = FetchType.EAGER,mappedBy="building")
+	@JsonIgnore
+	private User jefeObra;
 
 	public User getUser() {
 		return user;
@@ -88,6 +94,15 @@ public class Building {
 
 	public void setRequests(List<Request> requests) {
 		this.requests = requests;
+	}
+
+	
+	public User getJefeObra() {
+		return jefeObra;
+	}
+
+	public void setJefeObra(User jefeObra) {
+		this.jefeObra = jefeObra;
 	}
 
 	@PrePersist

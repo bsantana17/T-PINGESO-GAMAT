@@ -30,14 +30,13 @@ public class RequestService  implements Serializable {
 	@Autowired 
 	private IServiceMail mailService;
 
-	@PostMapping("/create/{idUser}/{idBuilding}")
+	@PostMapping("/create/{idUser}")
 	public Request createRequest(
 			@RequestBody Request request,
-			@PathVariable("idUser") Integer idUser,
-			@PathVariable("idBuilding") Integer idBuilding) {
+			@PathVariable("idUser") Integer idUser) {
 		if(request != null) {
 			User user = serviceBd.getUserById(idUser);
-			Building building = serviceBd.getBuildingById(idBuilding);
+			Building building = user.getBuilding();
 			request.setBuilding(building);
 			request.setUser(user);
 			request.setState("Pendiente por revisar");

@@ -32,8 +32,8 @@ public class Item  implements Serializable{
 	
 	@NotNull
 	private String name;
+	private boolean urgency;
 	
-	@NotNull
 	private int price;
 	
 	@NotNull
@@ -130,5 +130,15 @@ public class Item  implements Serializable{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
+	public boolean isUrgency() {
+		return urgency;
+	}
+
+	public void setUrgency(boolean urgency) {
+		this.urgency = urgency;
+	}
+	
+	
 
 }
