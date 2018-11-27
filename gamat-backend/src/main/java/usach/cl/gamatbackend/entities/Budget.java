@@ -36,6 +36,9 @@ public class Budget {
 	@Column(name = "payCondition")
 	private String payCondition;
 
+	@Column(name = "totalWeight")
+	private int totalWeight;
+
 	@ManyToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
 	@JoinColumn(name="budget_state_id")
 	private BudgetState budgetState;
@@ -98,6 +101,14 @@ public class Budget {
 
 	public String getPayCondition() {
 		return payCondition;
+	}
+
+	public void setWeight(int weight) {
+		this.totalWeight = weight;
+	}
+
+	public int getWeight() {
+		return totalWeight;
 	}
 
 	public void setPayCondition(String payCondition) {
