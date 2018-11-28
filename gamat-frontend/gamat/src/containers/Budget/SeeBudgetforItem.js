@@ -19,9 +19,11 @@ class SeeBudgetforItem extends React.Component {
     
         /*Funcion que muestra el modal */
         toggle() {
-            this.setState({
+            /*this.setState({
             modal: !this.state.modal
-            });
+            });*/
+            
+            this.props.funcion();
         }
         /*Funcion que desahibilita el boton*/
         
@@ -33,7 +35,7 @@ class SeeBudgetforItem extends React.Component {
 
     render(){
         return (
-        <div>
+        <div style={{display: "inline-block"}}>
         <Button disabled={this.state.disable} size="sm" color="info" onClick={this.toggle}>Ver</Button>
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
             <ModalHeader toggle={this.toggle}>Ver Item</ModalHeader>

@@ -13,10 +13,10 @@ class AddItemtoBudget extends Component {
             modal: false,
             idItem: {},
             price: 0,
-            totalprice: '',
+            totalprice: 0,
             weight: 0,
-            totalweight: '',
-            providers: '',
+            totalweight: 0,
+            provider: '',
             state: '',
             comments: '',
 
@@ -43,23 +43,36 @@ class AddItemtoBudget extends Component {
     inputHandler (e) {
         
         const {value, name} = e.target;
-        this.setState({
-            [name] : value
-        })
+        if(name === 'price' || name === 'weight'){
+            this.setState({
+                [name] : parseInt(value)
+            })
+        }
+        else{
+            this.setState({
+                [name] : value
+            })
+        }   
         
     }
 
     /*Funcion que calcula el total de los valores y pesos */
     totalHandler (e) {
-        const {name, price, quantity} = e.target;
+        console.log("Entra o no?");
+        const {name, son, quantity} = e.target;
         this.setState({
-            [name] : price*quantity
+            [name] : son*quantity
         }) 
     }
     /*Handler que sube todo al final */
     /*Este debe generar en el json los valores solicitados*/
     submitHandler(){
-        console.log('en submitHandler en AItB', this.state)
+        console.log('en submitHandler en AItB', this.state);
+        this.setState({
+            totalprice: parseInt(this.state.price) * this.props.cantidad,
+            totalweight: parseInt(this.state.weight) * this.props.cantidad
+        })
+        
         this.props.onAddItem(this.state);
         this.toggle();
       }
@@ -72,8 +85,8 @@ class AddItemtoBudget extends Component {
     render(){
         return(
         
-        <div>
-            <Button size ="sm" color="danger" onClick={this.toggle}>+</Button>
+        <div style={{display: "inline-block"}}>
+            <Button size ="sm" color="danger" style={{display: "inline-block"}} onClick={this.toggle}>+</Button>
             <Modal isOpen={this.state.modal} toggle={this.toggle}>
             <ModalHeader toggle={this.toggle}>Cotizar Item</ModalHeader>
             <ModalBody> 
@@ -85,7 +98,7 @@ class AddItemtoBudget extends Component {
                     <Label for="price">Precio Unitario</Label>
                     <InputGroup>
                     <InputGroupAddon addonType="append">$</InputGroupAddon>
-                    <Input type="number" min="0" name="price" id="price" onChange={this.inputHandler}></Input>
+                    <Input type="number" min="0" name="price" total="totalprice" id="price" onChange={this.inputHandler}></Input>
                     </InputGroup>
                 </FormGroup>
                 </div>
@@ -94,7 +107,7 @@ class AddItemtoBudget extends Component {
                     <Label for="totalprice">Precio Total</Label>
                     <InputGroup>
                     <InputGroupAddon addonType="append">$</InputGroupAddon>
-                    <Input disabled name="totalprice" id="totalprice"  onChange={this.inputHandler} value={this.props.cantidad*this.state.price}></Input>
+                    <Input disabled name="totalprice" id="totalprice" value={this.props.cantidad*this.state.price}  ></Input>
                     </InputGroup>
                 </FormGroup>
                 </div>
@@ -105,7 +118,7 @@ class AddItemtoBudget extends Component {
                     <Label for="weight">Peso Unitario</Label>
                     <InputGroup>
                     <Input type="number" min="0" name="weight" id="weight" onChange={this.inputHandler}></Input>
-                    <InputGroupAddon addonType="append">Kg</InputGroupAddon>
+                    <InputGroupAddon addonType="append">g</InputGroupAddon>
                     </InputGroup>
                 </FormGroup>
                 </div>
@@ -114,7 +127,7 @@ class AddItemtoBudget extends Component {
                     <Label for="totalweight">Peso Total</Label>
                     <InputGroup>
                     <Input disabled min='0'name="totalweight" id="totalweight" value={this.props.cantidad*this.state.weight} onChange={this.inputHandler} ></Input>
-                    <InputGroupAddon addonType="append">Kg</InputGroupAddon>
+                    <InputGroupAddon addonType="append">g</InputGroupAddon>
                     </InputGroup>
                 </FormGroup>
                 </div>
