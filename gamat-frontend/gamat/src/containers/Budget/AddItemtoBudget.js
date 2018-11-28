@@ -17,7 +17,7 @@ class AddItemtoBudget extends Component {
             weight: 0,
             totalweight: 0,
             provider: '',
-            state: '',
+            estado: 'Cotizado',
             comments: '',
 
 
@@ -27,7 +27,7 @@ class AddItemtoBudget extends Component {
         this.inputHandler = this.inputHandler.bind(this);
         this.totalHandler = this.totalHandler.bind(this);
         this.submitHandler = this.submitHandler.bind(this);
-        this.printeando = this.printeando.bind(this);
+        this.selectHandler = this.selectHandler.bind(this);
     }
 
 
@@ -64,6 +64,16 @@ class AddItemtoBudget extends Component {
             [name] : son*quantity
         }) 
     }
+
+    /*selectHandler que define el estado de los items*/
+    selectHandler (e) {
+        console.log("Entrando a selectH en AItB", e.target.value)
+        this.setState({estado: e.target.value});
+
+        
+    }
+
+
     /*Handler que sube todo al final */
     /*Este debe generar en el json los valores solicitados*/
     submitHandler(){
@@ -77,9 +87,7 @@ class AddItemtoBudget extends Component {
         this.toggle();
       }
 
-    printeando(){
-        console.log("Button:" + this.state)
-    }
+
 
     
     render(){
@@ -150,12 +158,12 @@ class AddItemtoBudget extends Component {
             <div className="row">
                 <div className="col-md-12">
                 <FormGroup>
-                <Label for="state">Estado</Label>
-                <Input type="select" name="state" id="state">
-                    <option>Cotizado</option>
-                    <option>Cotizado con Comentarios</option>
-                    <option>Pendiente de entrega</option>
-                    <option>Pendiente de cotizacion</option>
+                <Label for="estado">Estado</Label>
+                <Input type="select" name="estado" id="estado" value={this.state.estado} onChange={this.selectHandler}>
+                    <option value="Cotizado"> Cotizado</option>
+                    <option value="Cotizado con Comentarios">Cotizado con comentarios</option>
+                    <option value="Pendiente de entrega">Pendiente de entrega</option>
+                    <option value="Pendiente de cotizacion">Pendiente de cotizacion</option>
                 </Input>
                 </FormGroup>
                 
@@ -177,7 +185,6 @@ class AddItemtoBudget extends Component {
             <ModalFooter>
             <Button color="primary" onClick={this.submitHandler}>Agregar</Button>{' '}
             <Button color="secondary" onClick={this.toggle}>Volver</Button>
-            <Button color="warning" onClick={this.printeando}>print</Button>
 
             </ModalFooter>
             </Modal>

@@ -21,12 +21,6 @@ class ItemRow extends React.Component {
         addItemHandler = (item) => {
             console.log('en addItemHandles en IR:', item)
             
-            /*this.setState({
-                budgetItem: this.state.budgetItem.concat(item) 
-            },()=> console.log('el nuevo estado de items en ItemRow',this.state.budgetItem))
-            //Aqui deberia llamar a una funcion del padre NB
-            console.log("Los datos que deberia pasarle a NR son: " + this.state.budgetItem)
-            */
             this.props.onItemHandlerIR(item);    
         }
 

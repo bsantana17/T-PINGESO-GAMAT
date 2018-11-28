@@ -35,10 +35,12 @@ class NewBudget extends Component {
         items: [],
         lastItem: {
             price: 'NaN',
+            totalprice: 'NaN',
             weight: 'NaN',
-            provedor: 'NaN',
+            totalweight: 'Nan',
+            provider: 'NaN',
             estado:  'Cotizado',
-            comentario:  'NaN'
+            comments:  'NaN'
         },
         //Deberian todos los elementos de una budget
         date: '',
@@ -54,7 +56,7 @@ class NewBudget extends Component {
 
       this.addItemHandler = this.addItemHandler.bind(this);
       this.calculatePrices = this.calculatePrices.bind(this);
-      this.funcion = this.funcion.bind(this)
+      this.collapseHandler = this.collapseHandler.bind(this)
     }
     
         
@@ -109,24 +111,31 @@ class NewBudget extends Component {
 
     }
 
-    funcion(){
-        console.log("DIME QUE FUNCIONO AMOR MIOOOO",  this.state)
+    collapseHandler(){
+        //console.log("DIME QUE collapseHandlerO AMOR MIOOOO",  this.state)
         this.setState({
             estadocolapso: !this.state.estadocolapso
         });
     }
     
-
-   
+    
+   sendBudget(){
+        if(this.state.items.length === 3){
+            window.alert("¡La cotización fue enviada al aprobador!");
+        }
+        else{
+            window.alert("Faltan elementos por cotizar")
+        }
+   }
 
     render() {
 
 
-        /*Esta funcion toma los items de los request (que por ahora viene en request.json) 
+        /*Esta función toma los items de los request (que por ahora viene en request.json) 
           los pone en un ItemRow (que entrega una fila) y lo guarda en la variable prueba*/
         var prueba = this.state.request.items.map((person, i) => 
                 
-                <ItemRow key = {i}  datosRequest = {person} onItemHandlerIR={this.addItemHandler} colapseFunction={this.funcion}/>)
+                <ItemRow key = {i}  datosRequest = {person} onItemHandlerIR={this.addItemHandler} colapseFunction={this.collapseHandler}/>)
 
         
 
@@ -175,11 +184,11 @@ class NewBudget extends Component {
               </div>
             
               <div className="col-12">
-              Proveedor: {this.state.lastItem.provedor}
+              Proveedor: {this.state.lastItem.provider}
               </div>
 
               <div className="col-12">
-              Comentarios: {this.state.lastItem.comentario}
+              Comentarios: {this.state.lastItem.comments}
               </div>
             </div>
 
@@ -190,7 +199,7 @@ class NewBudget extends Component {
             <br/><br/>
 
             </div>  
-                         <div className="col-lg-3 col-md-12 col-sm-12">
+            <div className="col-lg-3 col-md-12 col-sm-12">
                 <Card body inverse style={{ backgroundColor: '#808080', borderColor: '#333' }}>
                     <CardTitle>
                         <b>Solicitud</b>
@@ -222,7 +231,7 @@ class NewBudget extends Component {
                     </CardText>
                 </Card> 
                 <br/>
-                <Button color="success" className="endbuttons">Guardar Cotización.</Button>
+                <Button color="success" className="endbuttons" onClick={this.sendBudget}>Guardar Cotización.</Button>
             </div>
         </div>
         );
