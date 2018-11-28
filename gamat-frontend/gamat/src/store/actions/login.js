@@ -43,10 +43,10 @@ export const login =  (email,password) => {
 
         axios.post( 'https://pingeso-back.herokuapp.com/users/login',loginData)
             .then( response => {
-                console.log('post success');
-                console.log(response);
+                //console.log('post success');
+                //console.log(response);
                 if(response.data === "NOT_FOUND"){
-                    console.log(response.data);
+                    //console.log(response.data);
                     dispatch(loginFail("Ups, hubo un error al intentar iniciar sesión"));
                 }
                 else{

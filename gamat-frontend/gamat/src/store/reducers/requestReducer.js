@@ -15,32 +15,35 @@ const addRequestsStart = ( state, action ) => {
 };
 
 const addRequestsSuccess = ( state, action ) => {
-    const newRequest = updateObject( action.requestData, { id: action.requestId } );
+    //const newRequest = updateObject( action.requestData, { id: action.requestId } );
     return updateObject( state, {
         loading: false,
         requestSent: true,
-        requests: state.concat( newRequest )
+        //requests: state.concat( newRequest )
     } );
 };
 
 const addRequestsFail = ( state, action ) => {
-    return updateObject( state, { loading: false } );
+    return updateObject( state, { 
+        loading: false, 
+        error: action.error 
+    } );
 };
 
 
 const fetchRequestsStart = ( state, action ) => {
-    return updateObject( state, { requestLoading: true } );
+    return updateObject( state, { loading: true } );
 };
 
 const fetchRequestsSuccess = ( state, action ) => {
     return updateObject( state, {
         requests: action.requests,
-        requestLoading: false
+        loading: false
     } );
 };
 
 const fetchRequestsFail = ( state, action ) => {
-    return updateObject( state, { requestLoading: false } );
+    return updateObject( state, { loading: false } );
 };
 
 

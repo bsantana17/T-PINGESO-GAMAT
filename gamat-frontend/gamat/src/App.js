@@ -6,6 +6,7 @@ import Requests from './containers/Request/Requests/Requests';
 import Login from './containers/Login/Login';
 import newBudget from './containers/Budget/NewBudget';
 import Logout from './containers/Login/Logout';
+import ViewRequest from './containers/Request/ViewRequest/ViewRequest';
 import { connect } from 'react-redux';
 import * as actions from './store/actions/index';
 
@@ -24,6 +25,7 @@ class App extends Component {
             <Route path="/login" exact component={ Login }></Route>
             <Route path="/new-budget" exact component= {newBudget}></Route>
             <Route path="/logout" exact component={ Logout }></Route>
+            <Route path="/view-request/:idRequest" exact component={ ViewRequest }></Route>
 
           </Layout>
         </div>
@@ -33,7 +35,7 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return {
-    isAuthenticated: state.userType !== null
+    isAuthenticated: state.login.userType !== null
   };
 };
 

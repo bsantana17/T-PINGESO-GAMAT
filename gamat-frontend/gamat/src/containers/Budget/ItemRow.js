@@ -1,9 +1,42 @@
 import React from 'react';
 import AddItemtoBudget from './AddItemtoBudget';
+import SeeBudgetforItem from './SeeBudgetforItem';
 
 class ItemRow extends React.Component {
-    render(){
 
+        
+    state = {
+        budgetItem: [],
+        collapseStatus: false
+    }
+
+    displayCollapse = () => {
+        console.log(this.props)
+        this.props.colapseFunction();
+        console.log("Me llamaste de mi papito");
+
+    }
+
+        /* Esta función agrega a la budget (en NewBudget)los valores de cada item!*/
+        addItemHandler = (item) => {
+            console.log('en addItemHandles en IR:', item)
+            
+            /*this.setState({
+                budgetItem: this.state.budgetItem.concat(item) 
+            },()=> console.log('el nuevo estado de items en ItemRow',this.state.budgetItem))
+            //Aqui deberia llamar a una funcion del padre NB
+            console.log("Los datos que deberia pasarle a NR son: " + this.state.budgetItem)
+            */
+            this.props.onItemHandlerIR(item);    
+        }
+
+
+
+
+    render(){
+     
+    
+        
     function printUrgency(dato){
         if(dato === true){
             return "Si";
@@ -11,18 +44,32 @@ class ItemRow extends React.Component {
         return "No";
     }
     
+    
+    
+    
+
     return (
+        
         <tr>
-            <th scope="row">{this.props.data.idItem}</th>
-            <td>{this.props.data.name}</td>
-            <td>{this.props.data.quantity}</td>
-            <td>{printUrgency(this.props.data.urgency)}</td>
-            <td>{this.props.data.description}</td>
+            <th scope="row">{this.props.datosRequest.idItem}</th>
+            <td>{this.props.datosRequest.name}</td>
+            <td>{this.props.datosRequest.quantity}</td>
+            <td>{printUrgency(this.props.datosRequest.urgency)}</td>
+            <td>{this.props.datosRequest.description}</td>
             <td>
-            <div><AddItemtoBudget onAddItem={(e) => this.addItemHandler(e)}/></div>
-            {/*Cuando se crea una budget, deberia poder ver su budget a partir de un botn.*/}
+            <div >
+                <AddItemtoBudget cantidad={this.props.datosRequest.quantity} onAddItem={(e) => this.addItemHandler(e)}/> 
+                {/*Cuando se crea una budget, deberia poder ver su budget a partir de un botn.*/}
+                <SeeBudgetforItem datos={this.state.budgetItem} funcion={this.displayCollapse}></SeeBudgetforItem>
+            </div>
+
             </td>
+
         </tr>
+        
+        
+        
+
     );
     }
 };

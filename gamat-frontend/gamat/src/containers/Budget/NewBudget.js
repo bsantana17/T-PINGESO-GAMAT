@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Table, Button,  
-    Card, CardText,  CardTitle} from 'reactstrap';
+    Card, CardText,  CardTitle, CardBody, CardHeader,
+    Collapse} from 'reactstrap';
 import { requests } from '../../requests.json';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import ItemRow from './ItemRow';
-import AddItemtoBudget from './AddItemtoBudget';
 import './AddBudget.css';
 import * as actions from '../../store/actions/index';
 
@@ -14,35 +14,107 @@ import * as actions from '../../store/actions/index';
 
 class NewBudget extends Component {
 
-    state = {
-          request: requests[0],
-          items: [],
-          //Deberian todos los elementos de una budget
 
-        };
+/* El formato de la vista NewBudget es.
+        Componentes ItemRows -> Cada fila tiene los elementos de las requests.
+                             -> Cada ItemRows tiene dos botones. Crear y Ver.
+        El boton Crear abre el componente AddItemtoBudget.
+        El boton Ver abre el componente SeeBudgetForItem.
+
+        El hijo ItemRows recoge de buena manera el state de AddItemtoBudget,
+        y al recibirlo, envia inmediatamente los datos a la vista NewBudget. 
+        Eso si, faltaria implementar que cada ItemRow tiene una Key. y que no 
+        se sobreescribe, si no se que se agrega una.  
+*/
+
+    constructor(props) {
+    super(props);    
+    this.state = {
+        estadocolapso: false,
+        request: requests[2],
+        items: [],
+        lastItem: {
+            price: 'NaN',
+            weight: 'NaN',
+            provedor: 'NaN',
+            estado:  'Cotizado',
+            comentario:  'NaN'
+        },
+        //Deberian todos los elementos de una budget
+        date: '',
+        expiration: '',
+        totalWeight: 0,
+        total_price: 0,
+        administration_price: 0,
+        shipping_price: 0,
+        true_price: 0
         
-        /* Agrega elementos a state.items*/ 
+
+      };
+
+      this.addItemHandler = this.addItemHandler.bind(this);
+      this.calculatePrices = this.calculatePrices.bind(this);
+      this.funcion = this.funcion.bind(this)
+    }
+    
+        
+    
+    
 
 /*
     //Cuando monta el DOM, entonces deberia realizar esto
     componentDidMount(){
         //Carga los elementos de una request
         this.props.onFetchRequest();
-
-    
-        //Sirve para  filas para cada uno de los items del cache
+        
+        
     }
 */
 
     /* Esta función deberia agregar a la budget los valores de cada item!*/
     addItemHandler (item){
-        console.log('en addItemHandles', item)
+        console.log('en addItemHandles en NB:', item)
+        //Aqui se deberia hacer append
         this.setState({
-            items: this.state.items.concat(item) 
-        },()=> console.log('el nuevo estado de items',this.state.items))
+            items: this.state.items.concat(item),
+            lastItem: item
+        },()=> this.calculatePrices());
         }
+    
+    
 
-  
+    calculatePrices(){
+        console.log("Entro a calculatePrices en NB");
+        console.log("Largo de items: ",this.state.items.length);
+        var preciototal = 0;
+        var pesototal = 0;
+        for(var i=0;i < this.state.items.length;i++){
+            preciototal += this.state.items[i].totalprice
+            pesototal += this.state.items[i].totalweight
+        }
+        pesototal = pesototal/1000;
+        //Calculo la sumatoria (VALOR NETO)
+        //Aqui calculo todos los valores que van en budget
+        this.setState({
+            totalWeight: pesototal,
+            total_price: preciototal,
+            //El precio de despacho sera un 10% del precio total.
+            shipping_price: preciototal*0.1,
+            //El precio de administracion sera un 1% del precio total.
+            administration_price: preciototal*0.01,
+            //El VALOR TOTAL sera el precio total + un 19% (IVA)
+            true_price: preciototal+(preciototal*0.19)
+        });
+
+
+    }
+
+    funcion(){
+        console.log("DIME QUE FUNCIONO AMOR MIOOOO",  this.state)
+        this.setState({
+            estadocolapso: !this.state.estadocolapso
+        });
+    }
     
 
    
@@ -53,13 +125,14 @@ class NewBudget extends Component {
         /*Esta funcion toma los items de los request (que por ahora viene en request.json) 
           los pone en un ItemRow (que entrega una fila) y lo guarda en la variable prueba*/
         var prueba = this.state.request.items.map((person, i) => 
-                <ItemRow key = {i}  data = {person} />)
+                
+                <ItemRow key = {i}  datosRequest = {person} onItemHandlerIR={this.addItemHandler} colapseFunction={this.funcion}/>)
 
-        //console.log(prueba);
+        
 
         return (
             
-            <div className="row">
+            <div className="row" >
                 <div className="col-lg-9 col-md-12 col-sm-12">
                     <Table size="sm" >
                         <thead>
@@ -73,25 +146,51 @@ class NewBudget extends Component {
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Perno</td>
-                            <td>20</td>
-                            <td>Si</td>
-                            <td>Esta fila es estatica, para probar el boton</td>
-                            <td>
-                            <div><AddItemtoBudget onAddItem={(e) => this.addItemHandler(e)}/></div>
-                            </td>
-                        </tr>
+                     
                         {/*Aqui, la funcion de arriba deberia guardar todo en testrequest, y mostrarlo.*/}
                         {prueba}
                         </tbody>     
                     </Table>
                     <br/><br/>
-                
-                    
-                </div>  
-             <div className="col-lg-3 col-md-12 col-sm-12">
+                    <Card outline color="info">
+                    <CardHeader>
+                        Descripcion del Item
+                    </CardHeader>
+
+                    <Collapse isOpen={this.state.estadocolapso}>
+                  
+            <CardBody>
+            <div className="row">
+              <div className="col-6">
+              Precio Unitario: {this.state.lastItem.price}
+              </div>
+            
+              <div className="col-6">
+              Precio Total: {this.state.lastItem.weight}
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-12">
+              Estado: {this.state.lastItem.estado}
+              </div>
+            
+              <div className="col-12">
+              Proveedor: {this.state.lastItem.provedor}
+              </div>
+
+              <div className="col-12">
+              Comentarios: {this.state.lastItem.comentario}
+              </div>
+            </div>
+
+            </CardBody>
+            </Collapse>                
+            
+            </Card>
+            <br/><br/>
+
+            </div>  
+                         <div className="col-lg-3 col-md-12 col-sm-12">
                 <Card body inverse style={{ backgroundColor: '#808080', borderColor: '#333' }}>
                     <CardTitle>
                         <b>Solicitud</b>
@@ -114,12 +213,12 @@ class NewBudget extends Component {
                     </CardTitle>
                     <CardText>
                     <li className="lista">Numero: </li>
-                        <li>Peso Total: </li>
-                        <li>Despacho: </li>
-                        <li>Administración: </li>
-                        <li>Valor Neto: </li>
-                        <li><b>IVA:</b></li>
-                        <li><b>VALOR TOTAL:</b></li>
+                        <li>Peso Total: {this.state.totalWeight}</li>
+                        <li>Precio por Despacho: ${this.state.shipping_price}</li>
+                        <li>Precio por Administración: ${this.state.administration_price}</li>
+                        <li>Valor Neto:$ {this.state.total_price}</li>
+                        <li><b>IVA: 19%</b></li>
+                        <li><b>VALOR TOTAL: ${this.state.true_price}</b></li>
                     </CardText>
                 </Card> 
                 <br/>
@@ -132,7 +231,7 @@ class NewBudget extends Component {
 const mapStateToProps = state => {
     return {
       requests: state.request,
-      requestsLoading: state.requestLoading
+      loading: state.loading
     };
   }
   const mapDispatchToProps = dispatch => {

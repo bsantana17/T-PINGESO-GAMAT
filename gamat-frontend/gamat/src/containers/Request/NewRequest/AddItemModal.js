@@ -54,6 +54,12 @@ class AddItemModal extends React.Component {
       itemState: null
     }
     this.props.onAddItem(item);
+    this.setState({
+      name: '',
+      quantity: '',
+      urgency: false,
+      description: ''
+    })
     return this.toggle()
   }
 
