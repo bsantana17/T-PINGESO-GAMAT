@@ -53,6 +53,20 @@ public class BudgetService {
         return approved;
     }
 
+    //Cotizaciones pendientes
+    @GetMapping("/pending")
+    @ResponseBody
+    public List<Budget> getPendingBudgets(){
+        Iterable<Budget> budgets = serviceBd.findAllBudget();
+        List<Budget> pendingBudgets = new ArrayList<>();
+        for (Budget budget:budgets){
+            if(budget.getBudgetState().getIdBudgetState() == 1){
+                pendingBudgets.add(budget);
+            }
+        }
+        return pendingBudgets;
+    }
+
     @RequestMapping(value = "/create/{idUser}", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
@@ -87,5 +101,12 @@ public class BudgetService {
         BudgetState state = serviceBd.getBudgetStateById(2);//Aprobado
         budget.setBudgetState(state);
         serviceBd.saveBudget(budget);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    @ResponseBody
+    public HttpStatus deleteBudget(@PathVariable("id") Integer id){
+        if(serviceBd.deleteBudget(id)) return HttpStatus.OK;
+        return HttpStatus.INTERNAL_SERVER_ERROR;
     }
 }

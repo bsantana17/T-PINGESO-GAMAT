@@ -30,6 +30,8 @@ public interface IServiceBd {
 	public Budget findBudgetById(Integer id);
 
 	public Budget saveBudget(Budget budget);
+
+	public boolean deleteBudget (Integer id);
 	
 	//operaciones Building
 	public Building getBuildingById(Integer idBuilding);

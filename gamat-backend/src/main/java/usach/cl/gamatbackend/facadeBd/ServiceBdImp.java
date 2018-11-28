@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import usach.cl.gamatbackend.entities.*;
 import usach.cl.gamatbackend.repositories.*;
 
+import javax.validation.constraints.Null;
+
 
 @Service
 public class ServiceBdImp implements IServiceBd {
@@ -243,5 +245,12 @@ public class ServiceBdImp implements IServiceBd {
 	@Override
 	public Budget saveBudget(Budget budget) {
 		return budgetRepository.save(budget);
+	}
+
+	@Override
+	public boolean deleteBudget(Integer id) {
+		Budget budget = budgetRepository.findById(id).orElse(null);
+		budgetRepository.delete(budget);
+		return true;
 	}
 }
