@@ -3,6 +3,7 @@ import Layout from './components/Layout/Layout';
 import {Route, withRouter}from 'react-router-dom';
 import NewRequest from './containers/Request/NewRequest/NewRequest';
 import Requests from './containers/Request/Requests/Requests';
+import RemovedSuccess from './containers/Request/Requests/Requests';
 import Login from './containers/Login/Login';
 import newBudget from './containers/Budget/NewBudget';
 import Logout from './containers/Login/Logout';
@@ -26,6 +27,7 @@ class App extends Component {
             <Route path="/new-budget" exact component= {newBudget}></Route>
             <Route path="/logout" exact component={ Logout }></Route>
             <Route path="/view-request/:idRequest" exact component={ ViewRequest }></Route>
+            <Route path="/removed-success" exact component={ RemovedSuccess }></Route>
 
           </Layout>
         </div>

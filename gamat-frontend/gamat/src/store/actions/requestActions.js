@@ -1,11 +1,7 @@
 import * as actionTypes from './actionTypes';
 import axios from '../../axios-config';
 
-
-
 export const addRequestsSuccess = ( id, requestData ) => {
-    console.log( 'entra en success' + id)
-    console.log( requestData )
     return {
         type: actionTypes.ADD_REQUESTS_SUCCESS,
         requestId: id,
@@ -14,7 +10,6 @@ export const addRequestsSuccess = ( id, requestData ) => {
 };
 
 export const addRequestsFail = ( error ) => {
-    console.log( 'entra en fail' )
     return {
         type: actionTypes.ADD_REQUESTS_FAIL,
         error: error
@@ -26,6 +21,26 @@ export const addRequestsStart = () => {
         type: actionTypes.ADD_REQUESTS_START
     };
 };
+
+export const removeRequestsStart = () => {
+    return {
+        type: actionTypes.REMOVE_REQUESTS_START
+    };
+};
+
+export const removeRequestsSuccess = (requestId) => {
+    return {
+        type: actionTypes.REMOVE_REQUESTS_SUCCESS,
+        requestId : requestId
+    };
+};
+
+export const removeRequestsFail = ( error ) => {
+    return {
+        type: actionTypes.REMOVE_REQUESTS_FAIL,
+        error: error
+    };
+}
 
 export const fetchRequestsSuccess = ( requests ) => {
     return {
@@ -47,19 +62,21 @@ export const fetchRequestsStart = () => {
     };
 };
 
+export const removedToFalse = () => {
+    return {
+        type: actionTypes.REMOVED_TO_FALSE
+    };
+};
+
 export const addRequest = ( requestData, userId ) => {
 
   return dispatch => {
-        //console.log('Datos a enviar: ' + requestData);
-        //console.log('Al user: '+ userId);
         dispatch( addRequestsStart() );
         axios.post( '/requests/create/'+userId, requestData )
             .then( response => {
-                console.log( 'obtiene response' );
                 dispatch( addRequestsSuccess( response.data.idRequest, requestData ) );
             } )
             .catch( error => {
-                console.log( 'entra en catch' )
                 dispatch( addRequestsFail( error ) );
            } );
         };
@@ -78,3 +95,25 @@ export const fetchRequests = (userId) => {
             } );
     };
 };
+
+export const removeRequests = (requestId) => {
+    return dispatch => {        
+        dispatch(removeRequestsStart());
+        axios.delete( '/requests/delete/'+requestId)
+            .then( res => {
+                console.log(res.data);
+                dispatch(removeRequestsSuccess(requestId));
+            } )
+            .catch( err => {
+                dispatch(removeRequestsFail(err));
+            } );
+    };
+};
+
+export const removedFalse = () => {
+    return dispatch => {        
+        dispatch(removedToFalse());
+    };
+};
+
+

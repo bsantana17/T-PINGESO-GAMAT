@@ -1,9 +1,11 @@
 export {
+    removeRequests,
+    removedToFalse,
     addRequest,
     fetchRequests
-} from './request';
+} from './requestActions';
 export {
     logout,
     login,
     loginCheckState
-} from './login';
+} from './loginActions';

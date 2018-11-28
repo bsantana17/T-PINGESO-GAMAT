@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import * as actions from '../../../store/actions/index';
 import Spinner from '../../../components/UI/Spinner';
 import { Table, Button} from 'reactstrap';
-import {Link} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 
 class Requests extends Component {
   constructor(props) {
@@ -25,6 +25,11 @@ class Requests extends Component {
 
   componentDidMount(){
     this.props.onFetchRequests(this.props.userId);
+    this.props.removedFalse();
+  }
+
+  deleteHandler = (event) => {
+    this.props.onDeleteRequest(event.target.name)
   }
 
   render() {
@@ -32,7 +37,13 @@ class Requests extends Component {
 
     let buttons = null
     if(this.props.userType === '2' || this.props.userType === 2){
-      buttons = <div><Button color="primary" id="ver" onClick={this.toggle}>Ver</Button> <Button color="primary" id="ver">Aprobar</Button></div>
+      buttons = <div><Button color="primary" id="ver">Aprobar</Button></div>
+    }
+
+    let redirect = null
+    if(this.props.requestRemoved){
+      //console.log(this.props.requestRemoved)
+      redirect = <Redirect to='/removed-success' />
     }
 
     let requests = null
@@ -46,13 +57,22 @@ class Requests extends Component {
           <td>{request.state}</td> 
           <td>{request.observation}</td> 
           {/* <td><Link to={'/view-request/'+request.idRequest}><Button color="primary" id="ver">Ver</Button></Link> </td> */}
-          <td><Link to={{ pathname: '/view-request/'+request.idRequest, state:request.items }}><Button color="primary" id="ver">Ver</Button></Link> </td>
+          <td>
+            <Link to={{ pathname: '/view-request/'+request.idRequest, state:request.items }}>
+              <Button color="primary" id="ver">Ver</Button>
+            </Link> 
+            {' '}
+            <Button color="primary" id="borrar" name={request.idRequest} onClick={this.deleteHandler}>Borrar</Button>
+          </td>
         </tr>
       ) )
   }
 
     return (
       <div className="container">
+        {redirect
+    
+    }
         {spinner}
         <h2>Historial de solicitudes: </h2>
         <Table hover className="table-responsive">
@@ -79,16 +99,20 @@ class Requests extends Component {
 
 const mapStateToProps = state => {
   return {
+      requestRemoved: state.request.requestRemoved,
       requests: state.request.requests,
       loading: state.request.loading,
       userId: state.login.userId,
-      userType: state.login.userType
+      userType: state.login.userType,
+      removed: state.request.removed
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-      onFetchRequests: (userId) => dispatch( actions.fetchRequests(userId) )
+      onFetchRequests: (userId) => dispatch( actions.fetchRequests(userId) ),
+      onDeleteRequest: (requestId) => dispatch( actions.removeRequests(requestId)),
+      removedFalse: () => dispatch(actions.removedToFalse())  
   };
 };
 
