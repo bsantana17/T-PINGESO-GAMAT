@@ -34,6 +34,7 @@ public class Item  implements Serializable{
 	private String name;
 	private boolean urgency;
 	
+	private String description;
 	private int price;
 	
 	@NotNull
@@ -137,7 +138,18 @@ public class Item  implements Serializable{
 
 	public void setUrgency(boolean urgency) {
 		this.urgency = urgency;
+		
 	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
+	
 	
 	
 
