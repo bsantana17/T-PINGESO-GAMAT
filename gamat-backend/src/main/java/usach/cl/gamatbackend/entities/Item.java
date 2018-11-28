@@ -40,11 +40,11 @@ public class Item  implements Serializable{
 	@NotNull
 	private int quantity;
 
-	@ManyToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="user_id")
 	private User driver;
 
-	@ManyToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="distributor_id")
 	private Distributor distributor;
 	
