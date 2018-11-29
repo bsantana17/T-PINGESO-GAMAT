@@ -19,7 +19,6 @@ class AddItemtoBudget extends Component {
             provider: '',
             estado: 'Cotizado',
             comments: '',
-            
 
 
         };
@@ -33,6 +32,7 @@ class AddItemtoBudget extends Component {
 
 
 
+
     /*Funcion que muestra el modal */
     toggle() {
         this.setState({
@@ -43,18 +43,9 @@ class AddItemtoBudget extends Component {
     inputHandler (e) {
         
         const {value, name} = e.target;
-        if(name === 'price'){
+        if(name === 'price' || name === 'weight'){
             this.setState({
-                [name] : parseInt(value),
-                totalprice: parseInt(value)*this.props.cantidad,
-                
-            })
-        }
-        else if(name === 'weight'){
-            this.setState({
-                [name] : parseInt(value),
-                totalweight: parseInt(value)*this.props.cantidad,
-                
+                [name] : parseInt(value)
             })
         }
         else{
@@ -86,19 +77,14 @@ class AddItemtoBudget extends Component {
     /*Handler que sube todo al final */
     /*Este debe generar en el json los valores solicitados*/
     submitHandler(){
-        console.log('en submitHandler en AItB', this.props.cantidad);
-        var eso1 = parseInt(this.state.price) * this.props.cantidad;
-        var eso2 = parseInt(this.state.weight) * this.props.cantidad;
-        console.log('en submitHandler en AItB', eso1)
+        console.log('en submitHandler en AItB', this.state);
         this.setState({
-            totalprice: eso1,
-            totalweight: eso2
-        },
-        function() { console.log("setState completed", this.state)}
-        )
+            totalprice: parseInt(this.state.price) * this.props.cantidad,
+            totalweight: parseInt(this.state.weight) * this.props.cantidad
+        })
+        
         this.props.onAddItem(this.state);
         this.toggle();
-
       }
 
 
@@ -129,7 +115,7 @@ class AddItemtoBudget extends Component {
                     <Label for="totalprice">Precio Total</Label>
                     <InputGroup>
                     <InputGroupAddon addonType="append">$</InputGroupAddon>
-                    <Input disabled type="number" name="totalprice" id="totalprice" value={this.props.cantidad*this.state.price}></Input>
+                    <Input disabled name="totalprice" id="totalprice" value={this.props.cantidad*this.state.price}  ></Input>
                     </InputGroup>
                 </FormGroup>
                 </div>
@@ -148,7 +134,7 @@ class AddItemtoBudget extends Component {
                 <FormGroup>
                     <Label for="totalweight">Peso Total</Label>
                     <InputGroup>
-                    <Input disabled type='number' name="totalweight" id="totalweight" value={this.props.cantidad*this.state.weight}></Input>
+                    <Input disabled min='0'name="totalweight" id="totalweight" value={this.props.cantidad*this.state.weight} onChange={this.inputHandler} ></Input>
                     <InputGroupAddon addonType="append">g</InputGroupAddon>
                     </InputGroup>
                 </FormGroup>

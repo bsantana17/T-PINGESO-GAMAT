@@ -22,7 +22,7 @@ import {
                     <Link to=''>Confirmar Recepción</Link>
                   </DropdownItem>
                   <DropdownItem>
-                    <Link to=''>Aprobar Solicitud</Link>
+                    <Link to='/requests'>Aprobar Solicitud</Link>
                   </DropdownItem>
                   <DropdownItem>
                     <Link to=''>Aprobar Cotizacion</Link>

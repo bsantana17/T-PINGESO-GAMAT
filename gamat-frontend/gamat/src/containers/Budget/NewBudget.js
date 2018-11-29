@@ -90,20 +90,12 @@ class NewBudget extends Component {
         console.log("Largo de items: ",this.state.items.length);
         var preciototal = 0;
         var pesototal = 0;
-                //Calculo la sumatoria (VALOR NETO)
-        if(this.state.items.length === 1){
-            preciototal = this.state.items[0].totalprice;
-            pesototal = this.state.items[0].totalweight;
+        for(var i=0;i < this.state.items.length;i++){
+            preciototal += this.state.items[i].totalprice
+            pesototal += this.state.items[i].totalweight
         }
-        else{
-            for(var i=0;i < this.state.items.length;i++){
-                preciototal += this.state.items[i].totalprice
-                pesototal += this.state.items[i].totalweight
-            }
-        }
-        
-        console.log("Preciototal: ", this.state.items)
         pesototal = pesototal/1000;
+        //Calculo la sumatoria (VALOR NETO)
         //Aqui calculo todos los valores que van en budget
         this.setState({
             totalWeight: pesototal,
@@ -114,8 +106,7 @@ class NewBudget extends Component {
             administration_price: preciototal*0.01,
             //El VALOR TOTAL sera el precio total + un 19% (IVA)
             true_price: preciototal+(preciototal*0.19)
-        }, () => console.log("setState Realizado en CP")
-        );
+        });
 
 
     }
@@ -129,8 +120,12 @@ class NewBudget extends Component {
     
     
    sendBudget(){
-        //Realiza el post.
-        window.alert("¡La cotización fue enviada al aprobador!");
+        if(this.state.items.length === 3){
+            window.alert("¡La cotización fue enviada al aprobador!");
+        }
+        else{
+            window.alert("Faltan elementos por cotizar")
+        }
    }
 
     render() {
@@ -227,7 +222,7 @@ class NewBudget extends Component {
                     </CardTitle>
                     <CardText>
                     <li className="lista">Numero: </li>
-                        <li>Peso Total: {this.state.totalWeight} Kg</li>
+                        <li>Peso Total: {this.state.totalWeight}</li>
                         <li>Precio por Despacho: ${this.state.shipping_price}</li>
                         <li>Precio por Administración: ${this.state.administration_price}</li>
                         <li>Valor Neto:$ {this.state.total_price}</li>

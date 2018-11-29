@@ -14,8 +14,11 @@ class Requests extends Component {
       modal: false,
     };
     this.toggle = this.toggle.bind(this);
+    this.handler = this.handler.bind(this);
   }
-
+  handler(){
+    console.log("funciona")
+  }
 
   toggle() {
     this.setState({
@@ -24,7 +27,7 @@ class Requests extends Component {
   }
 
   componentDidMount(){
-    this.props.onFetchRequests(this.props.userId);
+    this.props.onFetchRequests(this.props.userId,this.props.userType);
     this.props.removedFalse();
   }
 
@@ -34,10 +37,16 @@ class Requests extends Component {
 
   render() {
     let spinner = <Spinner/>
-
+    let ruta =''
     let buttons = null
-    if(this.props.userType === '2' || this.props.userType === 2){
-      buttons = <div><Button color="primary" id="ver">Aprobar</Button></div>
+    console.log(this.props.userType)
+    if(this.props.userType === '1' || this.props.userType === 1){
+      ruta='/approve-request/';
+      
+    }else{
+      ruta='/view-request/';
+      
+    
     }
 
     let redirect = null
@@ -58,11 +67,13 @@ class Requests extends Component {
           <td>{request.observation}</td> 
           {/* <td><Link to={'/view-request/'+request.idRequest}><Button color="primary" id="ver">Ver</Button></Link> </td> */}
           <td>
-            <Link to={{ pathname: '/view-request/'+request.idRequest, state:request.items }}>
+            <Link to={{ pathname: ruta+request.idRequest, state:request.items}}>
               <Button color="primary" id="ver">Ver</Button>
             </Link> 
+             
             {' '}
             <Button color="primary" id="borrar" name={request.idRequest} onClick={this.deleteHandler}>Borrar</Button>
+            {/* {this.props.userType == 1 && <Button color="primary" id="ver">Aprobar</Button>} */}
           </td>
         </tr>
       ) )
@@ -110,7 +121,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-      onFetchRequests: (userId) => dispatch( actions.fetchRequests(userId) ),
+      onFetchRequests: (userId,userType) => dispatch( actions.fetchRequests(userId,userType) ),
       onDeleteRequest: (requestId) => dispatch( actions.removeRequests(requestId)),
       removedFalse: () => dispatch(actions.removedToFalse())  
   };

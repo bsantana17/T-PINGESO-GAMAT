@@ -2,7 +2,10 @@ export {
     removeRequests,
     removedToFalse,
     addRequest,
-    fetchRequests
+    fetchRequests,
+    fetchApproveRequests,
+    fetchRejectRequests,
+    removedToFalseRequest,
 } from './requestActions';
 export {
     logout,

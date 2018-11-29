@@ -59,6 +59,18 @@ public class RequestService  implements Serializable {
 		}
 		return HttpStatus.INTERNAL_SERVER_ERROR;
 	}
+	
+	@GetMapping("/reject/{idRequest}")
+	public HttpStatus rechazarRequest(@PathVariable("idRequest") Integer id) {
+		Request request = serviceBd.getRequestById(id);
+		if (request != null) {
+			request.setState("Rechazado");
+			serviceBd.saveRequest(request);
+			return HttpStatus.OK;
+		}
+		return HttpStatus.INTERNAL_SERVER_ERROR;
+	}
+
 
 	/*//Método para el comprador
 	@RequestMapping(value = "/", method = RequestMethod.GET)
@@ -88,9 +100,11 @@ public class RequestService  implements Serializable {
 		List<Request> requests = new ArrayList<>();
 		//for(UserType rol:user.getRoles()){
 			if(user.getRol().getIdUserType() == 1){
-				for (Request request:user.getRequests()){
-					if (request.getState() == "Pendiente por aprobar"){
+				for (Building building:user.getBuildings()){
+					for(Request request : building.getRequests()) {
+					if (request.getState().equals("Pendiente por revisar")){
 						requests.add(request);
+					}
 					}
 				}
 			}
@@ -106,7 +120,7 @@ public class RequestService  implements Serializable {
 		//for(UserType rol:user.getRoles()){
 			if(user.getRol().getIdUserType() == 3){
 				for (Request request:user.getRequests()){
-					if (request.getState() == "Aprobado"){
+					if (request.getState().equals("Aprobado")){
 						requests.add(request);
 					}
 				}
