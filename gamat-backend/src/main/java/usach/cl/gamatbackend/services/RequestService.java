@@ -7,12 +7,14 @@ import org.springframework.web.bind.annotation.*;
 import usach.cl.gamatbackend.entities.Building;
 import usach.cl.gamatbackend.entities.Request;
 import usach.cl.gamatbackend.entities.User;
+import usach.cl.gamatbackend.entities.Item;
 import usach.cl.gamatbackend.entities.UserType;
 import usach.cl.gamatbackend.facadeBd.IServiceBd;
 import usach.cl.gamatbackend.repositories.RequestRepository;
 import usach.cl.gamatbackend.repositories.UserRepository;
 import usach.cl.gamatbackend.serviceMail.IServiceMail;
 
+import javax.validation.constraints.Null;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -127,6 +129,20 @@ public class RequestService  implements Serializable {
 			}
 		//}
 		return requests;
+	}
+
+	@GetMapping("/attendant/{id}")
+	@ResponseBody
+	public User getDriverAttendant(@PathVariable("id") Integer id){
+		Request request = serviceBd.getRequestById(id);
+		User user = new User();
+		if(request.getItems().size() > 0){
+			user = request.getItems().get(0).getDriver();
+			/*for(Item item: request.getItems()){
+				EN CASO DE QUE UN PEDIDO TENGA VARIOS CHOFERES
+			}*/
+		}
+		return user;
 	}
 	
 	@PutMapping("/update")

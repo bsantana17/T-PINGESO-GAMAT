@@ -50,4 +50,5 @@ public class UserService {
     public User create(@RequestBody User resource){
         return userRepository.save(resource);
     }
+
 }
