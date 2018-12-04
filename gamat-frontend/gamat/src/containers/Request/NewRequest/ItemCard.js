@@ -33,13 +33,7 @@ const ItemCard = (props) => {
                 </div>
                 <div>
 
-                    {props.rol==1 && 
-                    <div>
-                    <Button  onClick={(e)=>{props.onChangeState("autorizado")}} color="success">Autorizar</Button>
-                    <Button  onClick={(e)=>{props.onChangeState("pendiente")}} color="secondary">Pendiente</Button>
-                    <Button  onClick={(e)=>{props.onChangeState("rechazado")}} color="danger">Rechazar</Button>
-                    </div>
-                }
+                 
                 </div>
             </div>
         </div>

@@ -136,7 +136,7 @@ export const removeRequests = (requestId) => {
     };
 };
 
-export const fetchApproveRequests = (requestId) =>{
+export const fetchApproveRequests = (requestId,observations,states) =>{
     return dispatch => {
     axios.get(`requests/approve/${requestId}`)
         .then(res =>{
@@ -151,7 +151,7 @@ export const fetchApproveRequests = (requestId) =>{
 
 }
 
-export const fetchRejectRequests = (requestId) =>{
+export const fetchRejectRequests = (requestId,observations,states) =>{
     return dispatch => {
     axios.get(`requests/reject/${requestId}`)
         .then(res =>{

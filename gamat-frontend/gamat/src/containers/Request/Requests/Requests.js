@@ -57,7 +57,7 @@ class Requests extends Component {
     let requests = null
     if (!this.props.loading ) {
         spinner = null
-        requests = this.props.requests.map( request => (
+        requests = this.props.requests.map( (request,i) => (
         <tr key={request.idRequest}>
           <td>{request.idRequest}</td>
           <td>???</td>
@@ -66,17 +66,17 @@ class Requests extends Component {
           <td>{request.observation}</td> 
           {/* <td><Link to={'/view-request/'+request.idRequest}><Button color="primary" id="ver">Ver</Button></Link> </td> */}
           <td>
-            <Link to={{ pathname: ruta+request.idRequest, state:i}}>
-              <Button color="primary" id="ver">Ver</Button>
+          <Link to={{ pathname: '/view-request/'+request.idRequest, state:request.items}}>
+              <Button className="btn btn-sm btn-info" id="ver">Ver</Button>
             </Link> 
             {' '}
             <Button className="btn btn-sm btn-danger"  id="borrar" name={request.idRequest} onClick={this.deleteHandler}>Borrar</Button>
             {' '}
-            {this.props.userType == 1 ? 
-              <Link to={{ pathname: '/approve-request/'+request.idRequest, state:request.items}}>
+            {this.props.userType == 1 &&
+              <Link to={{ pathname: '/approve-request/'+i, state:i}}>
                 <Button  className="btn btn-sm btn-success" id="aprobar">Aprobar</Button> 
               </Link> 
-            : null}
+            }
           </td>
         </tr>
       ) )
