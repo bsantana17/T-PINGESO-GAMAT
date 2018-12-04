@@ -8,6 +8,7 @@ import Login from './containers/Login/Login';
 import newBudget from './containers/Budget/NewBudget';
 import Logout from './containers/Login/Logout';
 import ViewRequest from './containers/Request/ViewRequest/ViewRequest';
+import RequestToAprove from './containers/Request/RequestsToApprove/RequestToAprove';
 import { connect } from 'react-redux';
 import * as actions from './store/actions/index';
 
@@ -28,6 +29,8 @@ class App extends Component {
             <Route path="/logout" exact component={ Logout }></Route>
             <Route path="/view-request/:idRequest" exact component={ ViewRequest }></Route>
             <Route path="/removed-success" exact component={ RemovedSuccess }></Route>
+            <Route path="/approve-request/:idRequest" exact component={ RequestToAprove }></Route>
+
 
           </Layout>
         </div>

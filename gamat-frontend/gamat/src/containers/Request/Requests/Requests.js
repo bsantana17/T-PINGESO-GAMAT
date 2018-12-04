@@ -37,17 +37,16 @@ class Requests extends Component {
 
   render() {
     let spinner = <Spinner/>
-    let ruta =''
-    let buttons = null
-    console.log(this.props.userType)
-    if(this.props.userType === '1' || this.props.userType === 1){
-      ruta='/approve-request/';
-      
-    }else{
-      ruta='/view-request/';
-      
     
-    }
+    // let buttons = null
+    // let ruta =''
+    //console.log(this.props.userType)
+    // if(this.props.userType === '1' || this.props.userType === 1){
+    //   ruta='/approve-request/';
+      
+    // }else{
+    //   ruta='/view-request/';
+    // }
 
     let redirect = null
     if(this.props.requestRemoved){
@@ -59,7 +58,7 @@ class Requests extends Component {
     if (!this.props.loading ) {
         spinner = null
         requests = this.props.requests.map( request => (
-        <tr key={request.idRequest}>
+          <tr key={request.idRequest}>
           <td>{request.idRequest}</td>
           <td>???</td>
           <td>{Moment(request.date).format("DD/MM/YYYY hh:mm")}</td>
@@ -67,13 +66,17 @@ class Requests extends Component {
           <td>{request.observation}</td> 
           {/* <td><Link to={'/view-request/'+request.idRequest}><Button color="primary" id="ver">Ver</Button></Link> </td> */}
           <td>
-            <Link to={{ pathname: ruta+request.idRequest, state:request.items}}>
-              <Button color="primary" id="ver">Ver</Button>
+            <Link to={{ pathname: '/view-request/'+request.idRequest, state:request.items}}>
+              <Button className="btn btn-sm btn-info" id="ver">Ver</Button>
             </Link> 
-             
             {' '}
-            <Button color="primary" id="borrar" name={request.idRequest} onClick={this.deleteHandler}>Borrar</Button>
-            {/* {this.props.userType == 1 && <Button color="primary" id="ver">Aprobar</Button>} */}
+            <Button className="btn btn-sm btn-danger"  id="borrar" name={request.idRequest} onClick={this.deleteHandler}>Borrar</Button>
+            {' '}
+            {this.props.userType == 1 ? 
+              <Link to={{ pathname: '/approve-request/'+request.idRequest, state:request.items}}>
+                <Button  className="btn btn-sm btn-success" id="aprobar">Aprobar</Button> 
+              </Link> 
+            : null}
           </td>
         </tr>
       ) )
@@ -81,9 +84,7 @@ class Requests extends Component {
 
     return (
       <div className="container">
-        {redirect
-    
-    }
+        {redirect}
         {spinner}
         <h2>Historial de solicitudes: </h2>
         <Table hover className="table-responsive">
