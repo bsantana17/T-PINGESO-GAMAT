@@ -58,7 +58,7 @@ class Requests extends Component {
     if (!this.props.loading ) {
         spinner = null
         requests = this.props.requests.map( request => (
-          <tr key={request.idRequest}>
+        <tr key={request.idRequest}>
           <td>{request.idRequest}</td>
           <td>???</td>
           <td>{Moment(request.date).format("DD/MM/YYYY hh:mm")}</td>
@@ -66,8 +66,8 @@ class Requests extends Component {
           <td>{request.observation}</td> 
           {/* <td><Link to={'/view-request/'+request.idRequest}><Button color="primary" id="ver">Ver</Button></Link> </td> */}
           <td>
-            <Link to={{ pathname: '/view-request/'+request.idRequest, state:request.items}}>
-              <Button className="btn btn-sm btn-info" id="ver">Ver</Button>
+            <Link to={{ pathname: ruta+request.idRequest, state:i}}>
+              <Button color="primary" id="ver">Ver</Button>
             </Link> 
             {' '}
             <Button className="btn btn-sm btn-danger"  id="borrar" name={request.idRequest} onClick={this.deleteHandler}>Borrar</Button>

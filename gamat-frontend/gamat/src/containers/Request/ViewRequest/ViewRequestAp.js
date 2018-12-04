@@ -14,15 +14,27 @@ class ViewRequestAp extends Component {
     constructor(props) {
         super(props);
         this.state = {
-        
+            indice:0,
+            items:[]
         };
         this.handleOnApprove = this.handleOnApprove.bind(this);
         this.handleOnReject = this.handleOnReject.bind(this);
+        this.handleOnChangeState= this.handleOnChangeState.bind(this);
     }
 
     componentDidMount(){
-        this.props.onFalseVariables();
+        // this.props.onFalseVariables();
+        
+        let request = {...this.props.requests[this.props.location.state]};
+      
+        this.setState({
+            indice:this.props.location.state,
+           items: request.items,
+        } )
 
+    }
+    handleOnChangeState(state){
+        console.log(state)
     }
 
     handleOnApprove() {
@@ -48,11 +60,11 @@ class ViewRequestAp extends Component {
                     </UncontrolledAlert>
                 }
                     <h2>Revisar Solicitud </h2>
-                    
+                  
                 <div className="d-flex  mb-5"> 
 
-                    {
-                       this.props.location.state.map((item, index) => (
+                    { this.state.items &&
+                       this.state.items.map((item, index) => (
 
 
                             <ItemCard
@@ -62,13 +74,14 @@ class ViewRequestAp extends Component {
                                 quantity={item.quantity}
                                 urgency={item.urgency}
                                 description={item.description}
-                            // handler={props.location.state.handler}
+                                onChangeState={this.handleOnChangeState}
+                                rol={1}
                             />
 
 
 
                         ))}
-                </div>
+                </div> 
 
                 <div className=" col-md-7 d-flex justify-content-around">
 

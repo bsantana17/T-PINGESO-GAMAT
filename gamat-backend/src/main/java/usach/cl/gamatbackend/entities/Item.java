@@ -36,6 +36,7 @@ public class Item  implements Serializable{
 	
 	private String description;
 	private int price;
+	private String observation;
 	
 	@NotNull
 	private int quantity;
@@ -57,6 +58,8 @@ public class Item  implements Serializable{
 	@Column(name="create_at")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date date;
+	
+	
 	
 	@PrePersist
 	public void Prepersit(){
@@ -148,6 +151,16 @@ public class Item  implements Serializable{
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+	public String getObservation() {
+		return observation;
+	}
+
+	public void setObservation(String observation) {
+		this.observation = observation;
+	}
+	
+	
 	
 	
 	

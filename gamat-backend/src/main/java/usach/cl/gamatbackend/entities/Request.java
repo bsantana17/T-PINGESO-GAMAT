@@ -42,7 +42,7 @@ public class Request {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date date;
 	
-	@JsonIgnore
+//	@JsonIgnore
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="user_id")
 	private User user;
