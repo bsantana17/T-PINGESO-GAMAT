@@ -51,9 +51,9 @@ public class RequestService  implements Serializable {
 		
 	}
 	
-	@GetMapping("/approve/{idRequest}")
-	public HttpStatus aprobarRequest(@PathVariable("idRequest") Integer id) {
-		Request request = serviceBd.getRequestById(id);
+	@PostMapping("/approve/{idRequest}")
+	public HttpStatus aprobarRequest(@PathVariable("idRequest") Integer id,@RequestBody Request request) {
+//		Request request = serviceBd.getRequestById(id);
 		if (request != null) {
 			request.setState("Aprobado");
 			serviceBd.saveRequest(request);

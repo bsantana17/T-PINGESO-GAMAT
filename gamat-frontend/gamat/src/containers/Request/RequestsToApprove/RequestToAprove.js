@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import * as actions from '../../../store/actions/index';
 import { Link } from 'react-router-dom';
 import ItemToApprove from './ItemToApprove';
+import NewRequest from '../NewRequest/NewRequest';
 
 class RequestoToAprove extends Component {
     constructor(props) {
@@ -61,7 +62,30 @@ class RequestoToAprove extends Component {
         const idRequest= this.props.requests[this.state.indice].idRequest;
         const observations= this.state.observations;
         const states= this.state.states;
-        this.props.onApproveRequest(idRequest,observations,states)
+        let newStateRequest= this.props.requests[this.state.indice]
+        newStateRequest.items.map((item,i)=>{
+            item.observation=observations[i];
+            let idState;
+            switch (states[i]) {
+                case 'autorizado':
+                    idState=6
+                    break;
+                case 'pendiente':
+                    idState=2
+                    break;
+                case 'rechazado':
+                    idState=5
+                    break;
+                default:
+                    break;
+            }
+            item.itemState={
+                idItemState:idState,
+                name:states[i]
+            }
+        })
+        console.log('REQUEST MODIFICADA',newStateRequest);
+        this.props.onApproveRequest(idRequest,newStateRequest)
     }
 
     handleOnReject() {

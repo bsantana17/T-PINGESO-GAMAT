@@ -136,9 +136,10 @@ export const removeRequests = (requestId) => {
     };
 };
 
-export const fetchApproveRequests = (requestId,observations,states) =>{
+export const fetchApproveRequests = (requestId,request) =>{
     return dispatch => {
-    axios.get(`requests/approve/${requestId}`)
+
+    axios.post(`/requests/approve/${requestId}`,request)
         .then(res =>{
             console.log("aprobada",res)
             dispatch (approveSuccess());
