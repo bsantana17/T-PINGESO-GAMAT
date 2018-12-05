@@ -15,11 +15,17 @@ class NewRequest extends Component {
     this.state = {
       modal: false,
       observation: '',
-      items : []
+      items : [],
+      itemEdit:null,
+      open: false
     };
 
     this.toggle = this.toggle.bind(this);
+    this.toggleAddItem= this.toggleAddItem.bind(this);
     this.inputHandler = this.inputHandler.bind(this);
+    this.handleOnDelete = this.handleOnDelete.bind(this);
+    this.handleOnOpenEdit = this.handleOnOpenEdit.bind(this) ;
+    this.handleOnEditItem= this.handleOnEditItem.bind(this);
 
   }
 
@@ -29,6 +35,14 @@ class NewRequest extends Component {
     });
   }
 
+  toggleAddItem() {
+    this.setState({
+      open: !this.state.open,
+      itemEdit:null
+    });
+  }
+
+
   inputHandler (e) {
     const {value, name} = e.target;
       this.setState({
@@ -37,10 +51,39 @@ class NewRequest extends Component {
   }
 
   addItemHandler (item){
+    
     this.setState({
       items: this.state.items.concat(item),
     })
   }
+
+  handleOnEditItem(item,index){
+    let newItems= this.state.items.map((it)=>({...it}))
+    newItems[index] = item;
+    this.setState({
+      items: newItems,
+      itemEdit: null
+    })
+  }
+
+  handleOnOpenEdit(item){
+    
+    this.setState({
+      itemEdit: {...this.state.items[item],index:item},
+      open:true
+    })
+
+  }
+
+  handleOnDelete(item){
+    let newItems= this.state.items.map(item=>({...item}))
+    newItems.splice(item,1);
+    this.setState({
+      items:newItems
+    })
+
+  }
+
 
   sendHandler = (event) => {
     const requestData = {
@@ -65,7 +108,9 @@ class NewRequest extends Component {
                 name={item.name} 
                 quantity={item.quantity} 
                 description={item.description} 
-                urgency={item.urgency} 
+                urgency={item.urgency}
+                onEdit={ e =>this.handleOnOpenEdit(index)}
+                onDelete={ e =>this.handleOnDelete(index)}
                 />
     });
 
@@ -80,7 +125,18 @@ class NewRequest extends Component {
       <div>
         <div className="d-flex">
           <div className="mr-3"><h3>Nueva solicitud</h3></div>
-          <div><AddItemModal onAddItem={(e) => this.addItemHandler(e)}/></div>
+          <Button color="danger" onClick={this.toggleAddItem}>Agregar Item</Button>
+          {this.state.open &&
+
+          <div><AddItemModal  
+            open={this.state.open} 
+            toggle={this.toggleAddItem} 
+            item={this.state.itemEdit} 
+            onAddItem={(e) => this.addItemHandler(e)}
+            onEditItem={this.handleOnEditItem}
+            />
+          </div>
+          }
         </div>
         
         <h4>Items agregados:</h4>

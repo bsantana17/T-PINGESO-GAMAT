@@ -27,8 +27,8 @@ const ItemCard = (props) => {
                 </div>
                 <div className="row">
                     <div className="col-12 mt-3">
-                        <button className="btn btn-sm btn-info mr-2">Editar</button>
-                        <button className="btn btn-sm btn-danger mr-2">Borrar</button>
+                        <button onClick={props.onEdit} className="btn btn-sm btn-info mr-2">Editar</button>
+                        <button onClick={props.onDelete} className="btn btn-sm btn-danger mr-2">Borrar</button>
                     </div>
                 </div>
                 <div>

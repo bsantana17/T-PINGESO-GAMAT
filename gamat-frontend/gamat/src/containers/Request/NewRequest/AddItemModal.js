@@ -12,17 +12,26 @@ class AddItemModal extends React.Component {
       description: ''
     };
 
-    this.toggle = this.toggle.bind(this);
+   
     this.inputHandler = this.inputHandler.bind(this);
     this.radioHandler = this.radioHandler.bind(this);
     this.submitHandler = this.submitHandler.bind(this);
   }
 
-  toggle() {
-    this.setState({
-      modal: !this.state.modal
-    });
+  componentDidMount(){
+      
+   
+    if(this.props.item !== null){
+      this.setState({
+        name:this.props.item.name,
+        quantity: this.props.item.quantity,
+        urgency: this.props.item.urgency,
+        description: this.props.item.description
+      })
+      
+    }
   }
+
 
   inputHandler (e) {
     const {value, name} = e.target;
@@ -53,14 +62,17 @@ class AddItemModal extends React.Component {
       price: null,
       itemState: null
     }
-    this.props.onAddItem(item);
+
+    this.props.item !== null  ? 
+      this.props.onEditItem(item,this.props.item.index):
+      this.props.onAddItem(item);
     this.setState({
       name: '',
       quantity: '',
       urgency: false,
       description: ''
     })
-    return this.toggle()
+    return this.props.toggle()
   }
 
   validForm() {
@@ -76,20 +88,23 @@ class AddItemModal extends React.Component {
   render() {
     return (
       <div>
-        <Button color="danger" onClick={this.toggle}>Agregar Item</Button>
-        <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-          <ModalHeader toggle={this.toggle}>Agregar Item</ModalHeader>
+       
+        <Modal isOpen={this.props.open} toggle={this.props.toggle} className={this.props.className}>
+          <ModalHeader 
+            toggle={this.props.toggle}> 
+            {this.props.item === null ? "Agregar Item":"Editar Item"} 
+          </ModalHeader>
           <ModalBody>
 
               <Form>
                 <FormGroup>
                 <Label for="name">Nombre</Label>
-                <Input type="text" name="name" id="name" onChange={this.inputHandler}/>
+                <Input value={this.state.name} type="text" name="name" id="name" onChange={this.inputHandler}/>
                 </FormGroup>
 
                 <FormGroup>
                 <Label for="quantity">Cantidad</Label>
-                <Input type="number" name="quantity" id="quantity" onChange={this.inputHandler}/>
+                <Input value={this.state.quantity} type="number" name="quantity" id="quantity" onChange={this.inputHandler}/>
                 </FormGroup>
 
                 <FormGroup>
@@ -102,15 +117,16 @@ class AddItemModal extends React.Component {
 
                 <FormGroup>
                     <Label for="description">Descripción</Label>
-                    <Input type="textarea" name="description" id="description" onChange={this.inputHandler} />
+                    <Input value={this.state.description} type="textarea" name="description" id="description" onChange={this.inputHandler} />
                 </FormGroup>
 
             </Form>
 
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={this.submitHandler} disabled={this.validForm()}>Agregar</Button>{' '}
-            <Button color="secondary" onClick={this.toggle}>Volver</Button>
+            <Button color="primary" onClick={this.submitHandler} disabled={this.validForm()}>
+            {this.props.item === null ? "Agregar":"Editar"}</Button>{' '}
+            <Button color="secondary" onClick={this.props.toggle}>Volver</Button>
           </ModalFooter>
         </Modal>
       </div>
