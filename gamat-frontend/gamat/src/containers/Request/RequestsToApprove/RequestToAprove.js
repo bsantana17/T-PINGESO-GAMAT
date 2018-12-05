@@ -19,26 +19,28 @@ class RequestoToAprove extends Component {
         this.handleOnReject = this.handleOnReject.bind(this);
         this.handleOnChangeState = this.handleOnChangeState.bind(this);
         this.handleOnChangeForm=this.handleOnChangeForm.bind(this);
+        this.helperRefreshItems=this.helperRefreshItems.bind(this);
     }
 
     componentDidMount() {
         // this.props.onFalseVariables();
 
-        let request = { ...this.props.requests[this.props.match.params.indice] };
-        const newObservations= request.items.map(()=>"")
-        const newStates=request.items.map(()=>"");
+        let indiceRequest =  this.props.requests.findIndex(
+            (req)=>req.idRequest == this.props.match.params.idRequest);
+        const newObservations= this.props.requests[indiceRequest].items.map(()=>"")
+        const newStates=this.props.requests[indiceRequest].items.map(()=>"");
       
 
         this.setState({
-            indice: this.props.match.params.indice,
-            items: request.items,
+            indice: indiceRequest,
+            // items: request.items,
             observations: newObservations,
             states: newStates
         })
 
     }
     handleOnChangeState(state,i) {
-        console.log("cambiando",state,"en",i)
+        
        let copiaStates = [...this.state.states]
        copiaStates[i]=state;
        this.setState({
@@ -47,25 +49,25 @@ class RequestoToAprove extends Component {
     }
 
     handleOnChangeForm(e,i){
-        console.log("llegue aca")
+   
         const value = e.target.value;
         let copia = [...this.state.observations]
         copia[i]=value;
-        console.log("llegue aca2",value)
+       
         this.setState({
             observations:copia
         })
 
     }
-
-    handleOnApprove() {
-        const idRequest= this.props.requests[this.state.indice].idRequest;
+    helperRefreshItems(){
+       
         const observations= this.state.observations;
         const states= this.state.states;
         let newStateRequest= this.props.requests[this.state.indice]
         newStateRequest.items.map((item,i)=>{
             item.observation=observations[i];
             let idState;
+            // esto se modificara despues, cuando se hagan cambios en la bd
             switch (states[i]) {
                 case 'autorizado':
                     idState=6
@@ -84,15 +86,20 @@ class RequestoToAprove extends Component {
                 name:states[i]
             }
         })
-        console.log('REQUEST MODIFICADA',newStateRequest);
+
+        return newStateRequest
+    }
+
+    handleOnApprove() {
+        const idRequest= this.props.requests[this.state.indice].idRequest;
+        let newStateRequest = this.helperRefreshItems();
         this.props.onApproveRequest(idRequest,newStateRequest)
     }
 
     handleOnReject() {
         const idRequest= this.props.requests[this.state.indice].idRequest;
-        const observations= this.state.observations;
-        const states= this.state.states;
-        this.props.onRejectRequest(idRequest,observations,states)
+        let newStateRequest = this.helperRefreshItems()
+        this.props.onRejectRequest(idRequest, newStateRequest)
     }
 
     render() {
@@ -113,8 +120,8 @@ class RequestoToAprove extends Component {
 
                 <div className="d-flex  mb-5">
 
-                    {this.state.items && 
-                        this.state.items.map((item, index) => (
+                    {
+                        this.props.requests[this.state.indice].items.map((item, index) => (
 
 
                             <ItemToApprove

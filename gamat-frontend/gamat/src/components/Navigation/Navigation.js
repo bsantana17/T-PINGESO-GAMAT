@@ -45,7 +45,7 @@ export default class Navigation extends React.Component {
     }
 
     let loginMenu = <NavLink href="/login">Iniciar Sesión</NavLink>
-    if (this.props.type !== null){
+    if (this.props.type != null){
       loginMenu = <NavLink href="/logout"> Cerrar Sesión</NavLink>
     }
 

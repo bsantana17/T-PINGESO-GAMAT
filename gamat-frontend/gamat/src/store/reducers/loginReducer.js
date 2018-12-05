@@ -29,7 +29,7 @@ const fetchLoginFail = ( state, action ) => {
 };
 
 const fetchLogout = (state, action) => {
-    return updateObject(state, { userType: null});
+    return updateObject(state, { userType: null,userId: null, loading:false, error:null});
 };
 
 const reducer = ( state = initialState, action ) => {

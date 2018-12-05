@@ -73,7 +73,7 @@ class Requests extends Component {
             <Button className="btn btn-sm btn-danger"  id="borrar" name={request.idRequest} onClick={this.deleteHandler}>Borrar</Button>
             {' '}
             {this.props.userType == 1 &&
-              <Link to={{ pathname: '/approve-request/'+i, state:i}}>
+              <Link to={{ pathname: '/approve-request/'+request.idRequest, state:i}}>
                 <Button  className="btn btn-sm btn-success" id="aprobar">Aprobar</Button> 
               </Link> 
             }

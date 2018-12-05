@@ -152,9 +152,9 @@ export const fetchApproveRequests = (requestId,request) =>{
 
 }
 
-export const fetchRejectRequests = (requestId,observations,states) =>{
+export const fetchRejectRequests = (requestId,request) =>{
     return dispatch => {
-    axios.get(`requests/reject/${requestId}`)
+    axios.post(`requests/reject/${requestId}`)
         .then(res =>{
             console.log("rechazada",res)
             dispatch (rejectSuccess());

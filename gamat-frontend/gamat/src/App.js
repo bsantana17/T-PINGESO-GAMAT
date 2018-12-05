@@ -29,7 +29,7 @@ class App extends Component {
             <Route path="/new-budget" exact component= {newBudget}></Route>
             <Route path="/logout" exact component={ Logout }></Route>
             <Route path="/view-request/:idRequest" exact component={ ViewRequest }></Route>
-            <Route path="/approve-request/:indice" exact component={RequestToAprove }></Route>
+            <Route path="/approve-request/:idRequest" exact component={RequestToAprove }></Route>
             <Route path="/removed-success" exact component={ RemovedSuccess }></Route>
            
 

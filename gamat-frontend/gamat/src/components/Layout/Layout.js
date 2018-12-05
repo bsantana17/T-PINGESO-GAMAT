@@ -8,7 +8,7 @@ class Layout extends Component {
     render (){
         return(
             <Auxiliar>
-            <Navigation type={this.props.userType} />
+            <Navigation type={this.props.userType} isLogged={this.props.isLogged} />
             <main className='p-4'> 
                 {this.props.children}
             </main>
@@ -19,7 +19,8 @@ class Layout extends Component {
 
 const mapStateToProps = state =>{
     return {
-        userType: state.login.userType
+        userType: state.login.userType,
+        isLogged : state.login.userId !== null
     };
 }
 

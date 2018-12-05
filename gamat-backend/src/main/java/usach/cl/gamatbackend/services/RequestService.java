@@ -62,9 +62,9 @@ public class RequestService  implements Serializable {
 		return HttpStatus.INTERNAL_SERVER_ERROR;
 	}
 	
-	@GetMapping("/reject/{idRequest}")
-	public HttpStatus rechazarRequest(@PathVariable("idRequest") Integer id) {
-		Request request = serviceBd.getRequestById(id);
+	@PostMapping("/reject/{idRequest}")
+	public HttpStatus rechazarRequest(@PathVariable("idRequest") Integer id,@RequestBody Request request) {
+//		Request request = serviceBd.getRequestById(id);
 		if (request != null) {
 			request.setState("Rechazado");
 			serviceBd.saveRequest(request);
