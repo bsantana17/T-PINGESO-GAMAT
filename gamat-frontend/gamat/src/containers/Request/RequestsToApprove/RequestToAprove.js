@@ -63,7 +63,7 @@ class RequestoToAprove extends Component {
        
         const observations= this.state.observations;
         const states= this.state.states;
-        let newStateRequest= this.props.requests[this.state.indice]
+        let newStateRequest= [...this.props.requests[this.state.indice]]
         newStateRequest.items.map((item,i)=>{
             item.observation=observations[i];
             let idState;

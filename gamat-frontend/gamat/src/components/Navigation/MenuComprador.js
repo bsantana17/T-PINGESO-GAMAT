@@ -5,20 +5,26 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem } from 'reactstrap';
-
+  import {Link}from 'react-router-dom';
+  
   const MenuComprador = () => (
 
             <Nav className="" navbar>
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
+                
                   Solicitudes
                 </DropdownToggle>
                 <DropdownMenu left>
                   <DropdownItem>
+                  <Link to='/requests'>
                     Nuevas solicitudes
+                </Link>
                   </DropdownItem>
                   <DropdownItem>
+                  {/* <Link to='/requests'> */}
                     Solicitudes Pendientes
+                    {/* </Link> */}
                   </DropdownItem>
                   <DropdownItem>
                       Historial de Solicitudes

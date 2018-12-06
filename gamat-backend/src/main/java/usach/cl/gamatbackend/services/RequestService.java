@@ -118,17 +118,22 @@ public class RequestService  implements Serializable {
 	@ResponseBody
 	public List<Request> getrequestComprador(@PathVariable("idUser") Integer id){
 		User user = serviceBd.getUserById(id);
-		List<Request> requests = new ArrayList<>();
+		List<Request> requestsApprove = new ArrayList<>();
+		Iterable<Request> requests = serviceBd.findAllRequest();
+		
 		//for(UserType rol:user.getRoles()){
 			if(user.getRol().getIdUserType() == 3){
-				for (Request request:user.getRequests()){
+				for (Request request:requests){
+				
+					request.setUser(null);;
+					
 					if (request.getState().equals("Aprobado")){
-						requests.add(request);
+						requestsApprove.add(request);
 					}
 				}
 			}
 		//}
-		return requests;
+		return requestsApprove;
 	}
 
 	@GetMapping("/attendant/{id}")

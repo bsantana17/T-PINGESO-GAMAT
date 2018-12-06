@@ -36,7 +36,11 @@ public class Item  implements Serializable{
 	
 	private String description;
 	private int price;
+	private int totalPrice;
+	private int weight;
+	private int totalWeight;
 	private String observation;
+	private String comment;
 	
 	@NotNull
 	private int quantity;
@@ -45,9 +49,11 @@ public class Item  implements Serializable{
 	@JoinColumn(name="user_id")
 	private User driver;
 
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="distributor_id")
-	private Distributor distributor;
+//	@ManyToOne(fetch=FetchType.LAZY)
+//	@JoinColumn(name="distributor_id")
+//	private Distributor distributor;
+	
+	private String disributor;
 	
 	
 	@ManyToOne(fetch=FetchType.EAGER)
@@ -106,14 +112,14 @@ public class Item  implements Serializable{
 	public void setDriver(User driver) {
 		this.driver = driver;
 	}
-
-	public Distributor getDistributor() {
-		return distributor;
-	}
-
-	public void setDistributor(Distributor distributor) {
-		this.distributor = distributor;
-	}
+//
+//	public Distributor getDistributor() {
+//		return distributor;
+//	}
+//
+//	public void setDistributor(Distributor distributor) {
+//		this.distributor = distributor;
+//	}
 
 	public ItemState getItemState() {
 		return itemState;
@@ -158,6 +164,46 @@ public class Item  implements Serializable{
 
 	public void setObservation(String observation) {
 		this.observation = observation;
+	}
+
+	public int getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(int totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+
+	public int getWeight() {
+		return weight;
+	}
+
+	public void setWeight(int weight) {
+		this.weight = weight;
+	}
+
+	public int getTotalWeight() {
+		return totalWeight;
+	}
+
+	public void setTotalWeight(int totalWeight) {
+		this.totalWeight = totalWeight;
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
+	public String getDisributor() {
+		return disributor;
+	}
+
+	public void setDisributor(String disributor) {
+		this.disributor = disributor;
 	}
 	
 	
