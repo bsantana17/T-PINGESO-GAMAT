@@ -20,3 +20,5 @@ export const LOGIN_START = 'LOGIN_START';
 export const LOGIN_SUCCSESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAIL = 'LOGIN_FAIL';
 export const LOGIN_LOGOUT = 'LOGIN_LOGOUT';
+
+export const ADD_BUDGET_SUCCESS='ADD_BUDGET_SUCCESS'

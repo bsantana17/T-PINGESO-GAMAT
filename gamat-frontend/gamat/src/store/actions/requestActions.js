@@ -8,6 +8,11 @@ export const addRequestsSuccess = (id, requestData) => {
         requestData: requestData
     };
 };
+export const  addBudgetsSuccess=(id, requestData) =>{
+    return {
+        type: actionTypes.ADD_BUDGET_SUCCESS
+    };
+};
 
 export const addRequestsFail = (error) => {
     return {
@@ -96,6 +101,21 @@ export const addRequest = (requestData, userId) => {
             })
             .catch(error => {
                 dispatch(addRequestsFail(error));
+            });
+    };
+};
+
+
+export const addBudget = (userId,budgetData) => {
+
+    return dispatch => {
+        dispatch(addRequestsStart());
+        axios.post('budgets/create/' + userId, budgetData)
+            .then(response => {
+                dispatch(addBudgetsSuccess(response.data.idRequest, budgetData));
+            })
+            .catch(error => {
+                // dispatch(addRequestsFail(error));
             });
     };
 };

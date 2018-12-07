@@ -73,6 +73,7 @@ class NewBudget extends Component {
         this.handlerSeeItem = this.handlerSeeItem.bind(this);
         this.handlerOpenAddItem = this.handlerOpenAddItem.bind(this);
         this.inputHandler = this.inputHandler.bind(this)
+        this.sendBudget= this.sendBudget.bind(this)
 
     }
 
@@ -228,12 +229,24 @@ class NewBudget extends Component {
 
 
     sendBudget() {
-        if (this.state.items.length === 3) {
-            window.alert("¡La cotización fue enviada al aprobador!");
+        // if (this.state.items.length === 3) {
+        //     window.alert("¡La cotización fue enviada al aprobador!");
+        // }
+        // else {
+        //     window.alert("Faltan elementos por cotizar")
+        // }
+        let request = {...this.props.requests[this.state.indiceRequest],
+        items: this.state.items}
+        let newBudget ={
+            totalPrice:this.state.total_price,
+            shippingPrice:this.state.shipping_price,
+            administrationPrice:this.state.administration_price,
+            totalWeight:this.state.totalWeight,
+            request: request
         }
-        else {
-            window.alert("Faltan elementos por cotizar")
-        }
+        this.props.onBudgetAdded(this.props.userId,newBudget);
+
+
     }
 
     render() {
@@ -295,6 +308,7 @@ class NewBudget extends Component {
                 administration_price={this.state.administration_price}
                 total_price={this.state.total_price}
                 true_price={this.state.true_price}
+                sendBudget={this.sendBudget}
                 
                 />
             {/* } */}
@@ -305,12 +319,14 @@ class NewBudget extends Component {
 const mapStateToProps = state => {
     return {
         requests: state.request.requests,
-        loading: state.loading
+        loading: state.loading,
+        userId:state.login.userId
     };
 }
 const mapDispatchToProps = dispatch => {
     return {
-        onRequestAdded: (requestData) => dispatch(actions.addRequest(requestData))
+        onBudgetAdded: (userId,budgetData) => dispatch(actions.addBudget(userId,budgetData))
+        
     }
 }
 
