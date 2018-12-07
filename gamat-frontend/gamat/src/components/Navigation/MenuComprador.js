@@ -15,7 +15,7 @@ import {
                 
                   Solicitudes
                 </DropdownToggle>
-                <DropdownMenu left>
+                <DropdownMenu left="true" >
                   <DropdownItem>
                   <Link to='/requests'>
                     Nuevas solicitudes
@@ -35,7 +35,7 @@ import {
                 <DropdownToggle nav caret>
                   Usuarios
                 </DropdownToggle>
-                <DropdownMenu left>
+                <DropdownMenu left="true">
                   <DropdownItem>
                     Agregar nuevo usuario
                   </DropdownItem>
