@@ -36,7 +36,7 @@ const ResumeBudget = props => {
                     </CardText>
                 </Card> 
                 <br/>
-                <Button color="success" className="endbuttons" >Guardar Cotización.</Button>
+                <Button color="success" onClick={props.sendBudget} className="endbuttons" >Guardar Cotización.</Button>
             </div>
     );
 };

@@ -2,6 +2,7 @@ export {
     removeRequests,
     removedToFalse,
     addRequest,
+    addBudget,
     fetchRequests,
     fetchApproveRequests,
     fetchRejectRequests,
