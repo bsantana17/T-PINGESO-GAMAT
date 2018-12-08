@@ -104,7 +104,7 @@ public class RequestService  implements Serializable {
 			if(user.getRol().getIdUserType() == 1){
 				for (Building building:user.getBuildings()){
 					for(Request request : building.getRequests()) {
-					if (request.getState().equals("Pendiente por revisar")){
+					if (true){
 						requests.add(request);
 					}
 					}

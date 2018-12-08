@@ -66,7 +66,9 @@ const fetchRequestsStart = ( state, action ) => {
 const fetchRequestsSuccess = ( state, action ) => {
     return updateObject( state, {
         requests: action.requests,
-        loading: false
+        loading: false,
+        requestSent:false,
+        budgetSuccess:false
     } );
 };
 

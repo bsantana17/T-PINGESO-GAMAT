@@ -126,7 +126,7 @@ export const fetchRequests = (userId, userType) => {
         // console.log("userType",userType)
         userType == 1 ?
             ruta = `/requests/${userId}/approver` :
-        userType == 4 ?
+        userType == 2 ?
             ruta = `/requests/${userId}/manager`:
             ruta = `/requests/${userId}/buyer`;
         // console.log('id de user es ',userId)

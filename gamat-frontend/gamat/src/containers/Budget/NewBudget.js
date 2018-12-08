@@ -14,6 +14,7 @@ import TableItem from './TableItem';
 import SeeBudgetforItem from './SeeBudgetforItem';
 import ResumeBudget from './ResumeBudget';
 import AddItemtoBudget from './AddItemtoBudget';
+import { Link, Redirect } from 'react-router-dom';
 
 
 
@@ -43,6 +44,22 @@ class NewBudget extends Component {
             openAddItem: false,
             indiceItem: 0,
             indiceSeeItem:0,
+            // esto se cambiara si es que se elimina la tabla
+            estados:[
+                {
+                    idItemState:7,
+                    name:"cotizado"
+                },
+                {
+                    idItemState:2,
+                    name:"pendiente"
+                },
+                {
+                    idItemState:3,
+                    name:"pendiente de entrega"
+                },
+                
+            ],
 
             // budgetItem: {
             price: 0,
@@ -50,7 +67,7 @@ class NewBudget extends Component {
             weight: 0,
             totalweight: 0,
             provider: '',
-            estado: '',
+            estado: 0,
             comments: '',
             // },
             //Deberian todos los elementos de una budget
@@ -163,6 +180,7 @@ class NewBudget extends Component {
         copiaItem[i].pesototal=this.state.pesototal;
         copiaItem[i].comments=this.state.comments;
         copiaItem[i].distributor= this.state.provider;
+        copiaItem[i].itemState=this.state.estados[this.state.estado]
         this.setState({
             items: copiaItem,
         }, () => {
@@ -244,6 +262,7 @@ class NewBudget extends Component {
             totalWeight:this.state.totalWeight,
             request: request
         }
+        console.log("NEW Budget",newBudget);
         this.props.onBudgetAdded(this.props.userId,newBudget);
 
 
@@ -258,6 +277,11 @@ class NewBudget extends Component {
 
             <div className="row" >
                 <div className="col-lg-9 col-md-12 col-sm-12">
+                <Link to={'/requests'}>
+                        <Button color="secondary">Volver </Button>
+
+                    </Link>
+                    {this.props.successBudget && <Redirect to='/requests' />}
                     <TableItem
                         items={this.state.items}
                         openAddItem={this.handlerOpenAddItem}
@@ -273,6 +297,7 @@ class NewBudget extends Component {
                         comments={this.state.comments}
                         provider={this.state.provider}
                         estado={this.state.estado}
+                        estados={this.state.estados}
                         toggle={this.toggleAddItem}
                         submitHandler={this.addItemHandler}
                         open={this.state.openAddItem}
@@ -319,6 +344,7 @@ class NewBudget extends Component {
 const mapStateToProps = state => {
     return {
         requests: state.request.requests,
+        successBudget:state.request.budgetSuccess,
         loading: state.loading,
         userId:state.login.userId
     };

@@ -75,6 +75,7 @@ public class BudgetService {
             User user = serviceBd.getUserById(idUser);
             BudgetState state = serviceBd.getBudgetStateById(1); //Pendiente
             resource.setBudgetState(state);
+            resource.getRequest().setState("Cotizacion");
             resource.setUser(user);
             return repository.save(resource);
         }

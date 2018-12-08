@@ -267,11 +267,15 @@ const AddItemtoBudget = props => {
                             <div className="col-md-12">
                                 <FormGroup>
                                     <Label for="estado">Estado</Label>
-                                    <Input type="select" name="estado" id="estado" >
-                                        <option value="Cotizado"> Cotizado</option>
-                                        <option value="Cotizado con Comentarios">Cotizado con comentarios</option>
+                                    <Input  value={props.estado} onChange={props.inputHandler} type="select" name="estado" id="estado" >
+                                        {props.estados.map((estado,i)=>(
+
+                                            <option value={i}>{estado.name}</option>
+
+                                        ))}
+                                        {/* <option value="Cotizado con Comentarios">Cotizado con comentarios</option>
                                         <option value="Pendiente de entrega">Pendiente de entrega</option>
-                                        <option value="Pendiente de cotizacion">Pendiente de cotizacion</option>
+                                       */}
                                     </Input>
                                 </FormGroup>
 
