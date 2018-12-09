@@ -270,7 +270,7 @@ const AddItemtoBudget = props => {
                                     <Input  value={props.estado} onChange={props.inputHandler} type="select" name="estado" id="estado" >
                                         {props.estados.map((estado,i)=>(
 
-                                            <option value={i}>{estado.name}</option>
+                                            <option key={i} value={i}>{estado.name}</option>
 
                                         ))}
                                         {/* <option value="Cotizado con Comentarios">Cotizado con comentarios</option>

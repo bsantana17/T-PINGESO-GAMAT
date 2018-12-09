@@ -27,7 +27,22 @@ class Requests extends Component {
   }
 
   componentDidMount(){
-    this.props.onFetchRequests(this.props.userId,this.props.userType);
+    let state;
+    switch (this.props.match.params.state) {
+      case 'pending':
+        state=1
+        break;
+      case 'approve':
+        state=2
+        break;
+      case 'budget':
+        state=3
+        break;
+      default:
+        state=1;
+        break;
+    }
+    this.props.onFetchRequests(this.props.userId,this.props.userType,state);
     this.props.removedFalse();
   }
 

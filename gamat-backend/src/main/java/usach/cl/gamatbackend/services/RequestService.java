@@ -62,6 +62,18 @@ public class RequestService  implements Serializable {
 		return HttpStatus.INTERNAL_SERVER_ERROR;
 	}
 	
+	@PostMapping("/budget/{idRequest}")
+	public HttpStatus cotizarRequest(@PathVariable("idRequest") Integer id,@RequestBody Request request) {
+//		Request request = serviceBd.getRequestById(id);
+		if (request != null) {
+			request.setState("Cotizacion");
+			serviceBd.saveRequest(request);
+			return HttpStatus.OK;
+		}
+		return HttpStatus.INTERNAL_SERVER_ERROR;
+	}
+	
+	
 	@PostMapping("/reject/{idRequest}")
 	public HttpStatus rechazarRequest(@PathVariable("idRequest") Integer id,@RequestBody Request request) {
 //		Request request = serviceBd.getRequestById(id);
@@ -95,16 +107,34 @@ public class RequestService  implements Serializable {
 		
 	}
 
-	@GetMapping("/{idUser}/approver")
+	@GetMapping("/{idUser}/{state}/approver")
 	@ResponseBody
-	public List<Request> getRequestAprobador(@PathVariable("idUser") Integer id){
+	public List<Request> getRequestAprobador(
+			@PathVariable("idUser") Integer id,
+			@PathVariable("state") Integer state){
+		String nameState;
+		switch (state) {
+		case 1:
+			nameState="Pendiente por revisar";
+			break;
+		case 2:
+			nameState="Aprobado";
+			break;
+		case 3:
+			nameState="Cotizacion";
+			break;
+
+		default:
+			nameState=null;
+			break;
+		}
 		User user = serviceBd.getUserById(id);
 		List<Request> requests = new ArrayList<>();
 		//for(UserType rol:user.getRoles()){
 			if(user.getRol().getIdUserType() == 1){
 				for (Building building:user.getBuildings()){
 					for(Request request : building.getRequests()) {
-					if (true){
+					if (request.getState().equals(nameState)){
 						requests.add(request);
 					}
 					}

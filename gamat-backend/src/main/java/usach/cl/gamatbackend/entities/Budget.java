@@ -47,7 +47,7 @@ public class Budget {
 	@JoinColumn(name="user_id")
 	private User user;
 
-	@ManyToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+	@ManyToOne(fetch=FetchType.LAZY,cascade=CascadeType.DETACH)
 	@JoinColumn(name="request_id")
 	private Request request;
 

@@ -37,10 +37,25 @@ public class Request {
 	private String observation;
 	
 	
+	private int totalPrice;
+
+	private int shippingPrice;
 	
-	@Column(name="create_at")
-	@Temporal(TemporalType.TIMESTAMP)
+	
+	private int administrationPrice;
+	
+	@Temporal(TemporalType.DATE)
+
 	private Date date;
+	
+	@Temporal(TemporalType.DATE)
+	
+	private Date expiration;
+
+	private String payCondition;
+
+	
+	private int totalWeight;
 	
 //	@JsonIgnore
 	@ManyToOne(fetch=FetchType.LAZY)
@@ -120,6 +135,57 @@ public class Request {
 	public void setBuilding(Building building) {
 		this.building = building;
 	}
+
+	public int getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(int totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+
+	public int getShippingPrice() {
+		return shippingPrice;
+	}
+
+	public void setShippingPrice(int shippingPrice) {
+		this.shippingPrice = shippingPrice;
+	}
+
+	public int getAdministrationPrice() {
+		return administrationPrice;
+	}
+
+	public void setAdministrationPrice(int administrationPrice) {
+		this.administrationPrice = administrationPrice;
+	}
+
+	public Date getExpiration() {
+		return expiration;
+	}
+
+	public void setExpiration(Date expiration) {
+		this.expiration = expiration;
+	}
+
+	public String getPayCondition() {
+		return payCondition;
+	}
+
+	public void setPayCondition(String payCondition) {
+		this.payCondition = payCondition;
+	}
+
+	public int getTotalWeight() {
+		return totalWeight;
+	}
+
+	public void setTotalWeight(int totalWeight) {
+		this.totalWeight = totalWeight;
+	}
+	
+	
+	
 
 	
 	

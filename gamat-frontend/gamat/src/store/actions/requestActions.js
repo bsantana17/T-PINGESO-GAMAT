@@ -110,7 +110,7 @@ export const addBudget = (userId,budgetData) => {
 
     return dispatch => {
         dispatch(addRequestsStart());
-        axios.post('budgets/create/' + userId, budgetData)
+        axios.post('/requests/budget/' + userId, budgetData)
             .then(response => {
                 dispatch(addBudgetsSuccess(response.data.idRequest, budgetData));
             })
@@ -120,12 +120,12 @@ export const addBudget = (userId,budgetData) => {
     };
 };
 
-export const fetchRequests = (userId, userType) => {
+export const fetchRequests = (userId, userType,state) => {
     return dispatch => {
         let ruta = ''
         // console.log("userType",userType)
         userType == 1 ?
-            ruta = `/requests/${userId}/approver` :
+            ruta = `/requests/${userId}/${state}/approver` :
         userType == 2 ?
             ruta = `/requests/${userId}/manager`:
             ruta = `/requests/${userId}/buyer`;

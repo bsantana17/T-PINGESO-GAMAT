@@ -254,16 +254,17 @@ class NewBudget extends Component {
         //     window.alert("Faltan elementos por cotizar")
         // }
         let request = {...this.props.requests[this.state.indiceRequest],
-        items: this.state.items}
-        let newBudget ={
+            items: this.state.items,
             totalPrice:this.state.total_price,
             shippingPrice:this.state.shipping_price,
             administrationPrice:this.state.administration_price,
             totalWeight:this.state.totalWeight,
-            request: request
         }
-        console.log("NEW Budget",newBudget);
-        this.props.onBudgetAdded(this.props.userId,newBudget);
+            
+
+       
+        console.log("NEW Budget",request);
+        this.props.onBudgetAdded(this.props.userId,request);
 
 
     }
