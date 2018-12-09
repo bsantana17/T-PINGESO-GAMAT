@@ -11,6 +11,7 @@ import ViewRequest from './containers/Request/ViewRequest/ViewRequest';
 import RequestToAprove from './containers/Request/RequestsToApprove/RequestToAprove';
 import { connect } from 'react-redux';
 import * as actions from './store/actions/index';
+import ApproveBudget from './containers/Request/ApproveBudget/ApproveBudget';
 
 
 class App extends Component {
@@ -30,6 +31,7 @@ class App extends Component {
             <Route path="/logout" exact component={ Logout }></Route>
             <Route path="/view-request/:idRequest" exact component={ ViewRequest }></Route>
             <Route path="/approve-request/:idRequest" exact component={RequestToAprove }></Route>
+            <Route path="/approve-budget/:idRequest" exact component={ApproveBudget }></Route>
             <Route path="/removed-success" exact component={ RemovedSuccess }></Route>
            
 

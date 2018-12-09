@@ -14,6 +14,19 @@ export const  addBudgetsSuccess=(id, requestData) =>{
     };
 };
 
+ export const approveBudgetSuccess=()=>{
+     return {
+         type: actionTypes.FETCH_BUDGET_SUCCESS
+     }
+ }
+
+ export const rejectBudgetSuccess=()=>{
+    return {
+        type: actionTypes.FETCH_BUDGET_REJECT
+    }
+}
+
+
 export const addRequestsFail = (error) => {
     return {
         type: actionTypes.ADD_REQUESTS_FAIL,
@@ -176,7 +189,7 @@ export const fetchApproveRequests = (requestId,request) =>{
 
 export const fetchRejectRequests = (requestId,request) =>{
     return dispatch => {
-    axios.post(`requests/reject/${requestId}`)
+    axios.post(`requests/reject/${requestId}`,request)
         .then(res =>{
             console.log("rechazada",res)
             dispatch (rejectSuccess());
@@ -193,6 +206,36 @@ export const removedFalseRequest = () => {
         dispatch(removedToFalseRequest());
     };
 };
+
+export const fetchApproveBudget = (requestId,request) =>{
+    return dispatch => {
+
+    axios.post(`/requests/budget/approve/${requestId}`,request)
+        .then(res =>{
+            console.log("aprobada",res)
+            dispatch (approveBudgetSuccess());
+        })
+        .catch(err =>{
+            console.log('error',err)
+        })
+
+    }
+
+};
+
+export const fetchRejectBudget = (requestId,request) =>{
+    return dispatch => {
+    axios.post(`requests/busget/reject/${requestId}`,request)
+        .then(res =>{
+            console.log("rechazada",res)
+            dispatch (rejectBudgetSuccess());
+        })
+        .catch(err =>{
+            console.log('error',err)
+        })
+
+    };
+}
 
 export const removedFalse = () => {
     return dispatch => {

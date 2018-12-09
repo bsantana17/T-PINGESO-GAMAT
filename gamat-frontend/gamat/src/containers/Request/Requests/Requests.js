@@ -96,6 +96,11 @@ class Requests extends Component {
                 <Button className="btn btn-sm btn-success" id="aprobar">Aprobar</Button>
               </Link>
             }
+            {this.props.userType == 1 && this.state.estado==2 &&
+              <Link to={{ pathname: '/approve-budget/' + request.idRequest, state: i }}>
+                <Button className="btn btn-sm btn-success" id="aprobar">Aprobar Cotizacion</Button>
+              </Link>
+            }
             {this.props.userType == 3 &&
               <Link to={{ pathname: '/new-budget/' + request.idRequest, state: i }}>
                 <Button className="btn btn-sm btn-success" id="aprobar">Cotizar</Button>

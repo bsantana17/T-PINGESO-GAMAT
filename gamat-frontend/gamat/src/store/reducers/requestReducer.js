@@ -15,6 +15,8 @@ const initialState = {
     requestReject:false,
     //cuando se modifique la bd esto se modificara 
     budgetSuccess:false,
+    budgetApproveSuccess:false,
+    budgetRejectSuccess:false
 };
 
 const addRequestsStart = ( state, action ) => {
@@ -68,7 +70,9 @@ const fetchRequestsSuccess = ( state, action ) => {
         requests: action.requests,
         loading: false,
         requestSent:false,
-        budgetSuccess:false
+        budgetSuccess:false,
+        budgetApproveSuccess:false,
+        budgetRejectSuccess:false
     } );
 };
 
@@ -104,6 +108,14 @@ const budgetSuccess= (state,action) =>{
     return updateObject(state,{budgetSuccess:true})
 }
 
+const budgetApproveSuccess= (state,action)=>{
+    return updateObject(state,{budgetApproveSuccess:true})
+}
+
+const budgetRejectSuccess= (state,action)=>{
+    return updateObject(state,{budgetRejectSuccess:true})
+}
+
 const reducer = ( state = initialState, action ) => {
     switch ( action.type ) {
         case actionTypes.FETCH_REQUESTS_START: return fetchRequestsStart( state, action );
@@ -120,6 +132,8 @@ const reducer = ( state = initialState, action ) => {
         case actionTypes.REMOVED_TO_FALSE: return removedToFalse( state, action );
         case actionTypes.REMOVED_TO_FALSE_REQUEST: return falseRequest( state, action );
         case actionTypes.ADD_BUDGET_SUCCESS: return budgetSuccess(state,action);
+        case actionTypes.FETCH_BUDGET_SUCCESS: return budgetApproveSuccess(state,action);
+        case actionTypes.FETCH_BUDGET_REJECT: return budgetRejectSuccess(state,action);
         default: return state;
     }
 };

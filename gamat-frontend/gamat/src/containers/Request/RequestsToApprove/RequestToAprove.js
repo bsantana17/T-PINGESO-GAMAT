@@ -172,8 +172,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onApproveRequest: (requestId,observations,states) => dispatch(actions.fetchApproveRequests(requestId,observations,states)),
-        onRejectRequest: (requestId,observations,states) => dispatch(actions.fetchRejectRequests(requestId,observations,states)),
+        onApproveRequest: (requestId,request) => dispatch(actions.fetchApproveRequests(requestId,request)),
+        onRejectRequest: (requestId,request) => dispatch(actions.fetchRejectRequests(requestId,request)),
         onFalseVariables: () => dispatch(actions.removedToFalseRequest())
 
     };
