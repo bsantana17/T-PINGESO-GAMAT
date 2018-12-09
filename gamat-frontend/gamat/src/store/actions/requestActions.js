@@ -225,7 +225,7 @@ export const fetchApproveBudget = (requestId,request) =>{
 
 export const fetchRejectBudget = (requestId,request) =>{
     return dispatch => {
-    axios.post(`requests/busget/reject/${requestId}`,request)
+    axios.post(`requests/budget/reject/${requestId}`,request)
         .then(res =>{
             console.log("rechazada",res)
             dispatch (rejectBudgetSuccess());

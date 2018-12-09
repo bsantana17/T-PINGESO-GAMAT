@@ -62,6 +62,28 @@ public class RequestService  implements Serializable {
 		return HttpStatus.INTERNAL_SERVER_ERROR;
 	}
 	
+	@PostMapping("/budget/approve/{idRequest}")
+	public HttpStatus aprobarBudget(@PathVariable("idRequest") Integer id,@RequestBody Request request) {
+//		Request request = serviceBd.getRequestById(id);
+		if (request != null) {
+			request.setState("Autorizada");
+			serviceBd.saveRequest(request);
+			return HttpStatus.OK;
+		}
+		return HttpStatus.INTERNAL_SERVER_ERROR;
+	}
+	
+	@PostMapping("/budget/reject/{idRequest}")
+	public HttpStatus rechazarBudget(@PathVariable("idRequest") Integer id,@RequestBody Request request) {
+//		Request request = serviceBd.getRequestById(id);
+		if (request != null) {
+			request.setState("Rechazada");
+			serviceBd.saveRequest(request);
+			return HttpStatus.OK;
+		}
+		return HttpStatus.INTERNAL_SERVER_ERROR;
+	}
+	
 	@PostMapping("/budget/{idRequest}")
 	public HttpStatus cotizarRequest(@PathVariable("idRequest") Integer id,@RequestBody Request request) {
 //		Request request = serviceBd.getRequestById(id);

@@ -3,7 +3,9 @@ import { connect } from 'react-redux';
 import * as actions from '../../../store/actions/index';
 import { Link } from 'react-router-dom';
 import {Button} from 'reactstrap';
-import ItemApproveBudget from './ItemApproveBudget'
+import ItemApproveBudget from './ItemApproveBudget';
+import {  Redirect } from 'react-router-dom';
+
 
 class ApproveBudget extends Component {
     constructor(props){
@@ -63,9 +65,9 @@ class ApproveBudget extends Component {
     }
     helperRefreshItems(){
        
-        const observations= this.state.observations;
+        
         const states= this.state.states;
-        let request= this.props.requests[this.state.indice]
+        let request= this.props.requests[this.state.indiceRequest]
        let newItems = request.items.map((item,i)=>{
            let state;
             states[i] ? state={idItemState:6,name:'autorizado'}:
@@ -79,14 +81,14 @@ class ApproveBudget extends Component {
 
 
     handleOnApprove(){
-        const idRequest= this.props.requests[this.state.indice].idRequest;
+        const idRequest= this.props.requests[this.state.indiceRequest].idRequest;
         let newStateRequest = this.helperRefreshItems();
         this.props.onApproveBudget(idRequest,newStateRequest);
 
     }
 
     handleOnReject(){
-        const idRequest= this.props.requests[this.state.indice].idRequest;
+        const idRequest= this.props.requests[this.state.indiceRequest].idRequest;
         let newStateRequest = this.helperRefreshItems();
         this.props.onRejectBudget(idRequest,newStateRequest);
     }
@@ -105,6 +107,7 @@ class ApproveBudget extends Component {
                     Solicitud rechazada correctamente
                 </UncontrolledAlert>
             } */}
+            {(this.props.budgetApproveSuccess || this.props.budgetRejectSuccess) && <Redirect to='/requests' />}
             <h2>Revisar Cotizacion</h2>
 
             <div className="d-flex  mb-5">
@@ -160,7 +163,9 @@ const mapStateToProps = state => {
     return {
         requests: state.request.requests,
         approve: state.request.requestApprove,
-        reject: state.request.requestReject
+        reject: state.request.requestReject,
+        budgetApproveSuccess: state.request.budgetApproveSuccess,
+        budgetRejectSuccess: state.request.budgetRejectSuccess
     };
 };
 
