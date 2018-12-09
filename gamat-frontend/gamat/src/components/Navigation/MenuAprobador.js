@@ -25,10 +25,10 @@ import {
                     <Link to='/requests'>Aprobar Solicitud</Link>
                   </DropdownItem>
                   <DropdownItem>
-                    <Link to=''>Aprobar Cotizacion</Link>
+                    <Link to='/requests'>Aprobar Cotizacion</Link>
                   </DropdownItem>
                   <DropdownItem>
-                    <Link to=''>Historial de Solicitudes </Link>
+                    <Link to='/requests'>Historial de Solicitudes </Link>
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>

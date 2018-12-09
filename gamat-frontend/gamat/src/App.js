@@ -24,7 +24,7 @@ class App extends Component {
         <div>
           <Layout>
             <Route path="/new-request" exact component={ NewRequest }></Route>
-            <Route path="/requests/:state" exact component={ Requests }></Route>
+            <Route path="/requests" exact component={ Requests }></Route>
             <Route path="/login" exact component={ Login }></Route>
             <Route path="/new-budget/:idRequest" exact component= {newBudget}></Route>
             <Route path="/logout" exact component={ Logout }></Route>

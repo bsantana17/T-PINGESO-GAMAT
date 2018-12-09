@@ -114,13 +114,13 @@ public class RequestService  implements Serializable {
 			@PathVariable("state") Integer state){
 		String nameState;
 		switch (state) {
-		case 1:
+		case 0:
 			nameState="Pendiente por revisar";
 			break;
-		case 2:
+		case 1:
 			nameState="Aprobado";
 			break;
-		case 3:
+		case 2:
 			nameState="Cotizacion";
 			break;
 
