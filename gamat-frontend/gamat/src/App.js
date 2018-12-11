@@ -12,6 +12,7 @@ import RequestToAprove from './containers/Request/RequestsToApprove/RequestToApr
 import { connect } from 'react-redux';
 import * as actions from './store/actions/index';
 import ApproveBudget from './containers/Request/ApproveBudget/ApproveBudget';
+import testingQR from './containers/QRTest/testingQR';
 
 
 class App extends Component {
@@ -33,8 +34,8 @@ class App extends Component {
             <Route path="/approve-request/:idRequest" exact component={RequestToAprove }></Route>
             <Route path="/approve-budget/:idRequest" exact component={ApproveBudget }></Route>
             <Route path="/removed-success" exact component={ RemovedSuccess }></Route>
+            <Route path="/testingqr" exact component={ testingQR}></Route>
            
-
           </Layout>
         </div>
     );
