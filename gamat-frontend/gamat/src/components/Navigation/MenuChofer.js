@@ -16,11 +16,11 @@ import {
                 </DropdownToggle>
                 <DropdownMenu left='true' >
                 <DropdownItem>
-                    <Link to='/new-request'>Ver Solicitudes</Link>
+                    <Link to='/requests'>Ver Solicitudes</Link>
                   </DropdownItem>
-                  <DropdownItem>
-                    <Link to=''>Historial de Solicitudes </Link>
-                  </DropdownItem>
+                  {/* <DropdownItem>
+                    <Link to='/requests'>Historial de Solicitudes </Link>
+                  </DropdownItem> */}
                 </DropdownMenu>
               </UncontrolledDropdown>
             </Nav>

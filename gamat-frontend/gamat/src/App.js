@@ -9,6 +9,7 @@ import newBudget from './containers/Budget/NewBudget';
 import Logout from './containers/Login/Logout';
 import ViewRequest from './containers/Request/ViewRequest/ViewRequest';
 import RequestToAprove from './containers/Request/RequestsToApprove/RequestToAprove';
+import RequestToPickUp from './containers/Request/DriverRequests/RequestToPickUp';
 import { connect } from 'react-redux';
 import * as actions from './store/actions/index';
 import ApproveBudget from './containers/Request/ApproveBudget/ApproveBudget';
@@ -35,6 +36,7 @@ class App extends Component {
             <Route path="/approve-budget/:idRequest" exact component={ApproveBudget }></Route>
             <Route path="/removed-success" exact component={ RemovedSuccess }></Route>
             <Route path="/testingqr" exact component={ testingQR}></Route>
+            <Route path="/request-to-pick" exact component={ RequestToPickUp}></Route>
            
           </Layout>
         </div>
