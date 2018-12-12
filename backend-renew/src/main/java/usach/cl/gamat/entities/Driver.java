@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "driver")
+@DiscriminatorValue("Driver")
 public class Driver extends User{
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "driver")
     private Set<Item> items;

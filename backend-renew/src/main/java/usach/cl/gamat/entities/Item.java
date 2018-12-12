@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idItem;
+    private int idItem;
 
     @NotNull
     private String name;
@@ -31,11 +31,15 @@ public class Item {
     @JoinColumn(name ="user_id")
     private Driver driver;
 
-    public Long getIdItem() {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "distributor_id")
+    private Distributor distributor;
+
+    public int getIdItem() {
         return idItem;
     }
 
-    public void setIdItem(Long idItem) {
+    public void setIdItem(int idItem) {
         this.idItem = idItem;
     }
 
@@ -125,5 +129,21 @@ public class Item {
 
     public void setDriver(Driver driver) {
         this.driver = driver;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public Distributor getDistributor() {
+        return distributor;
+    }
+
+    public void setDistributor(Distributor distributor) {
+        this.distributor = distributor;
     }
 }

@@ -79,6 +79,8 @@ public interface IServiceBD {
 
     public User getUserById(Integer idUser);
 
+    public Set<User> findAllUsers();
+
     // operaciones Driver
 
     public Driver getDriverById(Integer idUser);

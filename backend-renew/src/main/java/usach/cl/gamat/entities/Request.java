@@ -55,7 +55,7 @@ public class Request {
 
 
     @OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
-    @JoinColumn(name="item_id")
+    @JoinColumn(name="request_id")
     private List<Item> items;
 
     public int getIdRequest() {

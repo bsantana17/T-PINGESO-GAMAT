@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "approver")
+@DiscriminatorValue("Approver")
 public class Approver extends User{
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "approver")
     private Set<Building> buildings;

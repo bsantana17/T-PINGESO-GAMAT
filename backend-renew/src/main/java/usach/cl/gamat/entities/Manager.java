@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "manager")
+@DiscriminatorValue("Manager")
 public class Manager extends User{
     @OneToMany(mappedBy="manager",fetch= FetchType.LAZY,cascade= CascadeType.ALL)
     private Set<Request> requests;

@@ -3,7 +3,7 @@ package usach.cl.gamat.entities;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "buyer")
+@DiscriminatorValue("Buyer")
 public class Buyer extends User{
 
 }

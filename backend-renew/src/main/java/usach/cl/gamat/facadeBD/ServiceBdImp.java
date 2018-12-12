@@ -192,6 +192,11 @@ public class ServiceBdImp implements IServiceBD {
     }
 
     @Override
+    public Set<User> findAllUsers() {
+        return (Set<User>) userRepository.findAll();
+    }
+
+    @Override
     public Driver getDriverById(Integer idUser) {
         return driverRepository.findById(idUser).orElse(null);
     }

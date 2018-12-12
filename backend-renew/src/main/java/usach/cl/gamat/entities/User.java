@@ -6,10 +6,11 @@ import java.util.Date;
 
 @Entity
 @Table(name = "user")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "role", discriminatorType = DiscriminatorType.STRING)
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true)
     private int idUser;
 
@@ -28,6 +29,11 @@ public class User {
     @Column(name="create_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
+
+    @PrePersist
+    protected void onCreate(){
+        date = new Date();
+    }
 
     public int getIdUser() {
         return idUser;
