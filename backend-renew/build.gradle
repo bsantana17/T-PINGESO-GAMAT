@@ -29,4 +29,6 @@ dependencies {
 	implementation('org.springframework.boot:spring-boot-starter-web')
 	runtimeOnly('mysql:mysql-connector-java')
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '2.0.4.RELEASE'
+	compile group: 'org.json', name: 'json', version: '20180130'
 }
