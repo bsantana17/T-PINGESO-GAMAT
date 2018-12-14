@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
 import QRCode from 'qrcode.react';
 import QrReader from 'react-qr-reader';
-import { Button, Modal, ModalHeader, ModalBody} from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 
 /*
 TestingQR: Clase de prueba donde se ve el funcionamiento del QR que deberian tener el JefeObra y el Chofer.
              En Lector: Se genera un MODAL con el componente QrReader, que realiza la lectura del QR, y manda al servicio X.
-                        >Lee el QR del telefono de la otra persona, modifica en la tabla la fila de revisadoChofer, y 
-                        >La vista deberia revisar todo el rato si la solicitud tiene el revisadoChofer y revisadoObra como true (1).
-                        >En caso de que si esta, entonces habilita el boton de Confirmar Recepción
+                        Cuando el sensor de QR lee el codigo. Se activa la funcion handlerScan()
+                        Carga lo leido en el state, manda un 
+                        
 */
 
 class testingQR extends Component {
@@ -16,10 +16,12 @@ class testingQR extends Component {
     constructor(props){
         super(props);
         this.state = {
-            texto: "",
             delay: 100,
             result: "",
-            modal: false
+            modal: false,
+            message: "",
+            IDrequest: "12345" //IDRequest: Obtiene la ID de la request (enviar codificada).
+            
         };
         this.handleScan = this.handleScan.bind(this);
         this.toggle = this.toggle.bind(this);
@@ -28,10 +30,21 @@ class testingQR extends Component {
     handleScan(data) {
         if (data) {
           this.setState({
-            result: data
+            result: data,
+            message: "Lectura Realizada!"
           });
+          //Llama al servicio para ver si la IDRequest es correcta.
+          //En caso de llegarle un request que esta en el estado correcta-> RequestUser true.
+          //En caso de que la request ya esta aceptada por los dos, el jefe de obra deberia poder aceptar items.
+          //(habilita el boton)
+          //En caso de que el codigo QR no corresponde a la request actual, o no esta en la BD. Manda un error.
+          
         }
+
       }
+
+
+
 
     toggle() {
     this.setState({
@@ -55,18 +68,23 @@ class testingQR extends Component {
                     onScan={this.handleScan}
                     style={{ width: "100%"}}
                     ></QrReader>
+                    <ModalFooter>
+                    {this.state.message} 
+                    </ModalFooter>
                     </ModalBody>
                 </Modal>
                 
                 
-                <p></p>
+                
             </div>
             <div className="col-12 col-md-4">
             <h3>Generador</h3>
-            <QRCode value="https://youtu.be/Zf2qOWmKiz0"></QRCode>            
+            <QRCode value={this.state.IDrequest}></QRCode>            
             </div>    
 
             <div className="col-12 col-md-4">
+                <h3>La QR que leyo es: {this.state.result}</h3>
+                <br></br>
                 <Button color="success" disabled="true"> Confirmar entrega.</Button>
 
             </div>
