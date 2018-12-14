@@ -8,11 +8,13 @@ import Login from './containers/Login/Login';
 import newBudget from './containers/Budget/NewBudget';
 import Logout from './containers/Login/Logout';
 import ViewRequest from './containers/Request/ViewRequest/ViewRequest';
-import RequestToAprove from './containers/Request/RequestsToApprove/RequestToAprove';
+import RequestToAprove from './containers/Request/ApproverRequests/RequestToAprove';
 import RequestToPickUp from './containers/Request/DriverRequests/RequestToPickUp';
+import RequestToDeliver from './containers/Request/DriverRequests/RequestToDeliver';
+import DeliverToApprove from './containers/Request/ManagerRequests/DeliverToApprove';
 import { connect } from 'react-redux';
 import * as actions from './store/actions/index';
-import ApproveBudget from './containers/Request/ApproveBudget/ApproveBudget';
+import ApproveBudget from './containers/Request/BuyerRequests/ApproveBudget';
 import testingQR from './containers/QRTest/testingQR';
 
 
@@ -35,8 +37,10 @@ class App extends Component {
             <Route path="/approve-request/:idRequest" exact component={RequestToAprove }></Route>
             <Route path="/approve-budget/:idRequest" exact component={ApproveBudget }></Route>
             <Route path="/removed-success" exact component={ RemovedSuccess }></Route>
-            <Route path="/testingqr" exact component={ testingQR}></Route>
-            <Route path="/request-to-pick" exact component={ RequestToPickUp}></Route>
+            <Route path="/testingqr" exact component={ testingQR }></Route>
+            <Route path="/request-to-pick" exact component={ RequestToPickUp }></Route>
+            <Route path="/request-to-deliver" exact component={ RequestToDeliver }></Route>
+            <Route path="/deliver-to-approve" exact component={ DeliverToApprove }></Route>
            
           </Layout>
         </div>
