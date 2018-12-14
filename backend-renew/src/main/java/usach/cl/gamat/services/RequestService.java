@@ -19,7 +19,7 @@ public class RequestService {
 
     @GetMapping("/")
     @ResponseBody
-    public Set<Request> getAllRequest(){return (Set<Request>) serviceBD.findAllRequest();}
+    public List<Request> getAllRequest(){return (List<Request>) serviceBD.findAllRequest();}
 
     @GetMapping("/{idRequest}")
     @ResponseBody
