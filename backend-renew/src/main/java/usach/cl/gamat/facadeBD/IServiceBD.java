@@ -115,4 +115,8 @@ public interface IServiceBD {
 
 
 
+	public List<Building> findAllBuilding();
+
+
+
 }

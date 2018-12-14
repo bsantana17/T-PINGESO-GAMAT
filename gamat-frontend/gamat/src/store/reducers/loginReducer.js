@@ -6,6 +6,7 @@ const initialState = {
     userId: null,
     loading: false,
     error: null,
+    
 };
 
 const fetchLoginStart = ( state, action ) => {

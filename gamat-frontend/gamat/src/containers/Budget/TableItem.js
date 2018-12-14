@@ -20,7 +20,7 @@ const TableItem = props => {
 
                     {/*Aqui, la funcion de arriba deberia guardar todo en testrequest, y mostrarlo.*/}
                     {props.items.map((item, index) => (
-
+                        item.state!="rechazado" &&
                         <tr key={index}>
                             <th scope="row">{item.idItem}</th>
                             <td>{item.name}</td>

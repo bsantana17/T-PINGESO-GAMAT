@@ -3,6 +3,8 @@ package usach.cl.gamat.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -10,13 +12,23 @@ import java.util.Set;
 public class Driver extends User{
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "driver")
-    private Set<Item> items;
+    private List<Request> request;
 
-    public Set<Item> getItems() {
-        return items;
-    }
+	public List<Request> getRequest() {
+		return request;
+	}
 
-    public void setItems(Set<Item> items) {
-        this.items = items;
-    }
+	public void setRequest(List<Request> request) {
+		this.request = request;
+	}
+
+//    public Set<Item> getItems() {
+//        return items;
+//    }
+//
+//    public void setItems(Set<Item> items) {
+//        this.items = items;
+//    }
+    
+    
 }

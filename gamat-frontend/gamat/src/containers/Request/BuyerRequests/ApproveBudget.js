@@ -126,7 +126,7 @@ class ApproveBudget extends Component {
                             comment={item.comment}
                             // observation={item.observation}
                             price={item.price}
-                            state={item.itemState.name}
+                            state={item.state}
                             // distributor={item.distributor}
                             totalPrice={item.totalPrice}
                             active={this.state.states[index]}

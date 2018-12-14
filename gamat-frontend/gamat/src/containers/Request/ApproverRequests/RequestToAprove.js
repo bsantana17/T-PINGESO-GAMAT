@@ -63,28 +63,13 @@ class RequestoToAprove extends Component {
        
         const observations= this.state.observations;
         const states= this.state.states;
-        let newStateRequest= [...this.props.requests[this.state.indice]]
+        let newStateRequest= this.props.requests[this.state.indice]
         newStateRequest.items.map((item,i)=>{
             item.observation=observations[i];
-            let idState;
+           
             // esto se modificara despues, cuando se hagan cambios en la bd
-            switch (states[i]) {
-                case 'autorizado':
-                    idState=6
-                    break;
-                case 'pendiente':
-                    idState=2
-                    break;
-                case 'rechazado':
-                    idState=5
-                    break;
-                default:
-                    break;
-            }
-            item.itemState={
-                idItemState:idState,
-                name:states[i]
-            }
+         
+            item.state=states[i]
         })
 
         return newStateRequest

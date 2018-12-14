@@ -54,6 +54,36 @@ public class RequestService {
         }
         return HttpStatus.INTERNAL_SERVER_ERROR;
     }
+    
+    
+    @PostMapping("/update-items/{idUser}/{type}")
+    public HttpStatus updateItems(@PathVariable("idUser") Integer id,@PathVariable("type") Integer type,@RequestBody Request request) {
+//		Request request = serviceBd.getRequestById(id);
+    	Driver driver=serviceBD.getDriverById(id);
+    	String state="Retirada";
+    	switch (type) {
+		case 0:
+			state="Retirada";
+			break;
+		case 1:
+			state="Entregada";
+			break;
+		case 2:
+			state="Recibida";
+			break;	
+
+		default:
+			break;
+		}
+        if (request != null) {
+            request.setState(state);
+            request.setDriver(driver);
+            serviceBD.saveRequest(request);
+            return HttpStatus.OK;
+        }
+        return HttpStatus.INTERNAL_SERVER_ERROR;
+    }
+
 
     @PostMapping("/budget/approve/{idRequest}")
     public HttpStatus aprobarBudget(@PathVariable("idRequest") Integer id,@RequestBody Request request) {
@@ -140,6 +170,9 @@ public class RequestService {
             case 2:
                 nameState="Cotizacion";
                 break;
+            case 3:
+            	nameState="Entregada";
+            	break;
 
             default:
                 nameState=null;
@@ -151,7 +184,9 @@ public class RequestService {
         //if(user.getRol().getIdUserType() == 1){
             for (Building building:user.getBuildings()){
                 for(Request request : building.getRequests()) {
+                	
                     if (request.getState().equals(nameState)){
+                    	
                         requests.add(request);
                     }
                 }
@@ -161,20 +196,35 @@ public class RequestService {
         return requests;
     }
     //Request visibles al comprador
-    @GetMapping("/{idUser}/buyer")
+    @GetMapping("/{idUser}/{state}/buyer")
     @ResponseBody
-    public List<Request> getRequestComprador(@PathVariable("idUser") Integer id){
+    public List<Request> getRequestComprador(@PathVariable("idUser") Integer id,@PathVariable("state") Integer state){
         Buyer user = serviceBD.getBuyerById(id);
         List<Request> requestsApprove = new ArrayList<>();
         Iterable<Request> requests = serviceBD.findAllRequest();
 
         //for(UserType rol:user.getRoles()){
         //if(user.getRol().getIdUserType() == 3){
+        String nameState;
+        switch (state) {
+            case 0:
+                nameState="Aprobado";
+                break;
+            case 1:
+                nameState="Autorizada";
+                break;
+        
+
+            default:
+                nameState=null;
+                break;
+        }
             for (Request request:requests){
 
                 request.setManager(null);
 
-                if (request.getState().equals("Aprobado") || request.getState().equals("Rechazado")){
+                if (request.getState().equals(nameState) ){
+                	request.setBuilding(null);
                     requestsApprove.add(request);
                 }
             }
@@ -182,30 +232,52 @@ public class RequestService {
         //}
         return requestsApprove;
     }
-
-    @GetMapping("/attendant/{id}")
-    @ResponseBody
-    public Driver getDriverAttendant(@PathVariable("id") Integer id){
-        Request request = serviceBD.getRequestById(id);
-        Driver user = new Driver();
-        if(request.getItems().size() > 0){
-            user = request.getItems().get(0).getDriver();
-			/*for(Item item: request.getItems()){
-				EN CASO DE QUE UN PEDIDO TENGA VARIOS CHOFERES
-			}*/
-        }
-        return user;
+    
+    @GetMapping("/{idUser}/driver")
+    public List<Request> getRequestDriver(@PathVariable("idUser")Integer id){
+    	Driver driver = serviceBD.getDriverById(id);
+    	List<Building> buildings =serviceBD.findAllBuilding();
+    	
+    	List<Request> requests= new ArrayList<Request>();
+    	for (Building building : buildings) {
+    		System.out.println(building.getAddress());
+			for (Request req: building.getRequests()) {
+				if(req.getDriver()!= null && req.getDriver().getIdUser()==id) {
+					requests.add(req);
+				}
+			}
+				
+		}
+    	return requests;
     }
 
+//    @GetMapping("/attendant/{id}")
+//    @ResponseBody
+//    public Driver getDriverAttendant(@PathVariable("id") Integer id){
+//        Request request = serviceBD.getRequestById(id);
+//        Driver user = new Driver();
+//        if(request.getItems().size() > 0){
+//            user = request.getItems().get(0).getDriver();
+//			/*for(Item item: request.getItems()){
+//				EN CASO DE QUE UN PEDIDO TENGA VARIOS CHOFERES
+//			}*/
+//        }
+//        return user;
+//    }
+
     //asignar chofer a items
-    @RequestMapping(value = "/driver/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/driver/{idDriver}/{idRequest}", method = RequestMethod.PUT)
     @ResponseBody
-    public void sendBudget(@PathVariable("id") Integer id, @RequestBody Request budget){
-        List<Item> items = budget.getItems();
-        for(Item item:items){
-            item.setDriver(serviceBD.getDriverById(id));
-            serviceBD.saveItem(item);
-        }
+    public void sendBudget(@PathVariable("idDriver") Integer idDriver, @PathVariable("idRequest") Integer idRequest){
+//        List<Item> items = budget.getItems();
+    	Request budget = serviceBD.getRequestById(idRequest);
+        budget.setDriver(serviceBD.getDriverById(idDriver));
+        budget.setState("Asignada");
+        serviceBD.saveRequest(budget);
+//        for(Item item:items){
+//            item.setDriver(serviceBD.getDriverById(id));
+//            serviceBD.saveItem(item);
+//        }
     }
 
     @PutMapping("/update")

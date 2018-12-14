@@ -50,13 +50,18 @@ public class Request {
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="building_id")
-    @JsonIgnore
+//    @JsonIgnore
     private Building building;
 
-    @JsonIgnore
+//    @JsonIgnore
     @OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
     @JoinColumn(name="request_id")
     private List<Item> items;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name ="driver_id")
+    @JsonIgnore
+    private Driver driver;
 
     public Integer getIdRequest() {
         return idRequest;
@@ -161,4 +166,14 @@ public class Request {
     public void setPayCondition(String payCondition) {
         this.payCondition = payCondition;
     }
+
+	public Driver getDriver() {
+		return driver;
+	}
+
+	public void setDriver(Driver driver) {
+		this.driver = driver;
+	}
+    
+    
 }

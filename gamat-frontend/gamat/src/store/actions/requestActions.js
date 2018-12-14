@@ -67,6 +67,8 @@ export const fetchRequestsSuccess = (requests) => {
     };
 };
 
+
+
 export const fetchRequestsFail = (error) => {
     return {
         type: actionTypes.FETCH_REQUESTS_FAIL,
@@ -110,6 +112,7 @@ export const addRequest = (requestData, userId) => {
         dispatch(addRequestsStart());
         axios.post('/requests/create/' + userId, requestData)
             .then(response => {
+                console.log(response)
                 dispatch(addRequestsSuccess(response.data.idRequest, requestData));
             })
             .catch(error => {
@@ -133,15 +136,36 @@ export const addBudget = (userId,budgetData) => {
     };
 };
 
+export const fetchDriverS = (drivers) => {
+    return {
+        type: actionTypes.FETCH_DRIVER_SUCCESS,
+        drivers:drivers
+    };
+};
+
+export const assingSuccess = ()=>{
+    return {
+        type: actionTypes.ASSING_DRIVER_SUCCESS
+    }
+}
+
+export const updateItemSuccess=() =>{
+    return {
+        type: actionTypes.UPDATE_ITEMS_SUCCESS
+    }
+}
+
 export const fetchRequests = (userId, userType,state) => {
     return dispatch => {
         let ruta = ''
         // console.log("userType",userType)
-        userType == 1 ?
+        userType == "Approver" ?
             ruta = `/requests/${userId}/${state}/approver` :
-        userType == 2 ?
+        userType == "Manager" ?
             ruta = `/requests/${userId}/manager`:
-            ruta = `/requests/${userId}/buyer`;
+        userType=="Buyer"?   
+            ruta = `/requests/${userId}/${state}/buyer`:
+            ruta = `/requests/${userId}/driver`;   
         // console.log('id de user es ',userId)
         console.log(ruta)
         dispatch(fetchRequestsStart());
@@ -173,7 +197,7 @@ export const removeRequests = (requestId) => {
 
 export const fetchApproveRequests = (requestId,request) =>{
     return dispatch => {
-
+        console.log("request actual",request)
     axios.post(`/requests/approve/${requestId}`,request)
         .then(res =>{
             console.log("aprobada",res)
@@ -225,6 +249,7 @@ export const fetchApproveBudget = (requestId,request) =>{
 
 export const fetchRejectBudget = (requestId,request) =>{
     return dispatch => {
+       
     axios.post(`requests/budget/reject/${requestId}`,request)
         .then(res =>{
             console.log("rechazada",res)
@@ -235,6 +260,47 @@ export const fetchRejectBudget = (requestId,request) =>{
         })
 
     };
+}
+
+export const fetchDriver= () =>{
+    return dispatch => {
+        
+    axios.get(`/drivers`)
+        .then(res =>{
+            console.log(res.data)
+            dispatch (fetchDriverS(res.data));
+        })
+        .catch(err =>{
+            console.log('error',err)
+        })
+
+    }
+
+}
+
+export const assingDriver= (idDriver,idRequest) =>{
+    return dispatch=>{
+        axios.put(`/requests/driver/${idDriver}/${idRequest}`)
+            .then(res =>{
+                dispatch(assingSuccess())
+            })
+            .catch(err => {
+                console.log('error',err)
+            })
+
+    }
+}
+
+export const updateItems=(request,type,userId)=>{
+    return dispatch=>{
+        axios.post(`/requests/update-items/${userId}/${type}`,request)
+        .then(res =>{
+            dispatch(updateItemSuccess())
+        })
+        .catch(err => {
+            console.log('error',err)
+        })
+    }
 }
 
 export const removedFalse = () => {

@@ -31,16 +31,16 @@ export default class Navigation extends React.Component {
   render() {
 
     let menu = null
-    if(this.props.type === "1" || this.props.type === 1){
+    if(this.props.type === "Approver" ){
       menu =  <MenuAprobador/>
     }
-    else if(this.props.type === "2" || this.props.type === 2){
+    else if(this.props.type === "Manager" ){
       menu =  <MenuJefeDeObra/>
     }
-    else if(this.props.type === "3" || this.props.type === 3){
+    else if(this.props.type === "Buyer" ){
       menu =  <MenuComprador/>
     }
-    else if(this.props.type === "4" || this.props.type === 4){
+    else if(this.props.type === "Driver" ){
       menu =  <MenuChofer/>
     }
 

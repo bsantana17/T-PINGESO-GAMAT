@@ -90,6 +90,7 @@ class NewRequest extends Component {
       observation: this.state.observation,
       items: this.state.items
     }
+    console.log(requestData)
     this.props.onSendRequest(requestData, this.props.userId);
     
   }

@@ -16,6 +16,7 @@ import { connect } from 'react-redux';
 import * as actions from './store/actions/index';
 import ApproveBudget from './containers/Request/BuyerRequests/ApproveBudget';
 import testingQR from './containers/QRTest/testingQR';
+import AssingRequest from './containers/Request/AssingRequest/AssingRequest';
 
 
 class App extends Component {
@@ -36,11 +37,12 @@ class App extends Component {
             <Route path="/view-request/:idRequest" exact component={ ViewRequest }></Route>
             <Route path="/approve-request/:idRequest" exact component={RequestToAprove }></Route>
             <Route path="/approve-budget/:idRequest" exact component={ApproveBudget }></Route>
+            <Route path="/assing-driver/:idRequest" exact component={AssingRequest }></Route>
             <Route path="/removed-success" exact component={ RemovedSuccess }></Route>
             <Route path="/testingqr" exact component={ testingQR }></Route>
-            <Route path="/request-to-pick" exact component={ RequestToPickUp }></Route>
-            <Route path="/request-to-deliver" exact component={ RequestToDeliver }></Route>
-            <Route path="/deliver-to-approve" exact component={ DeliverToApprove }></Route>
+            <Route path="/request-to-pick/:idRequest" exact component={ RequestToPickUp }></Route>
+            <Route path="/request-to-deliver/:idRequest" exact component={ RequestToDeliver }></Route>
+            <Route path="/deliver-to-approve/:idRequest" exact component={ DeliverToApprove }></Route>
            
           </Layout>
         </div>

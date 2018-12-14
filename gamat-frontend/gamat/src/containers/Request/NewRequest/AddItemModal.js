@@ -60,7 +60,8 @@ class AddItemModal extends React.Component {
       urgency: this.state.urgency,
       description: this.state.description,
       price: null,
-      itemState: null
+      itemState: null,
+      state: "pendiente"
     }
 
     this.props.item !== null  ? 

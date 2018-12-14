@@ -1,6 +1,6 @@
 import * as actionTypes from '../actions/actionTypes';
 import { updateObject } from '../utility';
-import { removedToFalseRequest } from '../actions/requestActions';
+import { removedToFalseRequest, fetchDriverSuccess } from '../actions/requestActions';
 
 const initialState = {
     requests: [],
@@ -16,7 +16,10 @@ const initialState = {
     //cuando se modifique la bd esto se modificara 
     budgetSuccess:false,
     budgetApproveSuccess:false,
-    budgetRejectSuccess:false
+    budgetRejectSuccess:false,
+    drivers:[],
+    assingDriver:false,
+    updateItemSuccess:false
 };
 
 const addRequestsStart = ( state, action ) => {
@@ -72,7 +75,9 @@ const fetchRequestsSuccess = ( state, action ) => {
         requestSent:false,
         budgetSuccess:false,
         budgetApproveSuccess:false,
-        budgetRejectSuccess:false
+        budgetRejectSuccess:false,
+        assingDriver:false,
+        updateItemSuccess:false
     } );
 };
 
@@ -116,6 +121,19 @@ const budgetRejectSuccess= (state,action)=>{
     return updateObject(state,{budgetRejectSuccess:true})
 }
 
+const driverSuccess=(state,action)=>{
+   
+    return updateObject(state,{drivers:action.drivers})
+}
+
+const assingDriverSuccess = (state,action)=>{
+    return updateObject(state,{assingDriver:true})
+}
+
+const updateItemsOk= (state,action)=>{
+    return updateObject(state,{updateItemSuccess:true})
+}
+
 const reducer = ( state = initialState, action ) => {
     switch ( action.type ) {
         case actionTypes.FETCH_REQUESTS_START: return fetchRequestsStart( state, action );
@@ -134,6 +152,9 @@ const reducer = ( state = initialState, action ) => {
         case actionTypes.ADD_BUDGET_SUCCESS: return budgetSuccess(state,action);
         case actionTypes.FETCH_BUDGET_SUCCESS: return budgetApproveSuccess(state,action);
         case actionTypes.FETCH_BUDGET_REJECT: return budgetRejectSuccess(state,action);
+        case actionTypes.FETCH_DRIVER_SUCCESS: return driverSuccess(state,action);
+        case actionTypes.ASSING_DRIVER_SUCCESS: return assingDriverSuccess(state,action);
+        case actionTypes.UPDATE_ITEMS_SUCCESS: return updateItemsOk(state,action);
         default: return state;
     }
 };

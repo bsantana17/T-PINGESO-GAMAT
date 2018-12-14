@@ -34,6 +34,30 @@ class Requests extends Component {
   }
 
   componentDidMount() {
+
+    let estados;
+    if(this.props.userType==="Buyer")
+   {
+     estados=[
+
+       'Aprobados',
+       'Autorizados'
+      ]
+       
+   } 
+   else{
+    estados=[
+      'Pendientes por revisar',
+      'Aprobados',
+      'Cotizados',
+      'Confirmar Recibidos'
+    ]
+
+
+   }
+    this.setState({
+      estados:estados
+    })
     let state=0;
    
     this.props.onFetchRequests(this.props.userId, this.props.userType, state);
@@ -86,24 +110,49 @@ class Requests extends Component {
               <Button className="btn btn-sm btn-info" id="ver">Ver</Button>
             </Link>
             {' '}
-            { (this.props.userType == 1 || this.props.userType==3) &&
+            { (this.props.userType == "Approver" || this.props.userType=="Buyer") &&
 
               <Button className="btn btn-sm btn-danger" id="borrar" name={request.idRequest} onClick={this.deleteHandler}>Borrar</Button>
             }
             {' '}
-            {this.props.userType == 1 && this.state.estado==0 &&
+            {this.props.userType == "Approver" && this.state.estado==0 &&
               <Link to={{ pathname: '/approve-request/' + request.idRequest, state: i }}>
                 <Button className="btn btn-sm btn-success" id="aprobar">Aprobar</Button>
               </Link>
             }
-            {this.props.userType == 1 && this.state.estado==2 &&
+            {this.props.userType == "Approver" && this.state.estado==2 &&
               <Link to={{ pathname: '/approve-budget/' + request.idRequest, state: i }}>
                 <Button className="btn btn-sm btn-success" id="aprobar">Aprobar Cotizacion</Button>
               </Link>
             }
-            {this.props.userType == 3 &&
+
+             {this.props.userType == "Approver" && this.state.estado==3 &&
+              <Link to={{ pathname: '/deliver-to-approve/' + request.idRequest, state: i }}>
+                <Button className="btn btn-sm btn-success" id="aprobar">Confirmar Recepcion</Button>
+              </Link>
+            }
+            {this.props.userType == "Buyer" && this.state.estado ==0 &&
               <Link to={{ pathname: '/new-budget/' + request.idRequest, state: i }}>
                 <Button className="btn btn-sm btn-success" id="aprobar">Cotizar</Button>
+              </Link>
+            }
+
+             {this.props.userType == "Buyer" && this.state.estado==1 &&
+              <Link to={{ pathname: '/assing-driver/' + request.idRequest, state: i }}>
+                <Button className="btn btn-sm btn-success" id="aprobar">Asignar Chofer</Button>
+              </Link>
+            }
+
+              {this.props.userType == "Driver" &&  request.state =="asignada"  &&
+              <Link to={{ pathname: '/request-to-pick/' + request.idRequest, state: i }}>
+                <Button className="btn btn-sm btn-success" id="retirarr">Retirar Item</Button>
+              </Link>
+            }
+
+
+              {this.props.userType == "Driver" &&  request.state =="Retirada" &&
+              <Link to={{ pathname: '/request-to-deliver/' + request.idRequest, state: i }}>
+                <Button className="btn btn-sm btn-success" id="retirarr">Entrega Item</Button>
               </Link>
             }
           </td>
@@ -120,7 +169,7 @@ class Requests extends Component {
 
           <h2>Historial de solicitudes: </h2>
           </div>
-          {this.props.userId ==1 &&
+          {(this.props.userType =="Approver" || this.props.userType=="Buyer") &&
           <FormGroup>
             <Label for="estado">Estado</Label>
             <Input value={this.state.estado} onChange={this.refreshRequest} type="select" name="estado" id="estado" >

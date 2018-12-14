@@ -13,7 +13,7 @@ const ItemToDeliver = (props) => {
         <div className={pickedState}>
             <div className="card-body">
             <div className="row">
-                    <div className="col-4"><b>Item #{props.number}</b></div>
+                    <div className="col-4"><b>Item #{props.i}</b></div>
                     <div className="col-8"></div>
                 </div>
                 <div className="row">
@@ -30,13 +30,13 @@ const ItemToDeliver = (props) => {
                 </div>
                 <div className="row">
                     <div className="col-5 col-lg-4">Proveedor:</div>
-                    <div className="col-7 col-lg-8"> </div>
+                    <div className="col-7 col-lg-8">{props.distributor} </div>
                 </div>
                 <div className="row">
                     <div className="col-12 my-2">
                     { props.picked === true ? 
-                        <button onClick={(e)=>{}} className="btn btn-sm mr-2 btn-danger">No Entregado</button>
-                        : <button onClick={(e)=>{}} className="btn btn-sm mr-2 btn-success">Entregado</button>
+                        <button onClick={props.onChangeState} className="btn btn-sm mr-2 btn-danger">No Entregado</button>
+                        : <button onClick={props.onChangeState} className="btn btn-sm mr-2 btn-success">Entregado</button>
                     }
                     </div>
                 </div>

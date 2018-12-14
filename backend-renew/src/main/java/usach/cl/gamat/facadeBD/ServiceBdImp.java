@@ -240,4 +240,11 @@ public class ServiceBdImp implements IServiceBD {
     }
 
 
+	@Override
+	public List<Building> findAllBuilding() {
+		// TODO Auto-generated method stub
+		return (List<Building>) buildingRepository.findAll();
+	}
+
+
 }

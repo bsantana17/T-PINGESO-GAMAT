@@ -18,7 +18,7 @@ public class Item {
 
     private String description;
     private int price;
-    private int totalPrice;
+    private long totalPrice;
     private int weight;
     private int totalWeight;
     private String observation;
@@ -27,13 +27,15 @@ public class Item {
     @NotNull
     private int quantity;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name ="user_id")
-    private Driver driver;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name ="user_id")
+//    private Driver driver;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "distributor_id")
-    private Distributor distributor;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "distributor_id")
+//    private Distributor distributor;
+    
+    private String distributor;
 
     public int getIdItem() {
         return idItem;
@@ -75,11 +77,11 @@ public class Item {
         this.price = price;
     }
 
-    public int getTotalPrice() {
+    public long getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(int totalPrice) {
+    public void setTotalPrice(long totalPrice) {
         this.totalPrice = totalPrice;
     }
 
@@ -123,13 +125,13 @@ public class Item {
         this.quantity = quantity;
     }
 
-    public Driver getDriver() {
-        return driver;
-    }
-
-    public void setDriver(Driver driver) {
-        this.driver = driver;
-    }
+//    public Driver getDriver() {
+//        return driver;
+//    }
+//
+//    public void setDriver(Driver driver) {
+//        this.driver = driver;
+//    }
 
     public String getState() {
         return state;
@@ -139,11 +141,21 @@ public class Item {
         this.state = state;
     }
 
-    public Distributor getDistributor() {
-        return distributor;
-    }
+	public String getDistributor() {
+		return distributor;
+	}
 
-    public void setDistributor(Distributor distributor) {
-        this.distributor = distributor;
-    }
+	public void setDistributor(String distributor) {
+		this.distributor = distributor;
+	}
+
+//    public Distributor getDistributor() {
+//        return distributor;
+//    }
+//
+//    public void setDistributor(Distributor distributor) {
+//        this.distributor = distributor;
+//    }
+    
+    
 }
