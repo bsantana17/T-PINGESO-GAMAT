@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import ItemToPick from './ItemToPickUp'
+import ItemToApproveDeliver from './ItemToApproveDeliver'
 import { Link } from 'react-router-dom';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input } from 'reactstrap';
 import Spinner from '../../../components/UI/Spinner';
 
 
 
-export default class RequestToPickUp extends Component {
+export default class DeliverToApprove extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -15,10 +15,6 @@ export default class RequestToPickUp extends Component {
         };
     
         this.toggle = this.toggle.bind(this);
-        // this.handleOnDelete = this.handleOnDelete.bind(this);
-        // this.handleOnOpenEdit = this.handleOnOpenEdit.bind(this) ;
-        // this.handleOnEditItem= this.handleOnEditItem.bind(this);
-    
     }
     
     toggle() {
@@ -40,14 +36,13 @@ export default class RequestToPickUp extends Component {
     
         return (
       <div>
-        <h2>Solicitud a retirar: </h2>
-        <p>Jefe de Obra: Juanito Perez</p>
+        <h2>Solicitud entregada: </h2>
         <p>Direccion de obra: calle 123, Maipu</p>
 
-        <h3>Items a Retirar:</h3>
+        <h3>Items entregados:</h3>
         <div className="row">
-            <ItemToPick picked={false} />
-            <ItemToPick picked={true} />
+            <ItemToApproveDeliver picked={false} />
+            <ItemToApproveDeliver picked={true} />
         </div>
 
         <button className="btn btn-primary" disabled={false} onClick={this.toggle} >Enviar Reporte</button>{' '}
@@ -58,7 +53,7 @@ export default class RequestToPickUp extends Component {
           <ModalBody>
             {this.props.loading ? <Spinner/> : 
               <div>
-                Los siguientes items fueron retirados:
+                Los siguientes items fueron entregados:
                 <table className="table table-sm">
                   <thead>
                     <tr>
