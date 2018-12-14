@@ -126,7 +126,7 @@ class Requests extends Component {
               </Link>
             }
 
-             {this.props.userType == "Approver" && this.state.estado==3 &&
+             {this.props.userType == "Manager" && request.state=="Entregada" &&
               <Link to={{ pathname: '/deliver-to-approve/' + request.idRequest, state: i }}>
                 <Button className="btn btn-sm btn-success" id="aprobar">Confirmar Recepcion</Button>
               </Link>
@@ -143,7 +143,7 @@ class Requests extends Component {
               </Link>
             }
 
-              {this.props.userType == "Driver" &&  request.state =="asignada"  &&
+              {this.props.userType == "Driver" &&  request.state =="Asignada"  &&
               <Link to={{ pathname: '/request-to-pick/' + request.idRequest, state: i }}>
                 <Button className="btn btn-sm btn-success" id="retirarr">Retirar Item</Button>
               </Link>

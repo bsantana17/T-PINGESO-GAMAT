@@ -41,7 +41,7 @@ export const login =  (email,password) => {
 
        // dispatch(loginSuccess('2', 6));
 
-        axios.post( 'http://localhost:8080/users/login',loginData)
+        axios.post( '/users/login',loginData)
             .then( response => {
                 //console.log('post success');
                 console.log(response);
