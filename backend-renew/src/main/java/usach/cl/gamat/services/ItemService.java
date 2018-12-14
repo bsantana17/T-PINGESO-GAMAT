@@ -18,6 +18,7 @@ public class ItemService {
     @GetMapping("/")
     @ResponseBody
     public List<Item> getAllItem(){return serviceBd.findAllItem();}
+
     @PutMapping
     @ResponseBody
     public Item updateItem(@RequestBody Item item) {

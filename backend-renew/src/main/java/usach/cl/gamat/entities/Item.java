@@ -1,5 +1,7 @@
 package usach.cl.gamat.entities;
 
+import com.fasterxml.jackson.annotation.*;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -27,10 +29,13 @@ public class Item {
     @NotNull
     private int quantity;
 
+    @JsonManagedReference
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name ="user_id")
     private Driver driver;
 
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "distributor_id")
     private Distributor distributor;
