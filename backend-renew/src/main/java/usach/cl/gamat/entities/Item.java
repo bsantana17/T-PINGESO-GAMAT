@@ -1,5 +1,7 @@
 package usach.cl.gamat.entities;
 
+import com.fasterxml.jackson.annotation.*;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
