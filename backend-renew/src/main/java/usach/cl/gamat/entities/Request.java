@@ -53,7 +53,7 @@ public class Request {
     @JsonIgnore
     private Building building;
 
-
+    @JsonIgnore
     @OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
     @JoinColumn(name="request_id")
     private List<Item> items;

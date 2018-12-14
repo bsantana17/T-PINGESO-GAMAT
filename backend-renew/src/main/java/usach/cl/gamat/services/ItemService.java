@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import usach.cl.gamat.entities.Item;
 import usach.cl.gamat.facadeBD.IServiceBD;
 
+import java.util.List;
+
 @CrossOrigin
 @RestController
 @RequestMapping("/items")
@@ -13,6 +15,9 @@ public class ItemService {
     @Autowired
     private IServiceBD serviceBd;
 
+    @GetMapping("/")
+    @ResponseBody
+    public List<Item> getAllItem(){return serviceBd.findAllItem();}
     @PutMapping
     @ResponseBody
     public Item updateItem(@RequestBody Item item) {

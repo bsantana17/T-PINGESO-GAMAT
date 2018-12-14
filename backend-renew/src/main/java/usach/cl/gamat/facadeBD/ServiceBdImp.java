@@ -129,12 +129,17 @@ public class ServiceBdImp implements IServiceBD {
         return false;
     }
 
+    // Item
+
+    @Override
+    public List<Item> findAllItem() {
+        return (List<Item>) itemRepository.findAll();
+    }
+
     @Override
     public Item saveItem(Item item) {
         return itemRepository.save(item);
     }
-
-    // Item
 
     @Override
     public Item updateItem(Item item) {

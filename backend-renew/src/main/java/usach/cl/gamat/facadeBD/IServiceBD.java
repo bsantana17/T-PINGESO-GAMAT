@@ -48,6 +48,8 @@ public interface IServiceBD {
 
 
     //operaciones items
+    public List<Item> findAllItem();
+
     public Item saveItem(Item item);
 
     public Item updateItem(Item item);

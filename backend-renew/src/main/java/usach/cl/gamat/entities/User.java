@@ -9,6 +9,9 @@ import java.util.Date;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "role", discriminatorType = DiscriminatorType.STRING)
 public class User {
+    @Column(name="role", insertable = false, updatable = false)
+    protected String role;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true)
@@ -73,5 +76,9 @@ public class User {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public String getRole() {
+        return role;
     }
 }
