@@ -38,6 +38,9 @@ public class ServiceBdImp implements IServiceBD {
     @Autowired
     private BuyerRepository buyerRepository;
 
+    @Autowired
+    private CompanyRepository companyRepository;
+
 
 
     // operaciones Request
@@ -56,9 +59,9 @@ public class ServiceBdImp implements IServiceBD {
     }
 
     @Override
-    public Iterable<Request> findAllRequest() {
+    public List<Request> findAllRequest() {
         // TODO Auto-generated method stub
-        return requestRepository.findAll();
+        return (List<Request>) requestRepository.findAll();
     }
 
     @Override
@@ -192,8 +195,8 @@ public class ServiceBdImp implements IServiceBD {
     }
 
     @Override
-    public Set<User> findAllUsers() {
-        return (Set<User>) userRepository.findAll();
+    public List<User> findAllUsers() {
+        return (List<User>) userRepository.findAll();
     }
 
     @Override
@@ -202,8 +205,8 @@ public class ServiceBdImp implements IServiceBD {
     }
 
     @Override
-    public Set<Driver> getAllDriver() {
-        return (Set<Driver>) driverRepository.findAll();
+    public List<Driver> getAllDriver() {
+        return (List<Driver>) driverRepository.findAll();
     }
 
     @Override
@@ -219,6 +222,16 @@ public class ServiceBdImp implements IServiceBD {
     @Override
     public Buyer getBuyerById(Integer idUser) {
         return buyerRepository.findById(idUser).orElse(null);
+    }
+
+    @Override
+    public List<Company> findAllCompany() {
+        return (List<Company>) companyRepository.findAll();
+    }
+
+    @Override
+    public Company findCompanyById(Integer id) {
+        return companyRepository.findById(id).orElse(null);
     }
 
 

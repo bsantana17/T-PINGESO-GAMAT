@@ -24,13 +24,13 @@ public class Request {
     private Date date;
 
     @Column(name = "totalPrice")
-    private int totalPrice;
+    private Integer totalPrice;
 
     @Column(name = "shippingPrice")
-    private int shippingPrice;
+    private Integer shippingPrice;
 
     @Column(name = "administrationPrice")
-    private int administrationPrice;
+    private Integer administrationPrice;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "dateBudget")
@@ -43,14 +43,14 @@ public class Request {
     @Column(name = "payCondition")
     private String payCondition;
 
-    //	@JsonIgnore
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="user_id")
+    @JsonIgnore
     private Manager manager;
 
-    @JsonIgnore
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="building_id")
+    @JsonIgnore
     private Building building;
 
 
@@ -58,7 +58,7 @@ public class Request {
     @JoinColumn(name="request_id")
     private List<Item> items;
 
-    public int getIdRequest() {
+    public Integer getIdRequest() {
         return idRequest;
     }
 
@@ -114,27 +114,27 @@ public class Request {
         this.items = items;
     }
 
-    public int getTotalPrice() {
+    public Integer getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(int totalPrice) {
+    public void setTotalPrice(Integer totalPrice) {
         this.totalPrice = totalPrice;
     }
 
-    public int getShippingPrice() {
+    public Integer getShippingPrice() {
         return shippingPrice;
     }
 
-    public void setShippingPrice(int shippingPrice) {
+    public void setShippingPrice(Integer shippingPrice) {
         this.shippingPrice = shippingPrice;
     }
 
-    public int getAdministrationPrice() {
+    public Integer getAdministrationPrice() {
         return administrationPrice;
     }
 
-    public void setAdministrationPrice(int administrationPrice) {
+    public void setAdministrationPrice(Integer administrationPrice) {
         this.administrationPrice = administrationPrice;
     }
 

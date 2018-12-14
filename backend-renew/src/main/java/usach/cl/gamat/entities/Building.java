@@ -38,6 +38,9 @@ public class Building {
     @JoinColumn(name="user_id")
     private Approver approver;
 
+    @OneToOne(mappedBy = "building")
+    private Manager manager;
+
     public int getIdBuilding() {
         return idBuilding;
     }

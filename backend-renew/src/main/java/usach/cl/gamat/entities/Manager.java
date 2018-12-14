@@ -9,7 +9,7 @@ public class Manager extends User{
     @OneToMany(mappedBy="manager",fetch= FetchType.LAZY,cascade= CascadeType.ALL)
     private Set<Request> requests;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "building_id")
     private Building building;
 

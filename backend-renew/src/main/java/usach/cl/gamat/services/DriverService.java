@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import usach.cl.gamat.entities.Driver;
 import usach.cl.gamat.facadeBD.IServiceBD;
 
+import java.util.List;
 import java.util.Set;
 
 @CrossOrigin
@@ -16,6 +17,6 @@ public class DriverService {
 
     @GetMapping
     @ResponseBody
-    public Set<Driver> getDrivers(){ return serviceBD.getAllDriver();}
+    public List<Driver> getDrivers(){ return serviceBD.getAllDriver();}
 
 }

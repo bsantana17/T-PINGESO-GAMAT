@@ -13,7 +13,7 @@ public interface IServiceBD {
 
 
 
-    public Iterable<Request> findAllRequest();
+    public List<Request> findAllRequest();
 
     public Request saveRequest(Request request);
 
@@ -79,13 +79,13 @@ public interface IServiceBD {
 
     public User getUserById(Integer idUser);
 
-    public Set<User> findAllUsers();
+    public List<User> findAllUsers();
 
     // operaciones Driver
 
     public Driver getDriverById(Integer idUser);
 
-    public Set<Driver> getAllDriver();
+    public List<Driver> getAllDriver();
 
     // operaciones Manager
 
@@ -104,6 +104,12 @@ public interface IServiceBD {
     // operaciones budgetState
 
     //public BudgetState getBudgetStateById(Integer idBudgetState);
+
+    //Operaciones Company
+
+    public List<Company> findAllCompany();
+
+    public Company findCompanyById(Integer id);
 
 
 
