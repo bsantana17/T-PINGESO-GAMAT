@@ -1,6 +1,6 @@
 package usach.cl.gamat.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -9,6 +9,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "building")
+@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="idBuilding")
 public class Building {
 
     @Id
@@ -29,7 +30,7 @@ public class Building {
     @JoinColumn(name="company_id")
     private Company company;
 
-    @JsonIgnore
+    @JsonBackReference
     @OneToMany(mappedBy="building",fetch=FetchType.LAZY,cascade=CascadeType.ALL)
     private List<Request> requests;
 
@@ -38,6 +39,8 @@ public class Building {
     @JoinColumn(name="user_id")
     private Approver approver;
 
+    //@JsonIgnore
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @OneToOne(mappedBy = "building")
     private Manager manager;
 
@@ -87,5 +90,13 @@ public class Building {
 
     public void setApprover(Approver approver) {
         this.approver = approver;
+    }
+
+    public Manager getManager() {
+        return manager;
+    }
+
+    public void setManager(Manager manager) {
+        this.manager = manager;
     }
 }

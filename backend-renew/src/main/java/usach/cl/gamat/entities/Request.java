@@ -1,6 +1,8 @@
 package usach.cl.gamat.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -43,14 +45,18 @@ public class Request {
     @Column(name = "payCondition")
     private String payCondition;
 
+    @JsonManagedReference
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="user_id")
-    @JsonIgnore
+   // @JsonIgnore
     private Manager manager;
 
+    @JsonManagedReference
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="building_id")
-    @JsonIgnore
+    //@JsonIgnore
     private Building building;
 
     @JsonIgnore
