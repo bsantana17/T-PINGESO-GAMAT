@@ -229,16 +229,32 @@ public class RequestService {
         }
             for (Request request:requests){
 
-                request.setManager(null);
+                //request.setManager(null);
 
                 if (request.getState().equals(nameState) ){
-                	request.setBuilding(null);
+                	//request.setBuilding(null);
                     requestsApprove.add(request);
                 }
             }
         //}
         //}
         return requestsApprove;
+    }
+
+    //Todas requests para comprador
+    @GetMapping("/{idUser}/all/buyer")
+    @ResponseBody
+    public List<Request> getAllRequestBuyer(@PathVariable("idUser") Integer id){
+        Buyer user = serviceBD.getBuyerById(id);
+        List<Request> buyerRequests = new ArrayList<>();
+        Iterable<Request> requests = serviceBD.findAllRequest();
+        for (Request request:requests){
+            if (request.getState().equals("Aprobado") || request.getState().equals("Autorizada") ||
+                    request.getState().equals("Cotizacion") || request.getState().equals("Comprada")){
+                buyerRequests.add(request);
+            }
+        }
+        return buyerRequests;
     }
     
     @GetMapping("/{idUser}/driver")
