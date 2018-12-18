@@ -11,6 +11,7 @@ import MenuJefeDeObra from './MenuJefeDeObra';
 import MenuComprador from './MenuComprador';
 import MenuChofer from './MenuChofer'
 import MenuAprobador from './MenuAprobador';
+import logo from  '../../assets/img/logoblanco.png'
 
 
 export default class Navigation extends React.Component {
@@ -51,8 +52,8 @@ export default class Navigation extends React.Component {
 
     return (
       <div>
-        <Navbar className="navbar navbar-dark bg-dark" color="dark" light expand="md">
-          <NavbarBrand href="/">GAMAT </NavbarBrand>
+        <Navbar className="navbar navbar-dark bg-primary" light expand="md">
+          <NavbarBrand href="/"> <img src={logo} width='200px'/> </NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             {menu}

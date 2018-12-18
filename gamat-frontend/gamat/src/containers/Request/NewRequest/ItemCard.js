@@ -6,7 +6,7 @@ const ItemCard = (props) => {
         <div className="card">
             <div className="card-body">
             <div className="row">
-                    <div className="col-4"><b>Item #{props.number}</b></div>
+                    <div className="col-4"><b>Item #{props.number + 1}</b></div>
                     <div className="col-8"></div>
                 </div>
                 <div className="row">
