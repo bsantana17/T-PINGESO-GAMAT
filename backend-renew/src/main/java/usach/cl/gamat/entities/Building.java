@@ -25,7 +25,7 @@ public class Building {
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
 
-    @JsonIgnore
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="company_id")
     private Company company;
