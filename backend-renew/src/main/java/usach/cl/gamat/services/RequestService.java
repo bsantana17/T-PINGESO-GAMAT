@@ -91,7 +91,7 @@ public class RequestService {
 
     @PostMapping("/budget/approve/{idRequest}")
     public HttpStatus aprobarBudget(@PathVariable("idRequest") Integer id,@RequestBody Request request) {
-		Request request1 = serviceBD.getRequestById(id);
+		Request request1 = serviceBD.getRequestById(request.getIdRequest());
         if (request != null) {
         	request.setBuilding(request1.getBuilding());
         	request.setManager(request1.getManager());
@@ -115,7 +115,7 @@ public class RequestService {
     //Cotizar request
     @PostMapping("/budget/{idRequest}")
     public HttpStatus cotizarRequest(@PathVariable("idRequest") Integer id,@RequestBody Request request) {
-		Request request1 = serviceBD.getRequestById(id);
+		Request request1 = serviceBD.getRequestById(request.getIdRequest());
         if (request != null) {
             request.setState("Cotizacion");
             request.setBuilding(request1.getBuilding());

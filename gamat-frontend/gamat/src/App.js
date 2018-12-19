@@ -17,6 +17,7 @@ import * as actions from './store/actions/index';
 import ApproveBudget from './containers/Request/BuyerRequests/ApproveBudget';
 import testingQR from './containers/QRTest/testingQR';
 import AssingRequest from './containers/Request/AssingRequest/AssingRequest';
+import generadorQr from './containers/Qr/generadorQr';
 
 
 class App extends Component {
@@ -43,7 +44,7 @@ class App extends Component {
             <Route path="/request-to-pick/:idRequest" exact component={ RequestToPickUp }></Route>
             <Route path="/request-to-deliver/:idRequest" exact component={ RequestToDeliver }></Route>
             <Route path="/deliver-to-approve/:idRequest" exact component={ DeliverToApprove }></Route>
-           
+            <Route path="/validation/:idRequest" exact component={ generadorQr }></Route>
           </Layout>
         </div>
     );
