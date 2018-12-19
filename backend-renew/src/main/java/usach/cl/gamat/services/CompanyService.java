@@ -18,4 +18,6 @@ public class CompanyService {
     @ResponseBody
     public List<Company> getAll(){return serviceBD.findAllCompany();}
 
+    //@PostMapping("/create")
+
 }

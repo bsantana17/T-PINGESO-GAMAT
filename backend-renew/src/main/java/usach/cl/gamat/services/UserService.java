@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import usach.cl.gamat.entities.Driver;
+import usach.cl.gamat.entities.Manager;
 import usach.cl.gamat.entities.User;
 import usach.cl.gamat.facadeBD.ServiceBdImp;
 import usach.cl.gamat.repositories.DriverRepository;
@@ -54,10 +55,13 @@ public class UserService {
         return userRepository.findById(Id).get();
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "/{idRole}", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public User create(@RequestBody User resource){
+    public User create(@RequestBody User resource, @PathVariable("idRole") Integer idRole){
+        if(idRole == 0){
+            
+        }
         return userRepository.save(resource);
     }
 

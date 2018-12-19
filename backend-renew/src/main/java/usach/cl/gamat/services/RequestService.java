@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import usach.cl.gamat.entities.*;
 import usach.cl.gamat.facadeBD.IServiceBD;
 
+import javax.validation.constraints.Null;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -302,6 +303,47 @@ public class RequestService {
 //            item.setDriver(serviceBD.getDriverById(id));
 //            serviceBD.saveItem(item);
 //        }
+    }
+
+    //Validar entrega manager
+    @PutMapping("/{idUser}/validateReceived/{idRequest}")
+    @ResponseBody
+    public HttpStatus validateReceived(@PathVariable("idUser") Integer idUser, @PathVariable("idRequest") Integer idRequest){
+        Manager manager = serviceBD.getManagerById(idUser);
+        if(manager != null){
+            for(Request request:manager.getRequests()){
+                if(request.getIdRequest() == idRequest){
+                    request.setManagerValidation(Boolean.TRUE);
+                    serviceBD.saveRequest(request);
+                    return HttpStatus.ACCEPTED;
+                }
+            }
+        }
+        Driver driver = serviceBD.getDriverById(idUser);
+        if(driver != null){
+            for(Request request:driver.getRequest()){
+                if(request.getIdRequest() == idRequest){
+                    request.setDriverValidation(Boolean.TRUE);
+                    serviceBD.saveRequest(request);
+                    return HttpStatus.ACCEPTED;
+                }
+            }
+        }
+        return HttpStatus.UNAUTHORIZED;
+    }
+
+    //Validar request como entregada
+    @GetMapping("/{idRequest}/confirmed")
+    @ResponseBody
+    public Integer confirmDelivered(@PathVariable("idRequest") Integer id){
+        Request request = serviceBD.getRequestById(id);
+        if(request.getDriverValidation() && request.getManagerValidation()){
+            if(request.getState() != "Recibida" && request.getState() != "Disconforme"){
+                request.setState("Recibida");
+            }
+            return 1;
+        }
+        return 0;
     }
 
     @PutMapping("/update")

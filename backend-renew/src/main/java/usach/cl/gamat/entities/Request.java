@@ -3,6 +3,8 @@ package usach.cl.gamat.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.sun.org.apache.xpath.internal.operations.Bool;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -45,6 +47,14 @@ public class Request {
     @Column(name = "payCondition")
     private String payCondition;
 
+    @Column(name = "driverValidation")
+    @ColumnDefault("0")
+    private Boolean driverValidation;
+
+    @Column(name = "managerValidation")
+    @ColumnDefault("0")
+    private Boolean managerValidation;
+
     @JsonManagedReference
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch=FetchType.LAZY)
@@ -63,10 +73,12 @@ public class Request {
     @OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
     @JoinColumn(name="request_id")
     private List<Item> items;
-    
+
+    @JsonManagedReference
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name ="driver_id")
-    @JsonIgnore
+    //@JsonIgnore
     private Driver driver;
 
     public Integer getIdRequest() {
@@ -180,6 +192,20 @@ public class Request {
 	public void setDriver(Driver driver) {
 		this.driver = driver;
 	}
-    
-    
+
+    public Boolean getDriverValidation() {
+        return driverValidation;
+    }
+
+    public void setDriverValidation(Boolean driverValidation) {
+        this.driverValidation = driverValidation;
+    }
+
+    public Boolean getManagerValidation() {
+        return managerValidation;
+    }
+
+    public void setManagerValidation(Boolean managerValidation) {
+        this.managerValidation = managerValidation;
+    }
 }

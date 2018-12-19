@@ -1,6 +1,7 @@
 package usach.cl.gamat.entities;
 
 import com.fasterxml.jackson.annotation.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -25,6 +26,9 @@ public class Item {
     private int totalWeight;
     private String observation;
     private String comment;
+    @Column(name = "measure")
+    @ColumnDefault("gramos")
+    private String measure;
 
     @NotNull
     private int quantity;
@@ -158,6 +162,13 @@ public class Item {
 //    public void setDistributor(Distributor distributor) {
 //        this.distributor = distributor;
 //    }
-    
-    
+
+
+    public String getMeasure() {
+        return measure;
+    }
+
+    public void setMeasure(String measure) {
+        this.measure = measure;
+    }
 }
