@@ -27,7 +27,7 @@ public class Item {
     private String observation;
     private String comment;
     @Column(name = "measure")
-    @ColumnDefault("gramos")
+    @ColumnDefault("'gramos'")
     private String measure;
 
     @NotNull

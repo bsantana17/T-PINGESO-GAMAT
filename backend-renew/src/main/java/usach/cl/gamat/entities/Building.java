@@ -30,7 +30,7 @@ public class Building {
     @JoinColumn(name="company_id")
     private Company company;
 
-    @JsonBackReference
+    @JsonIgnore
     @OneToMany(mappedBy="building",fetch=FetchType.LAZY,cascade=CascadeType.ALL)
     private List<Request> requests;
 

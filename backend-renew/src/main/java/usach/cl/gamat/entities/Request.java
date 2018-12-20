@@ -1,9 +1,9 @@
 package usach.cl.gamat.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
@@ -55,26 +55,26 @@ public class Request {
     @ColumnDefault("0")
     private Boolean managerValidation;
 
-    @JsonManagedReference
+    //@JsonBackReference
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="user_id")
    // @JsonIgnore
     private Manager manager;
 
-    @JsonManagedReference
+    //@JsonBackReference
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="building_id")
     //@JsonIgnore
     private Building building;
 
-    @JsonIgnore
+    //@JsonIgnore
     @OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
     @JoinColumn(name="request_id")
     private List<Item> items;
 
-    @JsonManagedReference
+    //@JsonBackReference
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name ="driver_id")

@@ -29,6 +29,7 @@ public class RequestService {
     }
     //Crear Request
     @PostMapping("/create/{idUser}")
+    @ResponseBody
     public Request createRequest(@RequestBody Request request, @PathVariable("idUser") Integer idUser) {
         if(request != null) {
             Manager user = serviceBD.getManagerById(idUser);

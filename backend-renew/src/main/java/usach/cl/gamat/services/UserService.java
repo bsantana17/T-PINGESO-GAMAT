@@ -5,9 +5,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import usach.cl.gamat.entities.Driver;
-import usach.cl.gamat.entities.Manager;
-import usach.cl.gamat.entities.User;
+import usach.cl.gamat.entities.*;
 import usach.cl.gamat.facadeBD.ServiceBdImp;
 import usach.cl.gamat.repositories.DriverRepository;
 import usach.cl.gamat.repositories.UserRepository;
@@ -55,14 +53,39 @@ public class UserService {
         return userRepository.findById(Id).get();
     }
 
-    @RequestMapping(value = "/{idRole}", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public User create(@RequestBody User resource, @PathVariable("idRole") Integer idRole){
-        if(idRole == 0){
-            
-        }
+    public User create(@RequestBody User resource){
         return userRepository.save(resource);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/createManager")
+    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseBody
+    public User createManager(@RequestBody Manager resource){
+        return serviceBdImp.saveManager(resource);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/createApprover")
+    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseBody
+    public User createApprover(@RequestBody Approver resource){
+        return serviceBdImp.saveApprover(resource);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/createDriver")
+    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseBody
+    public User createDriver(@RequestBody Driver resource){
+        return serviceBdImp.saveDriver(resource);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/createBuyer")
+    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseBody
+    public User createBuyer(@RequestBody Buyer resource){
+        return serviceBdImp.saveBuyer(resource);
     }
 
     //Get Drivers

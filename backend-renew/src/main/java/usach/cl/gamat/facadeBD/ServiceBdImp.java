@@ -215,8 +215,18 @@ public class ServiceBdImp implements IServiceBD {
     }
 
     @Override
+    public Driver saveDriver(Driver driver) {
+        return driverRepository.save(driver);
+    }
+
+    @Override
     public Manager getManagerById(Integer idUser) {
         return managerRepository.findById(idUser).orElse(null);
+    }
+
+    @Override
+    public Manager saveManager(Manager manager) {
+        return managerRepository.save(manager);
     }
 
     @Override
@@ -225,8 +235,18 @@ public class ServiceBdImp implements IServiceBD {
     }
 
     @Override
+    public Approver saveApprover(Approver approver) {
+        return approverRepository.save(approver);
+    }
+
+    @Override
     public Buyer getBuyerById(Integer idUser) {
         return buyerRepository.findById(idUser).orElse(null);
+    }
+
+    @Override
+    public Buyer saveBuyer(Buyer buyer) {
+        return buyerRepository.save(buyer);
     }
 
     @Override

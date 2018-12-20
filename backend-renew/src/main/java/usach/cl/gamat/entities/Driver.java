@@ -1,9 +1,6 @@
 package usach.cl.gamat.entities;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 
@@ -12,8 +9,9 @@ import java.util.Set;
 
 @Entity
 @DiscriminatorValue("Driver")
+@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="idUser")
 public class Driver extends User{
-    @JsonBackReference
+    //@JsonManagedReference
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "driver")
     private List<Request> request;
 

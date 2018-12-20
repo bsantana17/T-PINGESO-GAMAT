@@ -89,17 +89,25 @@ public interface IServiceBD {
 
     public List<Driver> getAllDriver();
 
+    public Driver saveDriver(Driver driver);
+
     // operaciones Manager
 
     public Manager getManagerById(Integer idUser);
+
+    public Manager saveManager(Manager manager);
 
     // operaciones Approver
 
     public Approver getApproverById(Integer idUser);
 
+    public Approver saveApprover(Approver approver);
+
     //Operaciones Buyer
 
     public Buyer getBuyerById(Integer idUser);
+
+    public Buyer saveBuyer(Buyer buyer);
 
 
 
