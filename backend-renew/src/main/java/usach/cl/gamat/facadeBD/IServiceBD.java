@@ -121,6 +121,8 @@ public interface IServiceBD {
 
     public Company findCompanyById(Integer id);
 
+    public Company createCompany(Company company);
+
 
 
 	public List<Building> findAllBuilding();

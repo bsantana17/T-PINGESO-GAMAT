@@ -259,8 +259,13 @@ public class ServiceBdImp implements IServiceBD {
         return companyRepository.findById(id).orElse(null);
     }
 
+    @Override
+    public Company createCompany(Company company) {
+        return companyRepository.save(company);
+    }
 
-	@Override
+
+    @Override
 	public List<Building> findAllBuilding() {
 		// TODO Auto-generated method stub
 		return (List<Building>) buildingRepository.findAll();
