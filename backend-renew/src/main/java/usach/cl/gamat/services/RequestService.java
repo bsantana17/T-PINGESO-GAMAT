@@ -45,6 +45,21 @@ public class RequestService {
         return null;
 
     }
+
+    //Crear Request
+    @PostMapping("/create")
+    @ResponseBody
+    public Request createRequestTest(@RequestBody Request request) {
+        if(request != null) {
+            request.setState("Pendiente por revisar");
+            Request newRequest= serviceBD.saveRequest(request);
+            // datos aprobador
+            //mailService.sendMailNotification("", "", "");
+            return newRequest;
+        }
+        return null;
+
+    }
     //Aprobar request
     @PostMapping("/approve/{idRequest}")
     public HttpStatus aprobarRequest(@PathVariable("idRequest") Integer id,@RequestBody Request request) {
