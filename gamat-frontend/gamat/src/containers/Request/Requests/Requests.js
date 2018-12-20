@@ -70,6 +70,7 @@ class Requests extends Component {
       estado:value
     })
     this.props.onFetchRequests(this.props.userId, this.props.userType, value);
+    console.log(this.props.userType)
   }
   deleteHandler = (event) => {
     this.props.onDeleteRequest(event.target.name)
@@ -110,7 +111,7 @@ class Requests extends Component {
                 <Button className="btn btn-sm btn-success" id="aprobar">Aprobar</Button>
               </Link>
             }
-            {this.props.userType === "Approver" && this.state.estado === 2 &&
+            {this.props.userType === "Approver" && this.state.estado == 2 &&
               <Link to={{ pathname: '/approve-budget/' + request.idRequest, state: i }}>
                 <Button className="btn btn-sm btn-success" id="aprobar">Aprobar Cotizacion</Button>
               </Link>
@@ -122,7 +123,7 @@ class Requests extends Component {
               </Link>
             }
                {this.props.userType === "Manager" && request.state === "Retirada" &&
-              <Link to={{ pathname: '/deliver-to-approve/' + request.idRequest, state: i }}>
+              <Link to={{ pathname: '/validation/' + request.idRequest, state: i }}>
                 <Button className="btn btn-sm btn-success" id="aprobar">Validar Entrega</Button>
               </Link>
             }
@@ -132,7 +133,7 @@ class Requests extends Component {
               </Link>
             }
 
-             {this.props.userType == "Buyer" && this.state.estado === 1 &&
+             {this.props.userType == "Buyer" && this.state.estado == 1 &&
               <Link to={{ pathname: '/assing-driver/' + request.idRequest, state: i }}>
                 <Button className="btn btn-sm btn-success" id="aprobar">Asignar Chofer</Button>
               </Link>
@@ -148,6 +149,12 @@ class Requests extends Component {
               {this.props.userType === "Driver" &&  request.state === "Retirada" &&
               <Link to={{ pathname: '/request-to-deliver/' + request.idRequest, state: i }}>
                 <Button className="btn btn-sm btn-success" id="retirarr">Entrega Item</Button>
+              </Link>
+            }
+
+             {this.props.userType === "Driver" &&  request.state === "Entregada" &&
+              <Link to={{ pathname: '/validation/' + request.idRequest, state: i }}>
+                <Button className="btn btn-sm btn-success" id="retirarr">Validar Entrega</Button>
               </Link>
             }
           </td>

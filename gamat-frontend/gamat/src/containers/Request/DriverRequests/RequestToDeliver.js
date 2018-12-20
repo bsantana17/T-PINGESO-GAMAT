@@ -6,6 +6,7 @@ import Spinner from '../../../components/UI/Spinner';
 import { connect } from 'react-redux';
 import * as actions from '../../../store/actions/index';
 import testingQR from '../../QRTest/testingQR';
+import LectorQr from '../../Qr/LectorQr';
 // import Spinner from '../../../components/UI/Spinner';
 
 
@@ -72,6 +73,7 @@ this.setState({
 
 handleOnValidate(data){
   const idRequest = this.props.requests[this.state.indice].idRequest;
+  console.log("data",data)
   if(data == idRequest.toString()){
     this.setState({
       validate: true
@@ -103,7 +105,7 @@ render() {
 
      
   <div>
-    { !this.state.validate ? <testingQR onValidateData={this.handleOnValidate}/>:
+    { !this.state.validate ? <LectorQr onValidateData={this.handleOnValidate}/>:
     <div>
      {this.props.updateItemSuccess && <Redirect to='/requests' />}
     <h2>Solicitud a Entregar: </h2>

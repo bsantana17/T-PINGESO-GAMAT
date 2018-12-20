@@ -110,7 +110,10 @@ export const addRequest = (requestData, userId) => {
 
     return dispatch => {
         dispatch(addRequestsStart());
-        axios.post('/requests/create/' + userId, requestData)
+        axios.post('/requests/create/' + userId, requestData, { headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json' 
+          }})
             .then(response => {
                 console.log(response)
                 dispatch(addRequestsSuccess(response.data.idRequest, requestData));
@@ -125,6 +128,8 @@ export const addRequest = (requestData, userId) => {
 export const addBudget = (userId,budgetData) => {
 
     return dispatch => {
+        budgetData.manager = null;
+        budgetData.building= null;
         dispatch(addRequestsStart());
         axios.post('/requests/budget/' + userId, budgetData)
             .then(response => {
@@ -197,6 +202,8 @@ export const removeRequests = (requestId) => {
 
 export const fetchApproveRequests = (requestId,request) =>{
     return dispatch => {
+        request.manager = null;
+        request.building= null;
         console.log("request actual",request)
     axios.post(`/requests/approve/${requestId}`,request)
         .then(res =>{
@@ -233,7 +240,8 @@ export const removedFalseRequest = () => {
 
 export const fetchApproveBudget = (requestId,request) =>{
     return dispatch => {
-
+        request.manager = null;
+        request.building= null;
     axios.post(`/requests/budget/approve/${requestId}`,request)
         .then(res =>{
             console.log("aprobada",res)
@@ -293,6 +301,9 @@ export const assingDriver= (idDriver,idRequest) =>{
 
 export const updateItems=(request,type,userId)=>{
     return dispatch=>{
+        request.manager = null;
+        request.building= null;
+        request.driver=null;
         axios.post(`/requests/update-items/${userId}/${type}`,request)
         .then(res =>{
             dispatch(updateItemSuccess())

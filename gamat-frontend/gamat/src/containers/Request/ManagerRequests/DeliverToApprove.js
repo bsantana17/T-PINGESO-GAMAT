@@ -5,6 +5,7 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, La
 import Spinner from '../../../components/UI/Spinner';
 import { connect } from 'react-redux';
 import * as actions from '../../../store/actions/index';
+import LectorQr from '../../Qr/LectorQr';
 
 
 class DeliverToApprove extends Component {
@@ -14,12 +15,14 @@ class DeliverToApprove extends Component {
       modal: false,
       open: false,
       itemStates:[],
-      indice:0
+      indice:0,
+      validate:false
     };
 
     this.toggle = this.toggle.bind(this);
     this.handlerOnChangeState=this.handlerOnChangeState.bind(this);
     this.handlerOnSendItems=this.handlerOnSendItems.bind(this);
+    this.handleOnValidate=this.handleOnValidate.bind(this);
     // this.handleOnDelete = this.handleOnDelete.bind(this);
     // this.handleOnOpenEdit = this.handleOnOpenEdit.bind(this) ;
     // this.handleOnEditItem= this.handleOnEditItem.bind(this);
@@ -69,6 +72,18 @@ this.setState({
 });
 }
 
+handleOnValidate(data){
+  const idRequest = this.props.requests[this.state.indice].idRequest;
+  console.log("data",data)
+  if(data == idRequest.toString()){
+    this.setState({
+      validate: true
+    })
+  }
+
+}
+
+
 
 render() {
 
@@ -89,6 +104,9 @@ render() {
 
     return (
   <div>
+      { !this.state.validate ? <LectorQr onValidateData={this.handleOnValidate}/>:
+      <div>
+
      {this.props.updateItemSuccess && <Redirect to='/requests' />}
     <h2>Solicitud Entregada: </h2>
     <p>Jefe de Obra: Juanito Perez</p>
@@ -97,19 +115,19 @@ render() {
     <h3>Items a Entregar:</h3>
     <div className="row">
       { this.props.requests[this.state.indice].items.map((item,i)=>(
-
+        
         
         <ItemToApproveDeliver
-          key={i}
-          i={i}
-          select={this.state.itemStates[i]} 
-          quantity={item.quantity}
-          name={item.name} 
-          description={item.description}
-          distributor={item.distributor}
-          onChangeState={this.handlerOnChangeState}         
-          />
-      ))
+        key={i}
+        i={i}
+        select={this.state.itemStates[i]} 
+        quantity={item.quantity}
+        name={item.name} 
+        description={item.description}
+        distributor={item.distributor}
+        onChangeState={this.handlerOnChangeState}         
+        />
+        ))
     }
     </div>
 
@@ -146,6 +164,7 @@ render() {
       </ModalFooter>
     </Modal>
 
+        </div>}
   </div>
 )
 }

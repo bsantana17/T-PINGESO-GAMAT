@@ -52,7 +52,9 @@ public class RequestService {
         if (request != null) {
         	request.setBuilding(request1.getBuilding());
         	request.setManager(request1.getManager());
+        	request.setDriver(request1.getDriver());
             request.setState("Aprobado");
+            System.out.println("llegue aca");
             serviceBD.saveRequest(request);
             return HttpStatus.OK;
         }

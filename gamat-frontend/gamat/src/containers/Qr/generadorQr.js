@@ -15,7 +15,7 @@ class generadorQr extends Component {
     componentDidMount(){
         let indiceRequest =  this.props.requests.findIndex(
             (req)=>req.idRequest == this.props.match.params.idRequest);
-        let idRequest=this.props.request[indiceRequest].idRequest.toString();
+        let idRequest=this.props.requests[indiceRequest].idRequest.toString();
             this.setState({indice:indiceRequest,
             idRequest: idRequest})
     }
