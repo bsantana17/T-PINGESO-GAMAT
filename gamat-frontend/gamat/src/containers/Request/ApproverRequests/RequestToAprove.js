@@ -30,7 +30,7 @@ class RequestoToAprove extends Component {
         const newObservations= this.props.requests[indiceRequest].items.map(()=>"")
         const newStates=this.props.requests[indiceRequest].items.map(()=>"");
       
-
+            console.log( this.props.requests[indiceRequest])
         this.setState({
             indice: indiceRequest,
             // items: request.items,

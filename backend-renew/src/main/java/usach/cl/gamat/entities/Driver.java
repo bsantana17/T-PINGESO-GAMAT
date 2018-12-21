@@ -9,9 +9,10 @@ import java.util.Set;
 
 @Entity
 @DiscriminatorValue("Driver")
-@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="idUser")
+//@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="idUser")
 public class Driver extends User{
     //@JsonManagedReference
+	@JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "driver")
     private List<Request> request;
 

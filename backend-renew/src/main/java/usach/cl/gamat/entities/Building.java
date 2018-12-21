@@ -9,7 +9,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "building")
-@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="idBuilding")
+//@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="idBuilding")
 public class Building {
 
     @Id
@@ -39,7 +39,7 @@ public class Building {
     @JoinColumn(name="user_id")
     private Approver approver;
 
-    //@JsonIgnore
+    @JsonIgnore
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @OneToOne(mappedBy = "building")
     private Manager manager;

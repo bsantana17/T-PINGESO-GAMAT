@@ -65,9 +65,9 @@ public class RequestService {
     public HttpStatus aprobarRequest(@PathVariable("idRequest") Integer id,@RequestBody Request request) {
 		Request request1 = serviceBD.getRequestById(id);
         if (request != null) {
-        	request.setBuilding(request1.getBuilding());
-        	request.setManager(request1.getManager());
-        	request.setDriver(request1.getDriver());
+//        	request.setBuilding(request1.getBuilding());
+//        	request.setManager(request1.getManager());
+//        	request.setDriver(request1.getDriver());
             request.setState("Aprobado");
             System.out.println("llegue aca");
             serviceBD.saveRequest(request);
@@ -79,7 +79,7 @@ public class RequestService {
     
     @PostMapping("/update-items/{idUser}/{type}")
     public HttpStatus updateItems(@PathVariable("idUser") Integer id,@PathVariable("type") Integer type,@RequestBody Request request) {
-		Request request1 = serviceBD.getRequestById(request.getIdRequest());
+//		Request request1 = serviceBD.getRequestById(request.getIdRequest());
     	Driver driver=serviceBD.getDriverById(id);
     	String state="Retirada";
     	switch (type) {
@@ -99,8 +99,8 @@ public class RequestService {
         if (request != null) {
             request.setState(state);
             request.setDriver(driver);
-            request.setBuilding(request1.getBuilding());
-        	request.setManager(request1.getManager());
+//            request.setBuilding(request1.getBuilding());
+//        	request.setManager(request1.getManager());
             serviceBD.saveRequest(request);
             return HttpStatus.OK;
         }
@@ -110,10 +110,10 @@ public class RequestService {
 
     @PostMapping("/budget/approve/{idRequest}")
     public HttpStatus aprobarBudget(@PathVariable("idRequest") Integer id,@RequestBody Request request) {
-		Request request1 = serviceBD.getRequestById(request.getIdRequest());
+//		Request request1 = serviceBD.getRequestById(request.getIdRequest());
         if (request != null) {
-        	request.setBuilding(request1.getBuilding());
-        	request.setManager(request1.getManager());
+//        	request.setBuilding(request1.getBuilding());
+//        	request.setManager(request1.getManager());
             request.setState("Autorizada");
             serviceBD.saveRequest(request);
             return HttpStatus.OK;
@@ -252,6 +252,7 @@ public class RequestService {
 
                 if (request.getState().equals(nameState) ){
                 	//request.setBuilding(null);
+                	
                     requestsApprove.add(request);
                 }
             }

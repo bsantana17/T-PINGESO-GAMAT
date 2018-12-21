@@ -39,6 +39,8 @@ class RequestToPickUp extends Component {
           indice:indiceRequest,
           itemStates:itemStates
         })
+
+        console.log( this.props.requests[indiceRequest])
     }
     handlerOnChangeState(i){
       let newItemState=[...this.state.itemStates]

@@ -7,7 +7,7 @@ import java.util.Set;
 
 @Entity
 @DiscriminatorValue("Manager")
-@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="idUser")
+//@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="idUser")
 public class Manager extends User{
     @JsonIgnore
     @OneToMany(mappedBy="manager",fetch= FetchType.LAZY,cascade= CascadeType.ALL)

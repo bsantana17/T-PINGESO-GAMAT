@@ -128,8 +128,8 @@ export const addRequest = (requestData, userId) => {
 export const addBudget = (userId,budgetData) => {
 
     return dispatch => {
-        budgetData.manager = null;
-        budgetData.building= null;
+        // budgetData.manager = null;
+        // budgetData.building= null;
         dispatch(addRequestsStart());
         axios.post('/requests/budget/' + userId, budgetData)
             .then(response => {
@@ -202,8 +202,8 @@ export const removeRequests = (requestId) => {
 
 export const fetchApproveRequests = (requestId,request) =>{
     return dispatch => {
-        request.manager = null;
-        request.building= null;
+        // request.manager = {idUser:request.manager};
+        // request.building= {idBuilding: request.building};
         console.log("request actual",request)
     axios.post(`/requests/approve/${requestId}`,request)
         .then(res =>{
@@ -240,8 +240,8 @@ export const removedFalseRequest = () => {
 
 export const fetchApproveBudget = (requestId,request) =>{
     return dispatch => {
-        request.manager = null;
-        request.building= null;
+        // request.manager = {idUser:request.manager};
+        // request.building= {idBuilding: request.building};
     axios.post(`/requests/budget/approve/${requestId}`,request)
         .then(res =>{
             console.log("aprobada",res)
@@ -301,11 +301,12 @@ export const assingDriver= (idDriver,idRequest) =>{
 
 export const updateItems=(request,type,userId)=>{
     return dispatch=>{
-        request.manager = null;
-        request.building= null;
-        request.driver=null;
+        console.log(request)
+        // request.manager = {idUser:request.manager};
+        // request.building= {idBuilding: request.building};
+        // request.driver={idUser: request.driver};
         axios.post(`/requests/update-items/${userId}/${type}`,request)
-        .then(res =>{
+        .then(res =>{ 
             dispatch(updateItemSuccess())
         })
         .catch(err => {
