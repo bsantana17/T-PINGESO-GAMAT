@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Layout from './components/Layout/Layout';
-import {Route, withRouter}from 'react-router-dom';
+import {Route, withRouter,Redirect}from 'react-router-dom';
 import NewRequest from './containers/Request/NewRequest/NewRequest';
 import Requests from './containers/Request/Requests/Requests';
 import RemovedSuccess from './containers/Request/Requests/Requests';
@@ -20,6 +20,18 @@ import AssingRequest from './containers/Request/AssingRequest/AssingRequest';
 import generadorQr from './containers/Qr/generadorQr';
 
 
+// componente para filtrar rutas ( en desarrollo, le debo hacer algunas modificaciones)
+const PrivateRoute = ( { component: Component,auth, rest } ) => (
+  <Route
+    {...rest}
+   render={
+      props => auth 
+        ? <Component  {...props} />
+        : <Redirect to={ { pathname: '/', state: { from: props.location } } } />
+    }
+  />
+)
+
 class App extends Component {
 
   componentDidMount () {
@@ -31,6 +43,7 @@ class App extends Component {
         <div>
           <Layout>
             <Route path="/new-request" exact component={ NewRequest }></Route>
+            {/* <PrivateRoute auth={false} path='/requests' component={Requests} /> */}
             <Route path="/requests" exact component={ Requests }></Route>
             <Route path="/login" exact component={ Login }></Route>
             <Route path="/new-budget/:idRequest" exact component= {newBudget}></Route>
