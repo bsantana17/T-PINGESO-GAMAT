@@ -18,6 +18,7 @@ import ApproveBudget from './containers/Request/BuyerRequests/ApproveBudget';
 import testingQR from './containers/QRTest/testingQR';
 import AssingRequest from './containers/Request/AssingRequest/AssingRequest';
 import generadorQr from './containers/Qr/generadorQr';
+import Users from './containers/Administration/Users'
 
 
 // componente para filtrar rutas ( en desarrollo, le debo hacer algunas modificaciones)
@@ -58,6 +59,7 @@ class App extends Component {
             <Route path="/request-to-deliver/:idRequest" exact component={ RequestToDeliver }></Route>
             <Route path="/deliver-to-approve/:idRequest" exact component={ DeliverToApprove }></Route>
             <Route path="/validation/:idRequest" exact component={ generadorQr }></Route>
+            <Route path="/users" exact component={Users}></Route>
           </Layout>
         </div>
     );

@@ -18,3 +18,8 @@ export {
     login,
     loginCheckState
 } from './loginActions';
+
+export {
+    fetchUsers,
+    addUser
+} from './userActions'
