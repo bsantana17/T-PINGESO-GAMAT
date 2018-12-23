@@ -2,7 +2,11 @@ package usach.cl.gamat.entities;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "company")
@@ -20,6 +24,14 @@ public class Company {
     @Column(name="create_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
+    
+    @JsonIgnore
+    @OneToMany(mappedBy="company",fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+    private List<Building> buildings;
+    
+    
+//    @OneToMany(mappedBy="company",fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+//    private List<Approver> approvers;
 
     public int getIdCompany() {
         return idCompany;
@@ -44,4 +56,14 @@ public class Company {
     public void setDate(Date date) {
         this.date = date;
     }
+
+	public List<Building> getBuildings() {
+		return buildings;
+	}
+
+	public void setBuildings(List<Building> buildings) {
+		this.buildings = buildings;
+	}
+    
+    
 }

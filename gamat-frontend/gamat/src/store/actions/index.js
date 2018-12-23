@@ -23,3 +23,10 @@ export {
     fetchUsers,
     addUser
 } from './userActions'
+
+export {
+    fetchCompanies,
+    addCompany,
+    fetchBuildings,
+    addBuilding
+} from './buildingActions'
