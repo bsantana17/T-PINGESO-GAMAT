@@ -132,8 +132,8 @@ class Requests extends Component {
                 <Button className="btn btn-sm btn-success" id="aprobar">Cotizar</Button>
               </Link>
             }
-            {this.props.userType === "Buyer" && this.state.estado === 0 && 
-            (request.state=='Cotizacion' || request.state=='Autorizada') &&
+            {this.props.userType === "Buyer" && this.state.estado == 1 && 
+            request.state==='Autorizada' &&
               <Link to={{ pathname: '/new-budget/' + request.idRequest, state: i }}>
                 <Button className="btn btn-sm btn-success" id="aprobar">Editar Cotizacion</Button>
               </Link>

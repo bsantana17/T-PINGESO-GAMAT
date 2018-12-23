@@ -30,7 +30,9 @@ const TableItem = props => {
                             <td>
                                 {/* <div > */}
                                 <Button  size="sm" color="info" onClick={(e)=>props.onSeeItem(index)}>Ver</Button>
-                                <Button size ="sm" color="danger" style={{display: "inline-block"}} onClick={(e)=>props.openAddItem(index)}>+</Button>
+                                <Button size ="sm" color={props.editItems[index] ? 'primary':'danger'} style={{display: "inline-block"}} onClick={(e)=>props.openAddItem(index)}>
+                                {props.editItems[index] ? 'Editar':'+'}
+                                </Button>
                                     {/* <AddItemtoBudget cantidad={this.props.datosRequest.quantity} onAddItem={(e) => this.addItemHandler(e)} /> */}
                                     {/*Cuando se crea una budget, deberia poder ver su budget a partir de un botn.*/}
                                     {/* <SeeBudgetforItem datos={this.state.budgetItem} funcion={this.displayCollapse}></SeeBudgetforItem> */}

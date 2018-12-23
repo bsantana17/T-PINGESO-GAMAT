@@ -44,6 +44,7 @@ class NewBudget extends Component {
             openAddItem: false,
             indiceItem: 0,
             indiceSeeItem:0,
+            editItems:[],
             // esto se cambiara si es que se elimina la tabla
             estados:[
                 {
@@ -107,11 +108,29 @@ class NewBudget extends Component {
             (req) => req.idRequest == this.props.match.params.idRequest);
             console.log("REQUEST",this.props.requests[indiceRequest])
             
-        let itemsActuales = this.props.requests[indiceRequest].items.map(item => ({ ...item,totalWeight:0,totalPrice:0}))
-        this.setState({
-            items: itemsActuales,
-            indiceRequest: indiceRequest
-        })
+            if(this.props.requests[indiceRequest].state=='Cotizacion' ||
+            this.props.requests[indiceRequest].state=='Autorizada'){
+               
+                let itemsActuales = this.props.requests[indiceRequest].items.map(item => ({ ...item}))
+                let editItems=this.props.requests[indiceRequest].items.map(item=>true)
+                this.setState({
+                    items: itemsActuales,
+                    indiceRequest: indiceRequest,
+                    editItems:editItems
+                },()=>{ this.calculatePrices();})
+        
+            }
+            else{
+
+                let itemsActuales = this.props.requests[indiceRequest].items.map(item => ({ ...item,totalWeight:0,totalPrice:0}))
+                let editItems=this.props.requests[indiceRequest].items.map(item=>false)
+                this.setState({
+                    items: itemsActuales,
+                    indiceRequest: indiceRequest,
+                    editItems:editItems
+                })
+                
+            }
 
 
     }
@@ -160,9 +179,9 @@ class NewBudget extends Component {
 
 
     handlerOpenAddItem(index) {
-        this.toggleAddItem()
+        
         console.log("abirnedo item",index)
-        this.setState({ indiceItem: index })
+        this.setState({ indiceItem: index }, ()=>{this.toggleAddItem()})
     }
 
     /* Esta función deberia agregar a la budget los valores de cada item!*/
@@ -177,12 +196,16 @@ class NewBudget extends Component {
         copiaItem[i].price= this.state.price;
         copiaItem[i].totalPrice= this.state.preciototal;
         copiaItem[i].weight=this.state.weight;
-        copiaItem[i].pesototal=this.state.pesototal;
-        copiaItem[i].comments=this.state.comments;
+        copiaItem[i].totalWeight=this.state.pesototal;
+        copiaItem[i].comment=this.state.comments;
         copiaItem[i].distributor= this.state.provider;
         copiaItem[i].itemState=this.state.estados[this.state.estado]
+        let editItems= [...this.state.editItems]
+        editItems[i]=true;
+
         this.setState({
             items: copiaItem,
+            editItems:editItems
         }, () => {
             this.calculatePrices()
             this.toggleAddItem();});
@@ -203,6 +226,19 @@ class NewBudget extends Component {
                     comments:0,
                     provider:'',
                     indiceItem:0
+                })
+            }
+
+            else if (this.state.editItems[this.state.indiceItem]){
+                let item = this.state.items[this.state.indiceItem]
+                this.setState({
+                    price:item.price,
+                    preciototal:item.totalPrice,
+                    weight:item.weight,
+                    pesototal:item.totalWeight,
+                    comments:item.comment,
+                    provider:item.distributor,
+                    
                 })
             }
         })
@@ -287,6 +323,7 @@ class NewBudget extends Component {
                         items={this.state.items}
                         openAddItem={this.handlerOpenAddItem}
                         onSeeItem={this.handlerSeeItem}
+                        editItems={this.state.editItems}
                     />
                      {
                         this.state.items.length > 0  &&
