@@ -119,25 +119,41 @@ public class RequestService {
 //        	request.setManager(request1.getManager());
             request.setState("Autorizada");
             for (Item item:request.getItems()){
-                if (item.getState().equals("Pendiente")){
-                    itemPendientes.add(item);
+                if (item.getState().equals("no autorizado")){
+                	Item newItem = new Item ();
+                	newItem.setComment(item.getComment());
+                	newItem.setDescription(item.getDescription());
+                	newItem.setDistributor(item.getDistributor());
+                	newItem.setMeasure(item.getMeasure());
+                	newItem.setObservation(item.getObservation());
+                	newItem.setPrice(item.getPrice());
+                	newItem.setName(item.getName());
+                	newItem.setQuantity(item.getQuantity());
+                	newItem.setState("Aprobado");
+                	newItem.setTotalPrice(item.getTotalPrice());
+                	newItem.setTotalWeight(item.getTotalWeight());
+                	newItem.setWeight(item.getWeight());
+                	newItem.setUrgency(item.isUrgency());
+                	itemPendientes.add(newItem);
                 }
                 else{
                     itemAprobados.add(item);
                 }
             }
             if(itemPendientes.size() > 0){
-                nuevaRequest.setItems(itemPendientes);
+                
+            	nuevaRequest.setItems(itemPendientes);
                 nuevaRequest.setState("Aprobado");
                 nuevaRequest.setManager(request.getManager());
                 nuevaRequest.setDriver(request.getDriver());
                 nuevaRequest.setBuilding(request.getBuilding());
-                nuevaRequest.setObservation("Solicitud creada debido al rechazo de otra: " + request.getObservation());
+                nuevaRequest.setObservation("Solicitud creada debido a item rechazados de otra: " + request.getObservation());
                 nuevaRequest.setPayCondition(request.getPayCondition());
             }
+           
+            serviceBD.saveRequest(nuevaRequest);
             request.setItems(itemAprobados);
             serviceBD.saveRequest(request);
-            serviceBD.saveRequest(nuevaRequest);
             return HttpStatus.OK;
         }
         return HttpStatus.INTERNAL_SERVER_ERROR;
@@ -210,18 +226,21 @@ public class RequestService {
             @PathVariable("state") Integer state){
         String nameState;
         switch (state) {
-            case 0:
+	        case 0:
+	        	nameState="";
+	        	break;
+            case 1:
                 nameState="Pendiente por revisar";
                 break;
-            case 1:
+            case 2:
                 nameState="Aprobado";
                 break;
-            case 2:
+            case 3:
                 nameState="Cotizacion";
                 break;
-            case 3:
-            	nameState="Entregada";
-            	break;
+//            case 3:
+//            	nameState="Entregada";
+//            	break;
 
             default:
                 nameState=null;
@@ -231,6 +250,8 @@ public class RequestService {
         List<Request> requests = new ArrayList<>();
         //for(UserType rol:user.getRoles()){
         //if(user.getRol().getIdUserType() == 1){
+        if(nameState !="") {
+        	
             for (Building building:user.getBuildings()){
                 for(Request request : building.getRequests()) {
                 	
@@ -240,6 +261,20 @@ public class RequestService {
                     }
                 }
             }
+        }else {
+            for (Building building:user.getBuildings()){
+                for(Request request : building.getRequests()) {
+                	
+                	
+                    if (request.getState().equals("Aprobado") || request.getState().equals("Cotizacion")
+                    		|| request.getState().equals("Pendiente por revisar")){
+                    	
+                        requests.add(request);
+                    }
+                }
+            }
+        	
+        }
         //}
         //}
         return requests;
@@ -256,12 +291,18 @@ public class RequestService {
         //if(user.getRol().getIdUserType() == 3){
         String nameState;
         switch (state) {
-            case 0:
+            case 1:
                 nameState="Aprobado";
                 break;
-            case 1:
+            case 2:
                 nameState="Autorizada";
                 break;
+            case 3:
+            	nameState="Cotizacion";
+            	break;
+            case 4:
+            	nameState="Asignada";
+            	break;
         
 
             default:
@@ -292,7 +333,7 @@ public class RequestService {
         Iterable<Request> requests = serviceBD.findAllRequest();
         for (Request request:requests){
             if (request.getState().equals("Aprobado") || request.getState().equals("Autorizada") ||
-                    request.getState().equals("Cotizacion") || request.getState().equals("Comprada")){
+                    request.getState().equals("Cotizacion") || request.getState().equals("Asignada")){
                 buyerRequests.add(request);
             }
         }

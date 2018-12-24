@@ -168,7 +168,8 @@ export const fetchRequests = (userId, userType,state) => {
             ruta = `/requests/${userId}/${state}/approver` :
         userType === "Manager" ?
             ruta = `/requests/${userId}/manager`:
-        userType === "Buyer"?   
+        userType === "Buyer"? 
+            state == 0 ?  ruta = `/requests/${userId}/all/buyer`:
             ruta = `/requests/${userId}/${state}/buyer`:
             ruta = `/requests/${userId}/driver`;   
         // console.log('id de user es ',userId)
@@ -242,7 +243,7 @@ export const fetchApproveBudget = (requestId,request) =>{
     return dispatch => {
         // request.manager = {idUser:request.manager};
         // request.building= {idBuilding: request.building};
-    axios.post(`/requests/budget/approve/${requestId}`,request)
+    axios.post(`/requests/budget/approve`,request)
         .then(res =>{
             console.log("aprobada",res)
             dispatch (approveBudgetSuccess());

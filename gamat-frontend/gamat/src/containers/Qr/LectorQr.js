@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import QRCode from 'qrcode.react';
 import QrReader from 'react-qr-reader';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
+import {Link} from 'react-router-dom'
 
 class LectorQr extends Component {
 
@@ -46,6 +47,7 @@ class LectorQr extends Component {
             
             <div className="row">
                 <div className="col-12 col-md-4">
+                <Link to='/requests'><button className="btn btn-secondary">Volver</button></Link>
                 <center>
                     <h4>Lea el codigo Qr del Jefe de Obra para validar la entrega</h4>
                     <Button color="danger" onClick={this.toggle}>Abrir Lector </Button>

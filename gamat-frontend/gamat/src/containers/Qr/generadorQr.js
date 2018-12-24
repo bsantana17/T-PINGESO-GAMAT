@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import QRCode from 'qrcode.react';
 import { connect } from 'react-redux';
+import {Link} from 'react-router-dom';
 
 
 class generadorQr extends Component {
@@ -26,6 +27,7 @@ class generadorQr extends Component {
                     <center>
                     <h3>Escanea el siguiente código</h3>
                     <QRCode value={this.state.idRequest}></QRCode>  
+                    <Link to='/requests'><button className="btn btn-secondary">Volver</button></Link>
                     </center>
                 </div>   
             </div>

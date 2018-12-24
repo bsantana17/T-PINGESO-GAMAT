@@ -28,7 +28,7 @@ class ApproveBudget extends Component {
 
     componentDidMount(){
         let indiceRequest =  this.props.requests.findIndex(
-            (req)=>req.idRequest === this.props.match.params.idRequest);
+            (req)=>req.idRequest == this.props.match.params.idRequest);
       
         const newStates=this.props.requests[indiceRequest].items.map(()=>false);
             console.log("nesStates",newStates)
@@ -70,12 +70,13 @@ class ApproveBudget extends Component {
         let request= this.props.requests[this.state.indiceRequest]
        let newItems = request.items.map((item,i)=>{
            let state;
-            states[i] ? state={idItemState:6,name:'autorizado'}:
-            state={idItemState:8,name:'no autorizado'};
+            states[i] ? state='autorizado':
+            state='no autorizado';
 
-            return {...item,itemState:state}
+            return {...item,state:state}
         })
         let newStateRequest={...request,items:newItems}
+
         return newStateRequest
     }
 
@@ -83,6 +84,7 @@ class ApproveBudget extends Component {
     handleOnApprove(){
         const idRequest= this.props.requests[this.state.indiceRequest].idRequest;
         let newStateRequest = this.helperRefreshItems();
+        console.log(newStateRequest)
         this.props.onApproveBudget(idRequest,newStateRequest);
 
     }

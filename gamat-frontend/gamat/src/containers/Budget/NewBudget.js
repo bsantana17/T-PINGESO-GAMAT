@@ -101,7 +101,7 @@ class NewBudget extends Component {
         //Carga los elementos de una request
         // this.props.onFetchRequest();
         let indiceRequest = this.props.requests.findIndex(
-            (req) => req.idRequest === this.props.match.params.idRequest);
+            (req) => req.idRequest == this.props.match.params.idRequest);
             console.log("REQUEST",this.props.requests[indiceRequest])
             
             if(this.props.requests[indiceRequest].state === 'Cotizacion' ||

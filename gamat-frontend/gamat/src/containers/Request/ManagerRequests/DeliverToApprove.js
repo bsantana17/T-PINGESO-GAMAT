@@ -104,7 +104,7 @@ render() {
 
     return (
       <div>
-        { !this.state.validate ? <LectorQr onValidateData={this.handleOnValidate}/>:
+       
         <div>
 
           {this.props.updateItemSuccess && <Redirect to='/requests' />}
@@ -165,7 +165,7 @@ render() {
             </Modal>
 
           </div>
-        }
+        
       </div>
     )
   }

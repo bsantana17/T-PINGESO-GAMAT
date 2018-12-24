@@ -146,7 +146,7 @@ class NewRequest extends Component {
             {items}
         </div>
 
-        <Link to='/'><button className="btn btn-secondary">Volver</button></Link>{' '}
+        <Link to='/requests'><button className="btn btn-secondary">Volver</button></Link>{' '}
         <button className="btn btn-success" disabled={!this.state.items.length > 0} onClick={this.toggle} >Enviar Solicitud</button>
        
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
