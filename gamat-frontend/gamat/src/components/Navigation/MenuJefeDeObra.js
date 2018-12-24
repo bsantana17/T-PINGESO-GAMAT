@@ -19,11 +19,14 @@ import {
                     <Link to='/new-request'>Ingresar Nueva Solicitud</Link>
                   </DropdownItem>
                   <DropdownItem>
+                    <Link to='/requests'>Solicitudes </Link>
+                  </DropdownItem>
+                  {/* <DropdownItem>
                     <Link to=''>Confirmar Recepción</Link>
                   </DropdownItem>
                   <DropdownItem>
                     <Link to='/requests'>Historial de Solicitudes </Link>
-                  </DropdownItem>
+                  </DropdownItem> */}
                 </DropdownMenu>
               </UncontrolledDropdown>
             </Nav>

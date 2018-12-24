@@ -15,13 +15,13 @@ import {
                   Solicitudes
                 </DropdownToggle>
                 <DropdownMenu left='true' >
-                <DropdownItem>
+                  <DropdownItem>
                     <Link to='/new-request'>Ingresar Nueva Solicitud</Link>
                   </DropdownItem>
                   <DropdownItem>
-                    <Link to=''>Confirmar Recepción</Link>
+                    <Link to='/requests'>Solicitudes</Link>
                   </DropdownItem>
-                  <DropdownItem>
+                  {/* <DropdownItem>
                     <Link to='/requests'>Aprobar Solicitud</Link>
                   </DropdownItem>
                   <DropdownItem>
@@ -29,7 +29,7 @@ import {
                   </DropdownItem>
                   <DropdownItem>
                     <Link to='/requests'>Historial de Solicitudes </Link>
-                  </DropdownItem>
+                  </DropdownItem> */}
                 </DropdownMenu>
               </UncontrolledDropdown>
             </Nav>
