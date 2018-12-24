@@ -9,7 +9,8 @@ class AddItemModal extends React.Component {
       name: '',
       quantity: '',
       urgency: false,
-      description: ''
+      description: '',
+      measure: '',
     };
 
    
@@ -19,14 +20,13 @@ class AddItemModal extends React.Component {
   }
 
   componentDidMount(){
-      
-   
     if(this.props.item !== null){
       this.setState({
         name:this.props.item.name,
         quantity: this.props.item.quantity,
         urgency: this.props.item.urgency,
-        description: this.props.item.description
+        description: this.props.item.description,
+        measure: this.props.item.measure
       })
       
     }
@@ -59,6 +59,7 @@ class AddItemModal extends React.Component {
       quantity: this.state.quantity,
       urgency: this.state.urgency,
       description: this.state.description,
+      measure: this.state.measure,
       price: null,
       itemState: null,
       state: "pendiente"
@@ -71,7 +72,8 @@ class AddItemModal extends React.Component {
       name: '',
       quantity: '',
       urgency: false,
-      description: ''
+      description: '',
+      measure: '',
     })
     return this.props.toggle()
   }
@@ -103,10 +105,16 @@ class AddItemModal extends React.Component {
                 <Input value={this.state.name} type="text" name="name" id="name" onChange={this.inputHandler}/>
                 </FormGroup>
 
-                <FormGroup>
-                <Label for="quantity">Cantidad</Label>
-                <Input value={this.state.quantity} type="number" name="quantity" id="quantity" onChange={this.inputHandler}/>
-                </FormGroup>
+                <div className="row m-0">
+                  <div className="col-6 pl-0">
+                  <Label for="quantity">Cantidad</Label>
+                  <Input value={this.state.quantity} type="number" name="quantity" id="quantity" onChange={this.inputHandler}/>
+                  </div>
+                  <div className="col-6 pr-0">
+                  <Label for="measure">Unidad</Label>
+                  <Input value={this.state.measure} type="text" name="measure" id="measure" onChange={this.inputHandler}/>
+                  </div>
+                </div>
 
                 <FormGroup>
                     <Label for="urgency">Urgencia</Label>

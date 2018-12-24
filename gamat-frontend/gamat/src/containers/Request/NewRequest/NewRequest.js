@@ -110,6 +110,7 @@ class NewRequest extends Component {
                 quantity={item.quantity} 
                 description={item.description} 
                 urgency={item.urgency}
+                measure={item.measure}
                 onEdit={ e =>this.handleOnOpenEdit(index)}
                 onDelete={ e =>this.handleOnDelete(index)}
                 />
@@ -125,8 +126,8 @@ class NewRequest extends Component {
     return (
       <div>
         <div className="d-flex">
-          <div className="mr-3"><h3>Nueva solicitud</h3></div>
-          <Button color="danger" onClick={this.toggleAddItem}>Agregar Item</Button>
+          <div className="mr-3"><h4>Nueva solicitud</h4></div>
+          <Button color="info" onClick={this.toggleAddItem}>Agregar Item</Button>
           {this.state.open &&
 
           <div><AddItemModal  
@@ -145,8 +146,8 @@ class NewRequest extends Component {
             {items}
         </div>
 
-        <button className="btn btn-primary" disabled={!this.state.items.length > 0} onClick={this.toggle} >Enviar Solicitud</button>{' '}
-        <Link to='/'><button className="btn btn-secondary">Volver</button></Link>
+        <Link to='/'><button className="btn btn-secondary">Volver</button></Link>{' '}
+        <button className="btn btn-success" disabled={!this.state.items.length > 0} onClick={this.toggle} >Enviar Solicitud</button>
        
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
           <ModalHeader toggle={this.toggle}>Enviar Solicitud</ModalHeader>

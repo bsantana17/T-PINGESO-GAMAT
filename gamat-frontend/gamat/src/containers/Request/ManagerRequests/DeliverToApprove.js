@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import ItemToApproveDeliver from './ItemToApproveDeliver'
 import { Link,Redirect } from 'react-router-dom';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 import Spinner from '../../../components/UI/Spinner';
 import { connect } from 'react-redux';
 import * as actions from '../../../store/actions/index';
@@ -75,7 +75,7 @@ this.setState({
 handleOnValidate(data){
   const idRequest = this.props.requests[this.state.indice].idRequest;
   console.log("data",data)
-  if(data == idRequest.toString()){
+  if(data === idRequest.toString()){
     this.setState({
       validate: true
     })
@@ -103,71 +103,72 @@ render() {
       ))
 
     return (
-  <div>
-      { !this.state.validate ? <LectorQr onValidateData={this.handleOnValidate}/>:
       <div>
+        { !this.state.validate ? <LectorQr onValidateData={this.handleOnValidate}/>:
+        <div>
 
-     {this.props.updateItemSuccess && <Redirect to='/requests' />}
-    <h2>Solicitud Entregada: </h2>
-    <p>Jefe de Obra: Juanito Perez</p>
-    <p>Direccion de obra: {this.props.requests[this.state.indice].building.address}</p>
+          {this.props.updateItemSuccess && <Redirect to='/requests' />}
+            <h4>Solicitud Entregada: </h4>
+            <p><strong>Jefe de Obra:</strong> Juanito Perez</p>
+            <p><strong>Dirección de obra:</strong> {this.props.requests[this.state.indice].building.address}</p>
 
-    <h3>Items a Entregar:</h3>
-    <div className="row">
-      { this.props.requests[this.state.indice].items.map((item,i)=>(
-        
-        
-        <ItemToApproveDeliver
-        key={i}
-        i={i}
-        select={this.state.itemStates[i]} 
-        quantity={item.quantity}
-        name={item.name} 
-        description={item.description}
-        distributor={item.distributor}
-        onChangeState={this.handlerOnChangeState}         
-        />
-        ))
-    }
-    </div>
+            <h4>Items Entregados:</h4>
+            <div className="row">
+              { this.props.requests[this.state.indice].items.map((item,i)=>(
+                
+                
+                <ItemToApproveDeliver
+                key={i}
+                i={i}
+                select={this.state.itemStates[i]} 
+                quantity={item.quantity}
+                name={item.name} 
+                description={item.description}
+                distributor={item.distributor}
+                onChangeState={this.handlerOnChangeState}         
+                />
+                ))
+            }
+            </div>
 
-    <button className="btn btn-primary" disabled={false} onClick={this.toggle} >Enviar Reporte</button>{' '}
-    <Link to='/'><button className="btn btn-secondary">Volver</button></Link>
+            <Link to='/'><button className="btn btn-secondary">Volver</button></Link>{' '}
+            <button className="btn btn-success" disabled={false} onClick={this.toggle} >Enviar Reporte</button>
 
-    <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-      <ModalHeader toggle={this.toggle}>Enviar Reporte</ModalHeader>
-      <ModalBody>
-        {this.props.loading ? <Spinner/> : 
-          <div>
-            Los siguientes items fueron entregados:
-            <table className="table table-sm">
-              <thead>
-                <tr>
-                <th>Nombre</th>
-                <th>Cantidad</th>
-                <th>Estado</th>
-                </tr>
-              </thead>
-              <tbody>
-                {itemsRow}
-              
-              </tbody>
-            </table>
-          
-        
-        </div>
+            <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
+              <ModalHeader toggle={this.toggle}>Enviar Reporte</ModalHeader>
+              <ModalBody>
+                {this.props.loading ? <Spinner/> : 
+                  <div>
+                    Los siguientes items fueron entregados:
+                    <table className="table table-sm">
+                      <thead>
+                        <tr>
+                        <th>Nombre</th>
+                        <th>Cantidad</th>
+                        <th>Estado</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {itemsRow}
+                      
+                      </tbody>
+                    </table>
+                  
+                
+                </div>
+                }
+              </ModalBody>
+              <ModalFooter>
+                <Button color="primary" onClick={this.handlerOnSendItems} disabled={false}>Enviar</Button>{' '}
+                <Button color="secondary" onClick={this.toggle}>Cancelar</Button>
+              </ModalFooter>
+            </Modal>
+
+          </div>
         }
-      </ModalBody>
-      <ModalFooter>
-        <Button color="primary" onClick={this.handlerOnSendItems} disabled={false}>Enviar</Button>{' '}
-        <Button color="secondary" onClick={this.toggle}>Cancelar</Button>
-      </ModalFooter>
-    </Modal>
-
-        </div>}
-  </div>
-)
-}
+      </div>
+    )
+  }
 }
 
 

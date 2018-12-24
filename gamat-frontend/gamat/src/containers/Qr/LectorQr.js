@@ -44,10 +44,12 @@ class LectorQr extends Component {
     render() {
         return (
             
-                 <div className="row">
-            <div className="col-12 col-md-4">
-                <h3>Lea el codigo Qr del Jefe de Obra para validar la entrega</h3>
-                <Button color="danger" onClick={this.toggle}>Abrir Lector </Button>
+            <div className="row">
+                <div className="col-12 col-md-4">
+                <center>
+                    <h4>Lea el codigo Qr del Jefe de Obra para validar la entrega</h4>
+                    <Button color="danger" onClick={this.toggle}>Abrir Lector </Button>
+                </center>
                 <Modal  isOpen={this.state.modal} toggle={this.toggle}>
                     <ModalHeader toggle={this.toggle}> Ponga la camara para leer el codigo QR</ModalHeader>
                     <ModalBody>

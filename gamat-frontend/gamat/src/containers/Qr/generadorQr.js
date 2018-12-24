@@ -13,30 +13,32 @@ class generadorQr extends Component {
     }
 
     componentDidMount(){
-        let indiceRequest =  this.props.requests.findIndex(
+        let indiceRequest = this.props.requests.findIndex(
             (req)=>req.idRequest == this.props.match.params.idRequest);
-        let idRequest=this.props.requests[indiceRequest].idRequest.toString();
+        let idRequest = this.props.requests[indiceRequest].idRequest.toString();
             this.setState({indice:indiceRequest,
             idRequest: idRequest})
     }
     render() {
         return (
-            <div>
-                            <h3>Generador</h3>
-            <QRCode value={this.state.idRequest}></QRCode>   
+            <div className="row m-0">
+                <div className="col-12">
+                    <center>
+                    <h3>Escanea el siguiente código</h3>
+                    <QRCode value={this.state.idRequest}></QRCode>  
+                    </center>
+                </div>   
             </div>
         );
     }
 }
-
 
 const mapStateToProps = state => {
     return {
       requests: state.request.requests,
     
     };
-    };
+};
     
-  
     
     export default connect(mapStateToProps,null)(generadorQr);

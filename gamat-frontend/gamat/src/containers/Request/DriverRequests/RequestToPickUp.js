@@ -7,11 +7,6 @@ import { connect } from 'react-redux';
 import * as actions from '../../../store/actions/index';
 import Spinner from '../../../components/UI/Spinner';
 
-
-
-
-
-
 class RequestToPickUp extends Component {
     constructor(props) {
         super(props);
@@ -40,7 +35,7 @@ class RequestToPickUp extends Component {
           itemStates:itemStates
         })
 
-        console.log( this.props.requests[indiceRequest])
+        // console.log( this.props.requests[indiceRequest])
     }
     handlerOnChangeState(i){
       let newItemState=[...this.state.itemStates]
@@ -78,77 +73,74 @@ class RequestToPickUp extends Component {
         const itemsRow = 
         this.props.requests[this.state.indice].items.map((item,i)=>(
 
-          <tr>
+          <tr key={i}>
                 <td>{item.name}</td>
                 <td>{item.quantity}</td>
                 {this.state.itemStates[i] ?
                 <td>Retirado</td>:
                 <td>No Retirado</td>
-
                 }
-                </tr>
+          </tr>
           
           ))
     
         return (
       <div>
          {this.props.updateItemSuccess && <Redirect to='/requests' />}
-        <h2>Solicitud a retirar: </h2>
-        <p>Jefe de Obra: Juanito Perez</p>
-        <p>Direccion de obra: {this.props.requests[this.state.indice].building.address}</p>
+          <h4>Solicitud a Entregar: </h4>
+          <p><strong>Jefe de Obra:</strong> Juanito Perez</p>
+          <p><strong>Dirección de obra:</strong> {this.props.requests[this.state.indice].building.address}</p>
 
-        <h3>Items a Retirar:</h3>
-        <div className="row">
-          { this.props.requests[this.state.indice].items.map((item,i)=>(
+          <h4>Items a Retirar:</h4>
+          <div className="row">
+            { this.props.requests[this.state.indice].items.map((item,i)=>(
+              <ItemToPick 
+                key={i}
+                picked={this.state.itemStates[i]} 
+                quantity={item.quantity}
+                name={item.name} 
+                description={item.description}
+                distributor={item.distributor}
+                onChangeState={(e)=>this.handlerOnChangeState(i)}         
+                />
+            ))
+          }
+          </div>
 
-            
-            <ItemToPick 
-              key={i}
-              picked={this.state.itemStates[i]} 
-              quantity={item.quantity}
-              name={item.name} 
-              description={item.description}
-              distributor={item.distributor}
-              onChangeState={(e)=>this.handlerOnChangeState(i)}         
-              />
-          ))
-        }
-        </div>
+            <Link to='/'><button className="btn btn-secondary">Volver</button></Link>{' '}
+            <button className="btn btn-success" disabled={false} onClick={this.toggle} >Enviar Reporte</button>
 
-        <button className="btn btn-primary" disabled={false} onClick={this.toggle} >Enviar Reporte</button>{' '}
-        <Link to='/'><button className="btn btn-secondary">Volver</button></Link>
-
-        <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-          <ModalHeader toggle={this.toggle}>Enviar Reporte</ModalHeader>
-          <ModalBody>
-            {this.props.loading ? <Spinner/> : 
-              <div>
-                Los siguientes items fueron retirados:
-                <table className="table table-sm">
-                  <thead>
-                    <tr>
-                    <th>Nombre</th>
-                    <th>Cantidad</th>
-                    <th>Estado</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {itemsRow}
+            <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
+              <ModalHeader toggle={this.toggle}>Enviar Reporte</ModalHeader>
+              <ModalBody>
+                {this.props.loading ? <Spinner/> : 
+                  <div>
+                    Los siguientes items fueron retirados:
+                    <table className="table table-sm">
+                      <thead>
+                        <tr>
+                        <th>Nombre</th>
+                        <th>Cantidad</th>
+                        <th>Estado</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {itemsRow}
+                      
+                      </tbody>
+                    </table>
                   
-                  </tbody>
-                </table>
-              
-            
-            </div>
-            }
-          </ModalBody>
-          <ModalFooter>
-            <Button color="primary" onClick={this.handlerOnSendItems} disabled={false}>Enviar</Button>{' '}
-            <Button color="secondary" onClick={this.toggle}>Cancelar</Button>
-          </ModalFooter>
-        </Modal>
+                
+                </div>
+                }
+              </ModalBody>
+              <ModalFooter>
+                <Button color="primary" onClick={this.handlerOnSendItems} disabled={false}>Enviar</Button>{' '}
+                <Button color="secondary" onClick={this.toggle}>Cancelar</Button>
+              </ModalFooter>
+            </Modal>
 
-      </div>
+          </div>
     )
   }
 }

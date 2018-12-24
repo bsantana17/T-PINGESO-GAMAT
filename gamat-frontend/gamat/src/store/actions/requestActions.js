@@ -164,11 +164,11 @@ export const fetchRequests = (userId, userType,state) => {
     return dispatch => {
         let ruta = ''
         // console.log("userType",userType)
-        userType == "Approver" ?
+        userType === "Approver" ?
             ruta = `/requests/${userId}/${state}/approver` :
-        userType == "Manager" ?
+        userType === "Manager" ?
             ruta = `/requests/${userId}/manager`:
-        userType=="Buyer"?   
+        userType === "Buyer"?   
             ruta = `/requests/${userId}/${state}/buyer`:
             ruta = `/requests/${userId}/driver`;   
         // console.log('id de user es ',userId)

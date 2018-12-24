@@ -9,7 +9,7 @@ class Layout extends Component {
         return(
             <Auxiliar>
             <Navigation type={this.props.userType} isLogged={this.props.isLogged} />
-            <main className='p-4'> 
+            <main className='p-2 pt-3 p-lg-4'> 
                 {this.props.children}
             </main>
         </Auxiliar>

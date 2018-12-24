@@ -87,11 +87,17 @@ class Login extends React.Component {
         }
 
         return (
-            <div>
+            <div className="row justify-content-center">
                 {loginRedirect}
                 {errorMessage}
-                <div className="col-12 col-lg-3 mb-3 center-div">
-                    {form}
+                <div className="col-12 col-lg-3 mb-3">
+                    <div className="card item-card">
+                        <div className="card-body">
+                            <center><h4>Iniciar Sesión</h4></center>
+                            {form}
+                        </div>
+                    </div>
+                    
                 </div>
             </div>
         );

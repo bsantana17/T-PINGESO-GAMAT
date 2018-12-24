@@ -32,141 +32,132 @@ import LectorQr from '../../Qr/LectorQr';
 
 }
 
-componentDidMount(){
-  let indiceRequest =  this.props.requests.findIndex(
-    (req)=>req.idRequest == this.props.match.params.idRequest);
-    const itemStates= this.props.requests[indiceRequest].items.map(()=>false)
+  componentDidMount(){
+    let indiceRequest =  this.props.requests.findIndex(
+      (req)=>req.idRequest == this.props.match.params.idRequest);
+      const itemStates= this.props.requests[indiceRequest].items.map(()=>false)
+      this.setState({
+        indice:indiceRequest,
+        itemStates:itemStates
+      })
+  }
+  handlerOnChangeState(i){
+    let newItemState=[...this.state.itemStates]
+    newItemState[i]=!this.state.itemStates[i]
     this.setState({
-      indice:indiceRequest,
-      itemStates:itemStates
-    })
-}
-handlerOnChangeState(i){
-  let newItemState=[...this.state.itemStates]
-  newItemState[i]=!this.state.itemStates[i]
-  this.setState({
-    itemStates:newItemState
-  })
-}
-
-handlerOnSendItems(){
-
- ;
-  const states= this.state.itemStates;
-  let newStateRequest= this.props.requests[this.state.indice]
-  newStateRequest.items.map((item,i)=>{
-      
-     
-      // esto se modificara despues, cuando se hagan cambios en la bd
-    if(states[i]) item.state="Entregado"
-  })
-
-  this.props.onUpdateItems(newStateRequest,1,this.props.userId);
-
-}
-
-toggle() {
-this.setState({
-    modal: !this.state.modal
-});
-}
-
-handleOnValidate(data){
-  const idRequest = this.props.requests[this.state.indice].idRequest;
-  console.log("data",data)
-  if(data == idRequest.toString()){
-    this.setState({
-      validate: true
+      itemStates:newItemState
     })
   }
 
-}
+  handlerOnSendItems(){
+
+  ;
+    const states= this.state.itemStates;
+    let newStateRequest= this.props.requests[this.state.indice]
+    newStateRequest.items.map((item,i)=>{
+        
+      
+        // esto se modificara despues, cuando se hagan cambios en la bd
+      if(states[i]) item.state="Entregado"
+    })
+
+    this.props.onUpdateItems(newStateRequest,1,this.props.userId);
+
+  }
+
+  toggle() {
+  this.setState({
+      modal: !this.state.modal
+  });
+  }
+
+  handleOnValidate(data){
+    const idRequest = this.props.requests[this.state.indice].idRequest;
+    console.log("data",data)
+    if(data == idRequest.toString()){
+      this.setState({
+        validate: true
+      })
+    }
+
+  }
 
 
-render() {
+  render() {
 
     const itemsRow = 
     this.props.requests[this.state.indice].items.map((item,i)=>(
 
       <tr>
-            <td>{item.name}</td>
-            <td>{item.quantity}</td>
-            {this.state.itemStates[i] ?
-            <td>Entregado</td>:
-            <td>No Entregado</td>
-
-            }
-            </tr>
-      
-      ))
-
+        <td>{item.name}</td>
+        <td>{item.quantity}</td>
+        {this.state.itemStates[i] ?
+        <td>Entregado</td>:
+        <td>No Entregado</td>
+        }
+        </tr>
+    ))
 
     return (
+      <div>
+        { !this.state.validate ? <LectorQr onValidateData={this.handleOnValidate}/> :
+        <div>
+        {this.props.updateItemSuccess && <Redirect to='/requests' />}
+          <h4>Solicitud a Entregar: </h4>
+          <p><strong>Jefe de Obra:</strong> Juanito Perez</p>
+          <p><strong>Dirección de obra:</strong> {this.props.requests[this.state.indice].building.address}</p>
 
-     
-  <div>
-    { !this.state.validate ? <LectorQr onValidateData={this.handleOnValidate}/>:
-    <div>
-     {this.props.updateItemSuccess && <Redirect to='/requests' />}
-    <h2>Solicitud a Entregar: </h2>
-    <p>Jefe de Obra: Juanito Perez</p>
-    <p>Direccion de obra: {this.props.requests[this.state.indice].building.address}</p>
+          <h4>Items a Entregar:</h4>
+          <div className="row">
+            { this.props.requests[this.state.indice].items.map((item,i)=>(
+              <ItemToDeliver
+              key={i}
+              picked={this.state.itemStates[i]} 
+              quantity={item.quantity}
+              name={item.name} 
+              description={item.description}
+              distributor={item.distributor}
+              onChangeState={(e)=>this.handlerOnChangeState(i)}         
+              />
 
-    <h3>Items a Entregar:</h3>
-    <div className="row">
-      { this.props.requests[this.state.indice].items.map((item,i)=>(
-        
-        
-        <ItemToDeliver
-        key={i}
-        picked={this.state.itemStates[i]} 
-        quantity={item.quantity}
-        name={item.name} 
-        description={item.description}
-        distributor={item.distributor}
-        onChangeState={(e)=>this.handlerOnChangeState(i)}         
-        />
-        ))
-    }
-    </div>
+              ))
+          }
+          </div>
 
-    <button className="btn btn-primary" disabled={false} onClick={this.toggle} >Enviar Reporte</button>{' '}
-    <Link to='/'><button className="btn btn-secondary">Volver</button></Link>
+          <Link to='/'><button className="btn btn-secondary">Volver</button></Link>{' '}
+          <button className="btn btn-success" disabled={false} onClick={this.toggle}>Enviar Reporte</button>
 
-    <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-      <ModalHeader toggle={this.toggle}>Enviar Reporte</ModalHeader>
-      <ModalBody>
-        {this.props.loading ? <Spinner/> : 
-          <div>
-            Los siguientes items fueron entregados:
-            <table className="table table-sm">
-              <thead>
-                <tr>
-                <th>Nombre</th>
-                <th>Cantidad</th>
-                <th>Estado</th>
-                </tr>
-              </thead>
-              <tbody>
-                {itemsRow}
-              
-              </tbody>
-            </table>
-          
-        
+          <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
+            <ModalHeader toggle={this.toggle}>Enviar Reporte</ModalHeader>
+            <ModalBody>
+              {this.props.loading ? <Spinner/> : 
+                <div>
+                  Los siguientes items fueron entregados:
+                  <table className="table table-sm">
+                    <thead>
+                      <tr>
+                      <th>Nombre</th>
+                      <th>Cantidad</th>
+                      <th>Estado</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {itemsRow}
+                    </tbody>
+                  </table>
+                </div>
+              }
+            </ModalBody>
+            <ModalFooter>
+              <Button color="primary" onClick={this.handlerOnSendItems} disabled={false}>Enviar</Button>{' '}
+              <Button color="secondary" onClick={this.toggle}>Cancelar</Button>
+            </ModalFooter>
+          </Modal>
+
         </div>
-        }
-      </ModalBody>
-      <ModalFooter>
-        <Button color="primary" onClick={this.handlerOnSendItems} disabled={false}>Enviar</Button>{' '}
-        <Button color="secondary" onClick={this.toggle}>Cancelar</Button>
-      </ModalFooter>
-    </Modal>
-
-        </div>}
-  </div>
-)
-}
+      }</div>
+    )
+  }
 }
 
 

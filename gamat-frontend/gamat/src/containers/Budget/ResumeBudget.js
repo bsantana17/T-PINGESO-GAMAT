@@ -1,6 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {Card,CardBody,CardTitle,CardText,Button} from 'reactstrap'
+// import PropTypes from 'prop-types';
+import {Card,CardTitle,CardText,Button} from 'reactstrap'
 
 const ResumeBudget = props => {
     return (

@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../../../store/actions/index';
 import Spinner from '../../../components/UI/Spinner';
-import { Table, Button ,FormGroup,Label,Input} from 'reactstrap';
+import { Button ,FormGroup,Label,Input} from 'reactstrap';
 import { Link, Redirect } from 'react-router-dom';
+import Moment from 'moment'
 
 
 class AssingRequest extends Component {
@@ -24,7 +25,7 @@ class AssingRequest extends Component {
             (req)=>req.idRequest == this.props.match.params.idRequest);
 
             this.props.onRefreshDriver();
-            console.log(this.props.drivers)
+            // console.log(this.props.drivers)
         this.setState({
             indice:indiceRequest
         })
@@ -43,56 +44,62 @@ class AssingRequest extends Component {
     }
 
     render() {
+        let request = this.props.requests[this.state.indice]
+
         return (
-            <div>
+            <div className="container">
                  <div>
-                 {this.props.assingDriver && <Redirect to='/requests' />}
-        <Link to={'/requests'}>
-           <Button color="secondary">Volver </Button>
-        </Link>
-        {console.log(this.props.location.state)}
-        <table className="table table-sm">
-          <thead>
-            <tr>
-            <th>Nombre</th>
-            <th>Cantidad</th>
-            <th>Urgencia</th>
-            <th>Descripcion</th>
-            <th>Observacion</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              
-              this.props.requests[this.state.indice].items.map((item, index) => {
-                return <tr key={index}>
-                        <td>{item.name}</td>
-                        <td>{item.quantity}</td>
-                        <td>{item.urgency}</td>
-                        <td>{item.description}</td>
-                        <td>{item.observation}</td>
-                      </tr>
-              })
-            }
-          </tbody>
-        </table>
-      </div>
-      <div>
+                    {this.props.assingDriver && <Redirect to='/requests' />}
+                    <h2>Detalles de la solicitud:</h2>
+                    <p><strong>Solicitante:</strong> {request.manager ? request.manager.name : '---'}</p>
+                    <p><strong>Compañía:</strong> {request.building ? request.building.company.name : '---'}</p>
+                    <p><strong>Dirección de obra:</strong> {request.building ? request.building.address : '---'}</p>
+                    <p><strong>Fecha:</strong> {request.date ? Moment(request.date).format("DD/MM/YYYY hh:mm") : '---'}</p>
+                    <p><strong>Estado de la solicitud:</strong> {request.state} </p>
 
-      <FormGroup>
-            <Label for="chofer">Chofer</Label>
-            <Input value={this.state.driver} onChange={this.onChangeDriver} type="select" name="chofer" id="chofer" >
-              {this.props.drivers.map((driver, i) => (
-                  
-                  <option key={i} value={i}>{driver.name}</option>
-                  
-                  ))}
-              
-            </Input>
-          </FormGroup>
-          <Button color="success" onClick={this.assignDriver}>Asignar</Button>
+                    <h4>Items Solicitados: </h4>
+                    <table className="table table-primary table-sm">
+                    <thead>
+                        <tr>
+                        <th>Nombre</th>
+                        <th>Cantidad</th>
+                        <th>Urgencia</th>
+                        <th>Descripción</th>
+                        <th>Observación</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                        
+                        this.props.requests[this.state.indice].items.map((item, index) => {
+                            return <tr key={index}>
+                                    <td>{item.name}</td>
+                                    <td>{item.quantity}</td>
+                                    <td>{item.urgency === false ? 'No' : 'Si' }</td>
+                                    <td>{item.description}</td>
+                                    <td>{item.observation}</td>
+                                </tr>
+                        })
+                        }
+                    </tbody>
+                    </table>
+                </div>
+                <div>
+                    <FormGroup>
+                        <Label for="chofer">Chofer</Label>
+                        <Input value={this.state.driver} onChange={this.onChangeDriver} type="select" name="chofer" id="chofer" >
+                        {this.props.drivers.map((driver, i) => (
+                            <option key={i} value={i}>{driver.name}</option>
+                            ))}
+                        </Input>
+                    </FormGroup>
+                    <Link to={'/requests'}>
+                    <Button color="secondary">Volver </Button>
+                    </Link>
+                    {' '}  
+                    <Button color="success" onClick={this.assignDriver}>Asignar</Button>
 
-                  </div>
+                </div>
             </div>
         );
     }

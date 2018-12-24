@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import {Button,Table} from 'reactstrap'
 
 const TableItem = props => {
@@ -12,7 +12,7 @@ const TableItem = props => {
                         <th>Nombre</th>
                         <th>Cantidad</th>
                         <th>Urgencia</th>
-                        <th>Descripcion</th>
+                        <th>Descripción</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -20,7 +20,7 @@ const TableItem = props => {
 
                     {/*Aqui, la funcion de arriba deberia guardar todo en testrequest, y mostrarlo.*/}
                     {props.items.map((item, index) => (
-                        item.state!="rechazado" &&
+                        item.state !== "rechazado" &&
                         <tr key={index}>
                             <th scope="row">{item.idItem}</th>
                             <td>{item.name}</td>

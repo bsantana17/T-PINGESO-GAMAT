@@ -1,12 +1,12 @@
 import React from 'react';
-import { Button,Card,CardBody,CardHeader,Collapse } from 'reactstrap';
-import PropTypes from 'prop-types';
+import { Card,CardBody,CardHeader,Collapse } from 'reactstrap';
+// import PropTypes from 'prop-types';
 
 const SeeBudgetforItem = props => {
     return (
         <Card outline color="info">
             <CardHeader>
-                Descripcion del Item
+                Descripción del Item
         </CardHeader>
 
             <Collapse isOpen={props.estadocolapso}>

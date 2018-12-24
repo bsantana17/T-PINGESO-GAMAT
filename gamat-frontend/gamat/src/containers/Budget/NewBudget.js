@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
-import {
-    Table, Button,
-    Card, CardText, CardTitle, CardBody, CardHeader,
-    Collapse
-} from 'reactstrap';
-import { requests } from '../../requests.json';
+import {Button} from 'reactstrap';
+// import { requests } from '../../requests.json';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import ItemRow from './ItemRow';
+// import ItemRow from './ItemRow';
 import './AddBudget.css';
 import * as actions from '../../store/actions/index';
 import TableItem from './TableItem';
@@ -105,11 +101,11 @@ class NewBudget extends Component {
         //Carga los elementos de una request
         // this.props.onFetchRequest();
         let indiceRequest = this.props.requests.findIndex(
-            (req) => req.idRequest == this.props.match.params.idRequest);
+            (req) => req.idRequest === this.props.match.params.idRequest);
             console.log("REQUEST",this.props.requests[indiceRequest])
             
-            if(this.props.requests[indiceRequest].state=='Cotizacion' ||
-            this.props.requests[indiceRequest].state=='Autorizada'){
+            if(this.props.requests[indiceRequest].state === 'Cotizacion' ||
+            this.props.requests[indiceRequest].state === 'Autorizada'){
                
                 let itemsActuales = this.props.requests[indiceRequest].items.map(item => ({ ...item}))
                 let editItems=this.props.requests[indiceRequest].items.map(item=>true)

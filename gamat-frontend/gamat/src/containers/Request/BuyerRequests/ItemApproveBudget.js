@@ -13,7 +13,7 @@ const ItemApproveBudget = (props) => {
                     <div className="col-7 col-lg-8"> {props.name} </div>
                 </div>
                 <div className="row">
-                    <div className="col-5 col-lg-4">Descripcion:</div>
+                    <div className="col-5 col-lg-4">Descripción:</div>
                     <div className="col-7 col-lg-8"> {props.description}</div>
                 </div>
                 <div className="row">
