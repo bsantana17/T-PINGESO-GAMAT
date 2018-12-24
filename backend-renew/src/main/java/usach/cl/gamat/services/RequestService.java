@@ -107,15 +107,37 @@ public class RequestService {
         return HttpStatus.INTERNAL_SERVER_ERROR;
     }
 
-
-    @PostMapping("/budget/approve/{idRequest}")
-    public HttpStatus aprobarBudget(@PathVariable("idRequest") Integer id,@RequestBody Request request) {
+    //Aprobar request
+    @PostMapping("/budget/approve")
+    public HttpStatus aprobarBudget(@RequestBody Request request) {
 //		Request request1 = serviceBD.getRequestById(request.getIdRequest());
+        Request nuevaRequest = new Request();
+        List<Item> itemPendientes = new ArrayList<>();
+        List<Item> itemAprobados = new ArrayList<>();
         if (request != null) {
 //        	request.setBuilding(request1.getBuilding());
 //        	request.setManager(request1.getManager());
             request.setState("Autorizada");
+            for (Item item:request.getItems()){
+                if (item.getState().equals("Pendiente")){
+                    itemPendientes.add(item);
+                }
+                else{
+                    itemAprobados.add(item);
+                }
+            }
+            if(itemPendientes.size() > 0){
+                nuevaRequest.setItems(itemPendientes);
+                nuevaRequest.setState("Aprobado");
+                nuevaRequest.setManager(request.getManager());
+                nuevaRequest.setDriver(request.getDriver());
+                nuevaRequest.setBuilding(request.getBuilding());
+                nuevaRequest.setObservation("Solicitud creada debido al rechazo de otra: " + request.getObservation());
+                nuevaRequest.setPayCondition(request.getPayCondition());
+            }
+            request.setItems(itemAprobados);
             serviceBD.saveRequest(request);
+            serviceBD.saveRequest(nuevaRequest);
             return HttpStatus.OK;
         }
         return HttpStatus.INTERNAL_SERVER_ERROR;
