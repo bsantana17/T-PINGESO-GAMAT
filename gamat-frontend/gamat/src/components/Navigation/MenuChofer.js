@@ -16,7 +16,7 @@ import {
                 </DropdownToggle>
                 <DropdownMenu left='true' >
                 <DropdownItem>
-                    <Link to='/requests'>Ver Solicitudes</Link>
+                    <Link to='/requests'>Solicitudes</Link>
                   </DropdownItem>
                   {/* <DropdownItem>
                     <Link to='/requests'>Historial de Solicitudes </Link>

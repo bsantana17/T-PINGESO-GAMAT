@@ -19,7 +19,7 @@ body {
     -moz-osx-font-smoothing: grayscale;
     font-size: 0.8rem;
   }
-  .btn-success {
+  .btn-success, .btn-warning {
       color: #fff !important;
   }
 
@@ -119,6 +119,7 @@ nav{
 
 .dropdown-menu{
     padding-top:0px;
+    padding-bottom:0px;
     border-radius: 0rem;
 }
 
@@ -150,4 +151,21 @@ nav{
 .table-primary  td, .table th {
     padding: .75rem;
     vertical-align: top;
+}
+.budget-content{
+    display: flex;
+    justify-content: space-between;
+    .budget-table{
+        width: 100%;
+    }
+    .budget-resume{
+        min-width: 350px;
+        width: 350px;
+        max-width: 350px;
+        .card-budget-request{
+            p {
+                margin-bottom: 5px;
+            }
+        }
+    }
 }

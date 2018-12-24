@@ -113,7 +113,7 @@ class RequestoToAprove extends Component {
                                 key={index}
                                 i={index}
                                 number={item.number}
-                                name={item.nombre}
+                                name={item.name}
                                 quantity={item.quantity}
                                 urgency={item.urgency}
                                 description={item.description}
@@ -122,7 +122,6 @@ class RequestoToAprove extends Component {
                                 valueObservation={this.state.observations[index]}
                                 state={this.state.states[index]}
                                 onChangeState={this.handleOnChangeState}
-
                             />
 
 

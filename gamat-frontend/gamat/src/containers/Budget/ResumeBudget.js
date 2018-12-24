@@ -4,39 +4,39 @@ import {Card,CardTitle,CardText,Button} from 'reactstrap'
 
 const ResumeBudget = props => {
     return (
-        <div className="col-lg-3 col-md-12 col-sm-12">
-                <Card body inverse style={{ backgroundColor: '#808080', borderColor: '#333' }}>
-                    <CardTitle>
-                        <b>Solicitud</b>
-                    </CardTitle>
-                    <CardText>
-                    {/* <ul className="lista"> */}
-                        <li>Numero: {props.request.idRequest}</li>
-                        <li>Fecha: {props.request.date}</li>
-                        <li>Lugar de Entrega: </li>
-                        <li>Condicion de Pago: </li>
-                        <li>Vence: </li>
-                        {/* <li>Solicita: {props.request.user.name}</li> */}
-                    {/* </ul>   */}
-                    </CardText>
-                </Card>
+        <div className="pl-3">
+                <div className="card card-budget-request item-card">
+                    <div className="card-body">
+                        <div className="d-flex justify-content-between">
+                            <h5>Solicitud</h5><button className="btn btn-sm btn-info">Editar</button>
+                        </div>
+                        <p><strong>Numero:</strong> {props.request.idRequest}</p>
+                        <p><strong>Fecha:</strong> {props.request.date}</p>
+                        <p><strong>Lugar de Entrega:</strong> </p>
+                        <p><strong>Receptor:</strong> </p>
+                        <p><strong>Contacto:</strong> </p>
+                        <p><strong>Hora de Entrega:</strong> </p>
+                        <p><strong>Condicion de Pago:</strong> </p>
+                        <p><strong>Vence:</strong> </p>
+                    </div>
+                </div>
                 <br/>
-                <Card body inverse style={{ backgroundColor: '#808080', borderColor: '#333' }}> 
-                    <CardTitle>
-                        <b>Resumen de la Cotizacion</b>
-                    </CardTitle>
-                    <CardText>
-                    <li className="lista">Numero: </li>
-                        <li>Peso Total: {props.totalWeight}</li>
-                        <li>Precio por Despacho: ${props.shipping_price}</li>
-                        <li>Precio por Administración: ${props.administration_price}</li>
-                        <li>Valor Neto:$ {props.total_price}</li>
-                        <li><b>IVA: 19%</b></li>
-                        <li><b>VALOR TOTAL: ${props.true_price}</b></li>
-                    </CardText>
-                </Card> 
+                <div className="card card-budget-request item-card"> 
+                    <div className="card-body">
+                        <div className="d-flex justify-content-between">
+                            <h5>Cotización</h5><button className="btn btn-sm btn-info">Editar</button>
+                        </div>
+                        <p><strong>Numero:</strong> </p>
+                        <p><strong>Peso Total:</strong> {props.totalWeight}</p>
+                        <p><strong>Precio por Despacho:</strong> ${props.shipping_price}</p>
+                        <p><strong>Precio por Administración:</strong> ${props.administration_price}</p>
+                        <p><strong>Valor Neto:</strong> ${props.total_price}</p>
+                        <p><strong>IVA: 19%</strong></p>
+                        <p><strong>VALOR TOTAL: ${props.true_price}</strong></p>
+                    </div>
+                </div> 
                 <br/>
-                <Button color="success" onClick={props.sendBudget} className="endbuttons" >Guardar Cotización.</Button>
+                <button className="btn btn-success" onClick={props.sendBudget}>Guardar Cotización.</button>
             </div>
     );
 };

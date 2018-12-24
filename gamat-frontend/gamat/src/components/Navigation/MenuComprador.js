@@ -17,18 +17,18 @@ import {
                 </DropdownToggle>
                 <DropdownMenu left="true" >
                   <DropdownItem>
-                  <Link to='/requests'>
-                    Nuevas solicitudes
-                </Link>
+                    <Link to='/requests'>
+                      Solicitudes
+                    </Link>
                   </DropdownItem>
-                  <DropdownItem>
-                  {/* <Link to='/requests'> */}
+                  {/* <DropdownItem>
+                    <Link to='/requests'>
                     Solicitudes Pendientes
-                    {/* </Link> */}
+                    </Link>
                   </DropdownItem>
                   <DropdownItem>
-                      Historial de Solicitudes
-                  </DropdownItem>
+                    Historial de Solicitudes
+                  </DropdownItem> */}
                 </DropdownMenu>
               </UncontrolledDropdown>
               <UncontrolledDropdown nav inNavbar>

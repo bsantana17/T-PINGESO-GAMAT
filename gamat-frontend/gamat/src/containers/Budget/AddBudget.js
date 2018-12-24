@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {InputGroup, InputGroupText, InputGroupAddon, Input, Table, Button, 
     Card, CardText, CardHeader, CardTitle, CustomInput, Label} from 'reactstrap';
 //import Moment from 'moment';
-import './AddBudget.css';
 
 class AddBudget extends Component {
 
