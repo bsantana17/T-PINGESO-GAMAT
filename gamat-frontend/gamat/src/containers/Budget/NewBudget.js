@@ -63,6 +63,7 @@ class NewBudget extends Component {
             price: 0,
             totalprice: 0,
             weight: 0,
+            measure: "",
             totalweight: 0,
             provider: '',
             estado: 0,
@@ -350,6 +351,7 @@ class NewBudget extends Component {
                             price={this.state.price}
                             preciototal={this.state.preciototal}
                             weight={this.state.weight}
+                            measure={this.state.measure}
                             totalWeight={this.state.pesototal}
                             comments={this.state.comments}
                             provider={this.state.provider}

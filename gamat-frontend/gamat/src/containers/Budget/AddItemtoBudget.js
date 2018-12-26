@@ -41,7 +41,14 @@ const AddItemtoBudget = props => {
                                     <Label for="weight">Peso Unitario</Label>
                                     <InputGroup>
                                         <Input type="number" value={props.weight} min="0" name="weight" id="weight" onChange={props.inputHandler}></Input>
-                                        <InputGroupAddon addonType="append">g</InputGroupAddon>
+                                        <Input type="select" value={props.measure} name="measure" onChange={props.inputHandler}>
+                                            <option value="g">g</option>
+                                            <option value="m">m</option>
+                                            <option value="m2">m²</option>
+                                            <option value="m3">m³</option>
+                                            <option value="lt">lt</option>
+                                            
+                                        </Input>   
                                     </InputGroup>
                                 </FormGroup>
                             </div>
@@ -50,7 +57,7 @@ const AddItemtoBudget = props => {
                                     <Label for="totalweight">Peso Total</Label>
                                     <InputGroup>
                                         <Input disabled min='0' value={props.weight*props.quantity} name="totalweight" id="totalweight"  ></Input>
-                                        <InputGroupAddon addonType="append">g</InputGroupAddon>
+                                        <InputGroupAddon addonType="append">{props.measure}</InputGroupAddon>
                                     </InputGroup>
                                 </FormGroup>
                             </div>
