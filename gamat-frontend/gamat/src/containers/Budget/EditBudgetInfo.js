@@ -17,7 +17,7 @@ const EditBudgetInfo = props => {
                                 <FormGroup>
                                     <Label for="">Precio por despacho</Label>
                                     <InputGroup>
-                                        <Input type="text" name="" id=""></Input>
+                                        <Input type="text" value={props.shippingPrice} onChange={props.onChangeForm} name="shipping_price" id=""></Input>
                                     </InputGroup>
                                 </FormGroup>
                             </div>
@@ -25,7 +25,7 @@ const EditBudgetInfo = props => {
                                 <FormGroup>
                                     <Label for="">Precio por administración</Label>
                                     <InputGroup>
-                                        <Input type="text" name="" id=""></Input>
+                                        <Input type="text"value ={props.administrationPrice} onChange={props.onChangeForm} name="administration_price" id=""></Input>
                                     </InputGroup>
                                 </FormGroup>
                             </div>
@@ -34,8 +34,8 @@ const EditBudgetInfo = props => {
                     </Form>
                 </ModalBody>
                 <ModalFooter>
-                    <Button color="primary" onClick={props.submitHandler}>Editar</Button>{' '}
-                    <Button color="secondary" onClick={props.toggle}>Cancelar</Button>
+                    {/* <Button color="primary" onClick={props.submitHandler}>Editar</Button>{' '} */}
+                    <Button color="secondary" onClick={props.toggle}>Cerrar</Button>
 
                 </ModalFooter>
             </Modal>

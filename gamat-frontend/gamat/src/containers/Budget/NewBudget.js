@@ -71,11 +71,15 @@ class NewBudget extends Component {
             //Deberian todos los elementos de una budget
             date: '',
             expiration: '',
+            payCondition:'',
+            hora:'00:00',
             totalWeight: 0,
             total_price: 0,
             administration_price: 0,
             shipping_price: 0,
-            true_price: 0
+            true_price: 0,
+            openEditInfo:false,
+            openEditRequestInfo:false
 
 
         };
@@ -91,6 +95,8 @@ class NewBudget extends Component {
         this.sendBudget= this.sendBudget.bind(this);
         this.editBudget= this.editBudget.bind(this);
         this.editRequest= this.editRequest.bind(this);
+        this.toggleInfo=this.toggleInfo.bind(this);
+        this.toggleRequestInfo=this.toggleRequestInfo.bind(this);
 
     }
 
@@ -110,8 +116,15 @@ class NewBudget extends Component {
                 this.setState({
                     items: itemsActuales,
                     indiceRequest: indiceRequest,
-                    editItems:editItems
-                },()=>{ this.calculatePrices();})
+                    editItems:editItems,
+                    total_price:this.props.requests[indiceRequest].totalPrice,
+                    shipping_price:this.props.requests[indiceRequest].shippingPrice,
+                    administration_price:this.props.requests[indiceRequest].administrationPrice,
+                    totalWeight:this.props.requests[indiceRequest].totalWeight,
+                    payCondition:this.props.requests[indiceRequest].payCondition,
+                    expiration:this.props.requests[indiceRequest].expirationBudget
+
+                })
         
             }
             else{
@@ -127,6 +140,17 @@ class NewBudget extends Component {
             }
     }
 
+    toggleInfo(){
+        this.setState({
+            openEditInfo:!this.state.openEditInfo
+        })
+    }
+
+    toggleRequestInfo(){
+        this.setState({
+            openEditRequestInfo:!this.state.openEditRequestInfo
+        })
+    }
     handlerSeeItem(index){
         this.setState({
             indiceSeeItem:index,
@@ -139,6 +163,7 @@ class NewBudget extends Component {
         let multiplicacion;
         const { value, name } = e.target;
         const indice = this.state.indiceItem;
+        console.log("llegueeeee")
         if (name === 'price') {
             let valueInt= parseInt(value);
             console.log(typeof valueInt);
@@ -159,6 +184,7 @@ class NewBudget extends Component {
             })
         }
         else {
+            console.log(name,value)
             this.setState({
                 [name]: value
             })
@@ -279,6 +305,8 @@ class NewBudget extends Component {
             shippingPrice:this.state.shipping_price,
             administrationPrice:this.state.administration_price,
             totalWeight:this.state.totalWeight,
+            payCondition:this.state.payCondition,
+            expirationBudget:this.state.expiration
         }
             
 
@@ -356,12 +384,28 @@ class NewBudget extends Component {
                         administration_price={this.state.administration_price}
                         total_price={this.state.total_price}
                         true_price={this.state.true_price}
+                        payCondition={this.state.payCondition}
+                        expiration={this.state.expiration}
+                        hora={this.state.hora}
                         sendBudget={this.sendBudget}
-                        onEditRequestInfo={this.editRequest}
-                        onEditBudgetInfo={this.editBudget}
+                        onEditRequestInfo={this.toggleRequestInfo}
+                        onEditBudgetInfo={this.toggleInfo}
                         />
-                        <EditBudgetInfo/>
-                        <EditRequestInfo/>
+                        <EditBudgetInfo
+                           administrationPrice={this.state.administration_price}
+                           shippingPrice={this.state.shipping_price}
+                           open={this.state.openEditInfo}
+                           onChangeForm={this.inputHandler} 
+                           toggle={this.toggleInfo}
+                           />
+                        <EditRequestInfo 
+                            toggle={this.toggleRequestInfo}
+                            open={this.state.openEditRequestInfo}
+                            onChangeForm={this.inputHandler}
+                            payCondition={this.state.payCondition}
+                            hora={this.state.hora}
+                            expiration={this.state.expiration}
+                        />
                         
                     </div>
                 </div>

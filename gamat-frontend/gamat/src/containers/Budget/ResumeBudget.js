@@ -8,23 +8,23 @@ const ResumeBudget = props => {
                 <div className="card card-budget-request item-card">
                     <div className="card-body">
                         <div className="d-flex justify-content-between">
-                            <h5>Solicitud</h5><button className="btn btn-sm btn-info">Editar</button>
+                            <h5>Solicitud</h5><button onClick={props. onEditRequestInfo} className="btn btn-sm btn-info">Editar</button>
                         </div>
                         <p><strong>Numero:</strong> {props.request.idRequest}</p>
                         <p><strong>Fecha:</strong> {props.request.date}</p>
-                        <p><strong>Lugar de Entrega:</strong> </p>
-                        <p><strong>Receptor:</strong> </p>
-                        <p><strong>Contacto:</strong> </p>
-                        <p><strong>Hora de Entrega:</strong> </p>
-                        <p><strong>Condicion de Pago:</strong> </p>
-                        <p><strong>Vence:</strong> </p>
+                        <p><strong>Lugar de Entrega:</strong>{props.request.building.address} </p>
+                        <p><strong>Receptor:</strong>{props.request.manager.name} </p>
+                        <p><strong>Contacto:</strong> {props.request.manager.email}</p>
+                        <p><strong>Hora de Entrega:</strong>{props.hora} </p>
+                        <p><strong>Condicion de Pago:</strong>{props.payCondition} </p>
+                        <p><strong>Vence:</strong> {props.expiration}</p>
                     </div>
                 </div>
                 <br/>
                 <div className="card card-budget-request item-card"> 
                     <div className="card-body">
                         <div className="d-flex justify-content-between">
-                            <h5>Cotización</h5><button className="btn btn-sm btn-info">Editar</button>
+                            <h5>Cotización</h5><button onClick={props.onEditBudgetInfo} className="btn btn-sm btn-info">Editar</button>
                         </div>
                         <p><strong>Numero:</strong> </p>
                         <p><strong>Peso Total:</strong> {props.totalWeight}</p>

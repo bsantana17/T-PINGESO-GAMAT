@@ -31,14 +31,14 @@ const TableItem = props => {
                         <td>{item.quantity}</td>
                         <td>{item.urgency ? "Si":"No"}</td>
                         <td>{item.description}</td>
-                        <td>{item.provider}</td>
+                        <td>{item.distributor}</td>
                         <td>{item.price}</td>
-                        <td>{item.preciototal}</td>
-                        <td>{item.estado}</td>
+                        <td>{item.totalPrice}</td>
+                        <td>{item.state}</td>
                         <td>{item.comments}</td>
                         <td>
                             {/* <div > */}
-                            <button className="btn btn-sm btn-info" onClick={(e)=>props.onSeeItem(index)}>Ver</button>
+                            {/* <button className="btn btn-sm btn-info" onClick={(e)=>props.onSeeItem(index)}>Ver</button> */}
                             <button className={props.editItems[index] ? 'btn btn-sm ml-1 btn-primary':'btn btn-sm ml-1 btn-success'} onClick={(e)=>props.openAddItem(index)}>
                             {props.editItems[index] ? 'Editar':'Cotizar'}
                             </button>
