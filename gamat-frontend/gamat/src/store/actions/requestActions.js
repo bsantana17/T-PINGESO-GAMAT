@@ -110,10 +110,8 @@ export const addRequest = (requestData, userId) => {
 
     return dispatch => {
         dispatch(addRequestsStart());
-        axios.post('/requests/create/' + userId, requestData, { headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json' 
-          }})
+        console.log(userId)
+        axios.post('/requests/create/' + userId, requestData)
             .then(response => {
                 console.log(response)
                 dispatch(addRequestsSuccess(response.data.idRequest, requestData));

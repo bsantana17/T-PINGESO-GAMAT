@@ -52,6 +52,7 @@ export const login =  (email,password) => {
                 else{
                     localStorage.setItem('userType', response.data.role);
                     localStorage.setItem('idUser', response.data.idUser);
+                    console.log("iddd",response.data.idUser)
                     dispatch(loginSuccess(response.data.role, response.data.idUser));
                 }
             } )

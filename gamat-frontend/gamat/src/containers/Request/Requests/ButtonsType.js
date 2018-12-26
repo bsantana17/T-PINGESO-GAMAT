@@ -23,7 +23,7 @@ const getManagerType = (objectButtons, state, id) => {
     if (state === 'Entregada')
         objectButtons.push({
             type: 'success',
-            path: `/deliver-to.approve/${id}`,
+            path: `/deliver-to-approve/${id}`,
             action: 'Confirmar Recepcion'
         })
 

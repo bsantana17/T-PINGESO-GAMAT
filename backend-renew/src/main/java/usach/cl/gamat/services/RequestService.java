@@ -149,9 +149,9 @@ public class RequestService {
                 nuevaRequest.setBuilding(request.getBuilding());
                 nuevaRequest.setObservation("Solicitud creada debido a item rechazados de otra: " + request.getObservation());
                 nuevaRequest.setPayCondition(request.getPayCondition());
+                serviceBD.saveRequest(nuevaRequest);
             }
            
-            serviceBD.saveRequest(nuevaRequest);
             request.setItems(itemAprobados);
             serviceBD.saveRequest(request);
             return HttpStatus.OK;

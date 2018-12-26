@@ -95,21 +95,21 @@ class Requests extends Component {
       requests = this.props.requests.map((request, i) => (
         <tr key={request.idRequest}>
           <td>{request.idRequest}</td>
-          {this.props.userType !== "Manager" ? 
+          {this.props.userType !== "Manager" &&
           <td>{request.manager ? request.manager.name : '---'}</td>
-          :''}
-          {this.props.userType !== "Manager" ? 
+      }
+          {this.props.userType !== "Manager" &&
           <td>{request.building ? request.building.company.name : '---'}</td>
-          :''}
-          {this.props.userType !== "Driver" ? 
+         }
+          {this.props.userType !== "Driver" &&
             <td>{request.date ? Moment(request.date).format("DD/MM/YYYY hh:mm") : ''}</td>
-          :''}
-          {this.props.userType !== "Driver" ? 
+         }
+          {this.props.userType !== "Driver" &&
             <td>{request.state}</td> 
-          :''}
-          {this.props.userType !== "Driver" && this.props.userType !== "Manager" ? 
+          }
+          {this.props.userType !== "Driver" && this.props.userType !== "Manager" &&
             <td>{request.observation}</td>
-          :''}
+          }
           {/* <td><Link to={'/view-request/'+request.idRequest}><Button color="primary" id="ver">Ver</Button></Link> </td> */}
          
           <td className="d-flex justify-content-center justify-content-lg-start flex-wrap">

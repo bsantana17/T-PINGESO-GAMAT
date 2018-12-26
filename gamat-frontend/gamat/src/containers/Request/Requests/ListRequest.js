@@ -34,11 +34,11 @@ const ListRequest = props => {
               <thead>
                 <tr>
                   <th>#</th>
-                  {props.userType !== "Manager" ? <th>Solicitante</th> :''}
-                  {props.userType !== "Manager" ? <th>Compañía</th> :''}
-                  {props.userType !== "Driver" ? <th>Fecha</th> :''}
-                  {props.userType !== "Driver" ? <th>Estado</th> :''}
-                  {props.userType !== "Driver" && props.userType !== "Manager" ? <th>Observación</th> :''}
+                  {props.userType !== "Manager" && <th>Solicitante</th> }
+                  {props.userType !== "Manager" && <th>Compañía</th> }
+                  {props.userType !== "Driver" && <th>Fecha</th> }
+                  {props.userType !== "Driver" && <th>Estado</th> }
+                  {props.userType !== "Driver" && props.userType !== "Manager" && <th>Observación</th> }
                   <th>Acciones</th>
                 </tr>
               </thead>

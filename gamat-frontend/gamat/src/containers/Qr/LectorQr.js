@@ -56,6 +56,7 @@ class LectorQr extends Component {
                     <ModalHeader toggle={this.toggle}> Ponga la camara para leer el codigo QR</ModalHeader>
                     <ModalBody>
                         <QrReader
+                    onError={()=> alert("error")}
                     delay={this.state.delay}
                     onScan={this.handleScan}
                     style={{ width: "100%"}}

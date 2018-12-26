@@ -88,9 +88,10 @@ class NewRequest extends Component {
   sendHandler = (event) => {
     const requestData = {
       observation: this.state.observation,
-      items: this.state.items
+      items: this.state.items,
+     
     }
-    console.log(requestData)
+    console.log(requestData,this.props.userId)
     this.props.onSendRequest(requestData, this.props.userId);
     
   }
