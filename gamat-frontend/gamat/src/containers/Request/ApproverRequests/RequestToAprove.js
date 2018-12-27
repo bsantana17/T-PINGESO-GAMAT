@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { UncontrolledAlert, Button } from 'reactstrap';
 import { connect } from 'react-redux';
 import * as actions from '../../../store/actions/index';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import ItemToApprove from './ItemToApprove';
 import NewRequest from '../NewRequest/NewRequest';
 
@@ -92,9 +92,7 @@ class RequestoToAprove extends Component {
         return (
             <div>
                 {this.props.approve &&
-                    <UncontrolledAlert color="success"  >
-                        Solicitud aprobada correctamente
-                 </UncontrolledAlert>}
+                  <Redirect to='/requests' />}
 
                 {this.props.reject &&
                     <UncontrolledAlert color="warning"  >

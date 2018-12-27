@@ -7,7 +7,7 @@ import Spinner from '../../../components/UI/Spinner';
 import * as actions from '../../../store/actions/index';
 import { Link, Redirect } from 'react-router-dom';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input } from 'reactstrap';
-
+// import AlertModal from  '../../AlertModal/AlertModal'
 
 class NewRequest extends Component {
   constructor(props) {
@@ -100,6 +100,7 @@ class NewRequest extends Component {
 
     let redirect = null
     if (this.props.requestSent){
+        // alert=<AlertModal/>
         redirect = <Redirect to='/requests' />
     }
 
@@ -127,6 +128,7 @@ class NewRequest extends Component {
     return (
       <div>
         <div className="d-flex">
+        {alert }
           <div className="mr-3"><h4>Nueva solicitud</h4></div>
           <Button color="info" onClick={this.toggleAddItem}>Agregar Item</Button>
           {this.state.open &&

@@ -77,7 +77,8 @@ const fetchRequestsSuccess = ( state, action ) => {
         budgetApproveSuccess:false,
         budgetRejectSuccess:false,
         assingDriver:false,
-        updateItemSuccess:false
+        updateItemSuccess:false,
+        requestApprove:false
     } );
 };
 

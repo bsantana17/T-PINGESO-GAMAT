@@ -21,6 +21,7 @@ import generadorQr from './containers/Qr/generadorQr';
 import Users from './containers/Administration/Users'
 
 
+
 // componente para filtrar rutas ( en desarrollo, le debo hacer algunas modificaciones)
 const PrivateRoute = ( { component: Component,auth, rest } ) => (
   <Route
@@ -42,6 +43,7 @@ class App extends Component {
   render() {
     return (
         <div>
+          {/* <AlertModal/> */}
           <Layout>
             <Route path="/new-request" exact component={ NewRequest }></Route>
             {/* <PrivateRoute auth={false} path='/requests' component={Requests} /> */}
