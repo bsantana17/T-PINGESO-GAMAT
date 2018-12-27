@@ -387,7 +387,7 @@ public class RequestService {
 //        }
     }
 
-    //Validar entrega manager
+    //Validar entrega manager o driver
     @PutMapping("/{idUser}/validateReceived/{idRequest}")
     @ResponseBody
     public HttpStatus validateReceived(@PathVariable("idUser") Integer idUser, @PathVariable("idRequest") Integer idRequest){
@@ -419,8 +419,8 @@ public class RequestService {
     @ResponseBody
     public Integer confirmDelivered(@PathVariable("idRequest") Integer id){
         Request request = serviceBD.getRequestById(id);
-        if(request.getDriverValidation() && request.getManagerValidation()){
-            if(request.getState() != "Recibida" && request.getState() != "Disconforme"){
+        if(request.getDriverValidation() || request.getManagerValidation()){
+            if(!request.getState().equals("Recibida") && !request.getState().equals("Disconforme")){
                 request.setState("Recibida");
             }
             return 1;
