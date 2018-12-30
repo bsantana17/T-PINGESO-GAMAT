@@ -76,7 +76,7 @@ class Requests extends Component {
       estado:value
     })
     this.props.onFetchRequests(this.props.userId, this.props.userType, value);
-    console.log(this.props.userType)
+    // console.log(this.props.userType)
   }
 
 

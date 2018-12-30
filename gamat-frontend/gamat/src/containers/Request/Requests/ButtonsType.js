@@ -6,7 +6,7 @@ export const getButtonsType = (userType, state, id) => {
         path: `/view-request/${id}`,
         action: 'Ver'
     })
-    console.log(userType)
+    // console.log(userType)
     if (userType === "Manager") getManagerType(objectButtons, state, id);
 
     else if (userType === "Buyer") getBuyerType(objectButtons, state, id);
@@ -19,7 +19,7 @@ export const getButtonsType = (userType, state, id) => {
 }
 
 const getManagerType = (objectButtons, state, id) => {
-    console.log("llego aca 000")
+    // console.log("llego aca 000")
     if (state === 'Entregada')
         objectButtons.push({
             type: 'success',
@@ -43,7 +43,7 @@ const getBuyerType = (objectButtons, state, id) => {
 
 
     if (state === 'Autorizada') {
-        console.log("llego aca 111")
+       
         objectButtons.push({
             type: 'success',
             path: `/assing-driver/${id}`,
@@ -77,7 +77,7 @@ const getBuyerType = (objectButtons, state, id) => {
 
 
 const getDriverType = (objectButtons, state, id) => {
-    console.log("llego aca 222")
+    // console.log("llego aca 222")
     if (state === 'Asignada')
         objectButtons.push({
             type: 'success',
@@ -96,7 +96,7 @@ const getDriverType = (objectButtons, state, id) => {
 
 
 const getApproverType = (objectButtons, state, id) => {
-    console.log("llego aca 333",state)
+    // console.log("llego aca 333",state)
     if (state === 'Pendiente por revisar')
         // console.log("llego aca 333")
         objectButtons.push({

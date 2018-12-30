@@ -44,7 +44,7 @@ export const login =  (email,password) => {
         axios.post( '/users/login',loginData)
             .then( response => {
                 //console.log('post success');
-                console.log(response);
+              
                 if(response.data === "NOT_FOUND"){
                     //console.log(response.data);
                     dispatch(loginFail("Ups, hubo un error al intentar iniciar sesión"));
@@ -52,14 +52,13 @@ export const login =  (email,password) => {
                 else{
                     localStorage.setItem('userType', response.data.role);
                     localStorage.setItem('idUser', response.data.idUser);
-                    console.log("iddd",response.data.idUser)
+                   
                     dispatch(loginSuccess(response.data.role, response.data.idUser));
                 }
             } )
             .catch( error => {
                 //console.log(error);
-                console.log('post error: ' + error.data);
-                console.log( error);
+              
                 //dispatch(loginFail(error.data));
                 dispatch(loginFail("Ups, hubo un error al intentar iniciar sesión"));
             } );

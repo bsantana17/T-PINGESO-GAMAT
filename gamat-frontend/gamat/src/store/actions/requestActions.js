@@ -2,7 +2,7 @@ import * as actionTypes from './actionTypes';
 import axios from '../../axios-config';
 
 export const addRequestsSuccess = (id, requestData) => {
-    console.log("LLEGANDO ACA")
+ 
     return {
         type: actionTypes.ADD_REQUESTS_SUCCESS,
         requestId: id,
@@ -125,10 +125,10 @@ export const addRequest = (requestData, userId) => {
 
     return dispatch => {
         dispatch(addRequestsStart());
-        console.log(userId)
+       
         axios.post('/requests/create/' + userId, requestData)
             .then(response => {
-                console.log("CREADA",response)
+               
                 dispatch(addRequestsSuccess(response.data.idRequest, requestData));
             })
             .catch(error => {
@@ -191,7 +191,7 @@ export const fetchRequests = (userId, userType,state) => {
             ruta = `/requests/${userId}/${state}/buyer`:
             ruta = `/requests/${userId}/driver`;   
         // console.log('id de user es ',userId)
-        console.log(ruta)
+       
         dispatch(fetchRequestsStart());
         axios.get(ruta)
             .then(res => {
@@ -210,7 +210,7 @@ export const removeRequests = (requestId) => {
         dispatch(removeRequestsStart());
         axios.delete('/requests/delete/' + requestId)
             .then(res => {
-                console.log(res.data);
+               
                 dispatch(removeRequestsSuccess(requestId));
             })
             .catch(err => {
@@ -223,10 +223,10 @@ export const fetchApproveRequests = (requestId,request) =>{
     return dispatch => {
         // request.manager = {idUser:request.manager};
         // request.building= {idBuilding: request.building};
-        console.log("request actual",request)
+      
     axios.post(`/requests/approve/${requestId}`,request)
         .then(res =>{
-            console.log("aprobada",res)
+            
             dispatch (approveSuccess());
         })
         .catch(err =>{
