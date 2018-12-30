@@ -99,8 +99,10 @@ class NewRequest extends Component {
   render() {
 
     let redirect = null
+    console.log("estado",this.props.requestSent)
     if (this.props.requestSent){
         // alert=<AlertModal/>
+        
         redirect = <Redirect to='/requests' />
     }
 
@@ -128,7 +130,7 @@ class NewRequest extends Component {
     return (
       <div>
         <div className="d-flex">
-        {alert }
+          
           <div className="mr-3"><h4>Nueva solicitud</h4></div>
           <Button color="info" onClick={this.toggleAddItem}>Agregar Item</Button>
           {this.state.open &&
@@ -155,7 +157,7 @@ class NewRequest extends Component {
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
           <ModalHeader toggle={this.toggle}>Enviar Solicitud</ModalHeader>
           <ModalBody>
-            {redirect}
+          {this.props.requestSent && <Redirect to='/requests' />}
             {this.props.loading ? <Spinner/> : 
               <div>
                 Los items a enviar son los siguientes:

@@ -4,7 +4,7 @@ import Moment from 'moment';
 import { connect } from 'react-redux';
 import * as actions from '../../../store/actions/index';
 import Spinner from '../../../components/UI/Spinner';
-import { Table, Button ,FormGroup,Label,Input} from 'reactstrap';
+import { Table, Button ,FormGroup,Label,Input,Alert} from 'reactstrap';
 import { Link, Redirect } from 'react-router-dom';
 import ListRequest from './ListRequest';
 import ButtonsRequest from './ButtonsRequest';
@@ -36,6 +36,7 @@ class Requests extends Component {
   }
 
   componentDidMount() {
+    setTimeout(() => this.props.onDismissAlert(),3000)
 
     let estados;
     if(this.props.userType==="Buyer")
@@ -66,6 +67,7 @@ class Requests extends Component {
    
     this.props.onFetchRequests(this.props.userId, this.props.userType, state);
     this.props.removedFalse();
+    
   }
 
   refreshRequest(e){
@@ -76,9 +78,13 @@ class Requests extends Component {
     this.props.onFetchRequests(this.props.userId, this.props.userType, value);
     console.log(this.props.userType)
   }
+
+
+
   deleteHandler = (event) => {
     this.props.onDeleteRequest(event.target.name)
   }
+  
 
   render() {
 
@@ -127,8 +133,12 @@ class Requests extends Component {
 
     return (
       <div className="container p-2 p-lg-4">
+       <Alert color={this.props.typeAlert} isOpen={this.props.activeAlert} toggle={this.props.onDismissAlert}>
+        {this.props.textAlert}
+      </Alert>
         {redirect}
         {spinner}
+        {}
         <ListRequest 
           userType={this.props.userType}
           estado={this.state.estado}
@@ -150,7 +160,10 @@ const mapStateToProps = state => {
     loading: state.request.loading,
     userId: state.login.userId,
     userType: state.login.userType,
-    removed: state.request.removed
+    removed: state.request.removed,
+    activeAlert: state.request.successAction,
+    typeAlert:state.request.typeAlert,
+    textAlert:state.request.textAlert
   };
 };
 
@@ -158,8 +171,11 @@ const mapDispatchToProps = dispatch => {
   return {
     onFetchRequests: (userId, userType, state) => dispatch(actions.fetchRequests(userId, userType, state)),
     onDeleteRequest: (requestId) => dispatch(actions.removeRequests(requestId)),
-    removedFalse: () => dispatch(actions.removedToFalse())
+    removedFalse: () => dispatch(actions.removedToFalse()),
+    onDismissAlert: ()=> dispatch(actions.onDismissAlert())
   };
 };
+
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(Requests);

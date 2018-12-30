@@ -2,21 +2,28 @@ import * as actionTypes from './actionTypes';
 import axios from '../../axios-config';
 
 export const addRequestsSuccess = (id, requestData) => {
+    console.log("LLEGANDO ACA")
     return {
         type: actionTypes.ADD_REQUESTS_SUCCESS,
         requestId: id,
-        requestData: requestData
+        requestData: requestData,
+        text: "Solicitud creada correctamente",
+        typeAlert: "success"
     };
 };
 export const  addBudgetsSuccess=(id, requestData) =>{
     return {
-        type: actionTypes.ADD_BUDGET_SUCCESS
+        type: actionTypes.ADD_BUDGET_SUCCESS,
+        text: "Cotizacion creada correctamente",
+        typeAlert: "success"
     };
 };
 
  export const approveBudgetSuccess=()=>{
      return {
-         type: actionTypes.FETCH_BUDGET_SUCCESS
+         type: actionTypes.FETCH_BUDGET_SUCCESS,
+         text: "Cotizacion aprobada correctamente",
+        typeAlert: "success"
      }
  }
 
@@ -84,7 +91,9 @@ export const fetchRequestsStart = () => {
 
 export const approveSuccess = () =>{
     return {
-        type: actionTypes.FECTH_APPROVE_SUCCESS
+        type: actionTypes.FECTH_APPROVE_SUCCESS,
+        text: "Solicitud aprobada correctamente",
+        typeAlert: "success"
     }
 }
 
@@ -106,6 +115,12 @@ export const removedToFalseRequest = () => {
     };
 };
 
+export const dismissAlert= ()=>{
+    return {
+        type: actionTypes.DISMISS_ALERT
+    }
+}
+
 export const addRequest = (requestData, userId) => {
 
     return dispatch => {
@@ -113,10 +128,11 @@ export const addRequest = (requestData, userId) => {
         console.log(userId)
         axios.post('/requests/create/' + userId, requestData)
             .then(response => {
-                console.log(response)
+                console.log("CREADA",response)
                 dispatch(addRequestsSuccess(response.data.idRequest, requestData));
             })
             .catch(error => {
+              
                 dispatch(addRequestsFail(error));
             });
     };
@@ -148,13 +164,17 @@ export const fetchDriverS = (drivers) => {
 
 export const assingSuccess = ()=>{
     return {
-        type: actionTypes.ASSING_DRIVER_SUCCESS
+        type: actionTypes.ASSING_DRIVER_SUCCESS,
+        text: "Chofer  asignado correctamente",
+        typeAlert: "success"
     }
 }
 
 export const updateItemSuccess=() =>{
     return {
-        type: actionTypes.UPDATE_ITEMS_SUCCESS
+        type: actionTypes.UPDATE_ITEMS_SUCCESS,
+        text: "Estado de items modificado correctamente",
+        typeAlert: "success"
     }
 }
 
@@ -319,3 +339,10 @@ export const removedFalse = () => {
         dispatch(removedToFalse());
     };
 };
+
+
+export const onDismissAlert = () =>{
+    return dispatch =>{
+        dispatch(dismissAlert())
+    }
+}

@@ -19,7 +19,11 @@ const initialState = {
     budgetRejectSuccess:false,
     drivers:[],
     assingDriver:false,
-    updateItemSuccess:false
+    updateItemSuccess:false,
+    successAction: false,
+    typeAlert:'',
+    textAlert:'',
+    errorAction:false
 };
 
 const addRequestsStart = ( state, action ) => {
@@ -30,9 +34,13 @@ const addRequestsStart = ( state, action ) => {
 
 const addRequestsSuccess = ( state, action ) => {
     //const newOrder = updateObject( action.requestId, { id: action.requestId } );
+ 
     return updateObject( state, {
         loading: false,
         requestSent: true,
+        successAction:true,
+        textAlert:action.text,
+        typeAlert:action.typeAlert
     } );
 };
 
@@ -70,7 +78,7 @@ const fetchRequestsStart = ( state, action ) => {
 
 const fetchRequestsSuccess = ( state, action ) => {
     return updateObject( state, {
-        requests: action.requests,
+        requests: action.requests.reverse(),
         loading: false,
         requestSent:false,
         budgetSuccess:false,
@@ -100,7 +108,10 @@ const falseRequest= ( state, action) =>{
 
 const approveRequest = (state,action) =>{
     return updateObject(state,{
-        requestApprove:true
+        requestApprove:true,
+        successAction:true,
+        textAlert:action.text,
+        typeAlert:action.typeAlert
     })
 }
 
@@ -111,11 +122,22 @@ const rejectRequest = (state,action) =>{
 }
 
 const budgetSuccess= (state,action) =>{
-    return updateObject(state,{budgetSuccess:true})
+    return updateObject(state,{
+        budgetSuccess:true,
+        successAction:true,
+        textAlert:action.text,
+        typeAlert:action.typeAlert
+    })
 }
 
 const budgetApproveSuccess= (state,action)=>{
-    return updateObject(state,{budgetApproveSuccess:true})
+    return updateObject(state,
+        {budgetApproveSuccess:true,
+            successAction:true,
+        textAlert:action.text,
+        typeAlert:action.typeAlert
+        
+        })
 }
 
 const budgetRejectSuccess= (state,action)=>{
@@ -128,11 +150,26 @@ const driverSuccess=(state,action)=>{
 }
 
 const assingDriverSuccess = (state,action)=>{
-    return updateObject(state,{assingDriver:true})
+    return updateObject(state,{
+        assingDriver:true,
+        successAction:true,
+        textAlert:action.text,
+        typeAlert:action.typeAlert
+    })
 }
 
 const updateItemsOk= (state,action)=>{
-    return updateObject(state,{updateItemSuccess:true})
+    return updateObject(state,
+        {updateItemSuccess:true,
+            successAction:true,
+        textAlert:action.text,
+        typeAlert:action.typeAlert
+        
+        })
+}
+
+const closeAlert = (state,action) =>{
+    return updateObject(state,{successAction:false})
 }
 
 const reducer = ( state = initialState, action ) => {
@@ -156,6 +193,7 @@ const reducer = ( state = initialState, action ) => {
         case actionTypes.FETCH_DRIVER_SUCCESS: return driverSuccess(state,action);
         case actionTypes.ASSING_DRIVER_SUCCESS: return assingDriverSuccess(state,action);
         case actionTypes.UPDATE_ITEMS_SUCCESS: return updateItemsOk(state,action);
+        case actionTypes.DISMISS_ALERT: return closeAlert(state,action);
         default: return state;
     }
 };
