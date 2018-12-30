@@ -36,7 +36,7 @@ class Requests extends Component {
   }
 
   componentDidMount() {
-    setTimeout(() => this.props.onDismissAlert(),3000)
+ 
 
     let estados;
     if(this.props.userType==="Buyer")
@@ -133,12 +133,10 @@ class Requests extends Component {
 
     return (
       <div className="container p-2 p-lg-4">
-       <Alert color={this.props.typeAlert} isOpen={this.props.activeAlert} toggle={this.props.onDismissAlert}>
-        {this.props.textAlert}
-      </Alert>
+      
         {redirect}
         {spinner}
-        {}
+        
         <ListRequest 
           userType={this.props.userType}
           estado={this.state.estado}
@@ -160,10 +158,7 @@ const mapStateToProps = state => {
     loading: state.request.loading,
     userId: state.login.userId,
     userType: state.login.userType,
-    removed: state.request.removed,
-    activeAlert: state.request.successAction,
-    typeAlert:state.request.typeAlert,
-    textAlert:state.request.textAlert
+    removed: state.request.removed
   };
 };
 
@@ -172,7 +167,7 @@ const mapDispatchToProps = dispatch => {
     onFetchRequests: (userId, userType, state) => dispatch(actions.fetchRequests(userId, userType, state)),
     onDeleteRequest: (requestId) => dispatch(actions.removeRequests(requestId)),
     removedFalse: () => dispatch(actions.removedToFalse()),
-    onDismissAlert: ()=> dispatch(actions.onDismissAlert())
+    
   };
 };
 
