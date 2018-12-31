@@ -62,22 +62,22 @@ class App extends Component {
 
           <Route path="/login" exact component={Login}></Route>
 
-          <Route path="/new-budget/:idRequest" exact
+          <Route path="/new-budget/:idRequest/:update?" exact
             render={(props) => VerificarRuta({...props},NewBudget, this.props.uType, ['Buyer'])}></Route>
 
           <Route path="/logout" exact
             render={(props) => VerificarRuta({...props},Logout, this.props.uType, ['Approver', 'Manager', 'Buyer', 'Driver'])}></Route>
 
-          <Route path="/view-request/:idRequest" exact
+          <Route path="/view-request/:idRequest/:update?" exact
             render={(props) => VerificarRuta({...props},ViewRequest, this.props.uType, ['Approver', 'Manager', 'Buyer', 'Driver'])}></Route>
 
-          <Route path="/approve-request/:idRequest" exact
+          <Route path="/approve-request/:idRequest/:update?" exact
             render={(props) => VerificarRuta({...props},RequestToAprove, this.props.uType, ['Approver'])}></Route>
 
-          <Route path="/approve-budget/:idRequest" exact
+          <Route path="/approve-budget/:idRequest/:update?" exact
             render={(props) => VerificarRuta({...props},ApproveBudget, this.props.uType, ['Approver'])}></Route>
 
-          <Route path="/assing-driver/:idRequest" exact
+          <Route path="/assing-driver/:idRequest/:update?" exact
             render={(props) => VerificarRuta({...props},AssingRequest, this.props.uType, ['Buyer'])}></Route>
 
           <Route path="/removed-success" exact
@@ -85,16 +85,16 @@ class App extends Component {
 
           <Route path="/testingqr" exact component={testingQR}></Route>
 
-          <Route path="/request-to-pick/:idRequest" exact
+          <Route path="/request-to-pick/:idRequest/:update?" exact
             render={(props) => VerificarRuta({...props},RequestToPickUp, this.props.uType, ['Driver'])}></Route>
 
-          <Route path="/request-to-deliver/:idRequest" exact
+          <Route path="/request-to-deliver/:idRequest/:update?" exact
             render={(props) => VerificarRuta({...props},RequestToDeliver, this.props.uType, ['Driver'])}></Route>
 
-          <Route path="/deliver-to-approve/:idRequest" exact
+          <Route path="/deliver-to-approve/:idRequest/:update?" exact
             render={(props) => VerificarRuta({...props},DeliverToApprove, this.props.uType, ['Approver'])}></Route>
 
-          <Route path="/validation/:idRequest" exact
+          <Route path="/validation/:idRequest/:update?" exact
             render={(props) => VerificarRuta({...props},generadorQr, this.props.uType, ['Manager'])}></Route>
 
           <Route path="/users" exact

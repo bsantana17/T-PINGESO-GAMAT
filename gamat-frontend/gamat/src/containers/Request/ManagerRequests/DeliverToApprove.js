@@ -30,6 +30,11 @@ class DeliverToApprove extends Component {
 }
 
 componentDidMount(){
+
+  if(this.props.match.params.update === "notf"){
+    // console.log("vengo de notificacion");
+    this.props.onFetchRequests(this.props.userId, this.props.userType, 0);
+}
   let indiceRequest =  this.props.requests.findIndex(
     (req)=>req.idRequest == this.props.match.params.idRequest);
     const itemStates= this.props.requests[indiceRequest].items.map(()=>0)
@@ -178,12 +183,15 @@ return {
   updateItemSuccess: state.request.updateItemSuccess,
   userId: state.login.userId,
   
+    userType: state.login.userType,
+  
 };
 };
 
 const mapDispatchToProps = dispatch => {
 return {
   onUpdateItems: (request,type,userId) => dispatch(actions.updateItems(request,type,userId)),
+  onFetchRequests: (userId, userType, state) => dispatch(actions.fetchRequests(userId, userType, state)),
   
 
 };

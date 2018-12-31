@@ -27,6 +27,10 @@ class RequestToPickUp extends Component {
     }
 
     componentDidMount(){
+      if(this.props.match.params.update === "notf"){
+        // console.log("vengo de notificacion");
+        this.props.onFetchRequests(this.props.userId, this.props.userType, 0);
+    }
       let indiceRequest =  this.props.requests.findIndex(
         (req)=>req.idRequest == this.props.match.params.idRequest);
         const itemStates= this.props.requests[indiceRequest].items.map(()=>false)
@@ -149,7 +153,10 @@ class RequestToPickUp extends Component {
 const mapStateToProps = state => {
   return {
       requests: state.request.requests,
-      updateItemSuccess: state.request.updateItemSuccess,userId: state.login.userId,
+      updateItemSuccess: state.request.updateItemSuccess
+      ,userId: state.login.userId,
+     
+    userType: state.login.userType,
       
   };
 };
@@ -157,6 +164,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
       onUpdateItems: (request,type,userId) => dispatch(actions.updateItems(request,type,userId)),
+      onFetchRequests: (userId, userType, state) => dispatch(actions.fetchRequests(userId, userType, state)),
       
 
   };

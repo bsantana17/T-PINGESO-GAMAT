@@ -6,6 +6,13 @@ import Moment from 'moment'
 import * as actions from '../../../store/actions/index';
 
  class ViewRequest extends Component {
+
+  componentDidMount(){
+    if(this.props.match.params.update === "notf"){
+      // console.log("vengo de notificacion");
+      this.props.onFetchRequests(this.props.userId, this.props.userType, 0);
+  }
+  }
   render() {
     // esto es para qeu se pueda acceder directamente usando la ruta
     let request= this.props.requests.find(
@@ -56,16 +63,15 @@ import * as actions from '../../../store/actions/index';
 const mapStateToProps = state => {
   return {
       requests: state.request.requests,
+      userId: state.login.userId,
+    userType: state.login.userType,
   };
 };
 
-// const mapDispatchToProps = dispatch => {
-//   return {
-//       onApproveRequest: (requestId,observations,states) => dispatch(actions.fetchApproveRequests(requestId,observations,states)),
-//       onRejectRequest: (requestId,observations,states) => dispatch(actions.fetchRejectRequests(requestId,observations,states)),
-//       onFalseVariables: () => dispatch(actions.removedToFalseRequest())
+const mapDispatchToProps = dispatch => {
+  return {
+    onFetchRequests: (userId, userType, state) => dispatch(actions.fetchRequests(userId, userType, state)),
+  };
+};
 
-//   };
-// };
-
-export default connect(mapStateToProps, null)(ViewRequest);
+export default connect(mapStateToProps,  mapDispatchToProps)(ViewRequest);

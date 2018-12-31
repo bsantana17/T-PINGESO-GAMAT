@@ -27,6 +27,11 @@ class ApproveBudget extends Component {
     }
 
     componentDidMount(){
+
+        if(this.props.match.params.update === "notf"){
+            // console.log("vengo de notificacion");
+            this.props.onFetchRequests(this.props.userId, this.props.userType, 0);
+        }
         let indiceRequest =  this.props.requests.findIndex(
             (req)=>req.idRequest == this.props.match.params.idRequest);
       
@@ -167,7 +172,9 @@ const mapStateToProps = state => {
         approve: state.request.requestApprove,
         reject: state.request.requestReject,
         budgetApproveSuccess: state.request.budgetApproveSuccess,
-        budgetRejectSuccess: state.request.budgetRejectSuccess
+        budgetRejectSuccess: state.request.budgetRejectSuccess,
+        userId: state.login.userId,
+    userType: state.login.userType,
     };
 };
 
@@ -175,7 +182,8 @@ const mapDispatchToProps = dispatch => {
     return {
         onApproveBudget: (requestId,request) => dispatch(actions.fetchApproveBudget(requestId,request)),
         onRejectBudget: (requestId,request) => dispatch(actions.fetchRejectBudget(requestId,request)),
-        onFalseVariables: () => dispatch(actions.removedToFalseRequest())
+        onFalseVariables: () => dispatch(actions.removedToFalseRequest()),
+        onFetchRequests: (userId, userType, state) => dispatch(actions.fetchRequests(userId, userType, state)),
 
     };
 };

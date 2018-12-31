@@ -129,4 +129,8 @@ public interface IServiceBD {
 
 
 
+	public List<Buyer> findAllBuyer();
+
+
+
 }

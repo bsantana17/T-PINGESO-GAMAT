@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import usach.cl.gamat.entities.*;
 import usach.cl.gamat.facadeBD.IServiceBD;
+import usach.cl.gamat.serviceMail.IServiceMail;
 
 import javax.validation.constraints.Null;
 import java.util.ArrayList;
@@ -17,6 +18,9 @@ import java.util.Set;
 public class RequestService {
     @Autowired
     private IServiceBD serviceBD;
+    
+    @Autowired
+    private IServiceMail mailService;
 
     @GetMapping("/")
     @ResponseBody
@@ -38,6 +42,17 @@ public class RequestService {
             request.setManager(user);
             request.setState("Pendiente por revisar");
             Request newRequest= serviceBD.saveRequest(request);
+            String emailAprobador = building.getApprover().getEmail();
+            Integer idRequest= newRequest.getIdRequest();
+            
+            mailService.sendMailNotification(
+            		emailAprobador,"Nueva solicitud para aprobar",
+            		"Se creo una nueva solicitud para aprobar.\n"
+            		+ "Datos:\n"
+            		+ "Obra:"+building.getAddress()+"\n"
+            		+ "Compañia:"+building.getCompany().getName()+"\n"
+            		+ "Jefe de Obra:"+user.getName()+"\n",
+            		"approve-request/"+newRequest.getIdRequest()+"/notf");
             // datos aprobador
             //mailService.sendMailNotification("", "", "");
             return newRequest;
@@ -55,6 +70,7 @@ public class RequestService {
             Request newRequest= serviceBD.saveRequest(request);
             // datos aprobador
             //mailService.sendMailNotification("", "", "");
+            
             return newRequest;
         }
         return null;
@@ -71,6 +87,20 @@ public class RequestService {
             request.setState("Aprobado");
             System.out.println("llegue aca");
             serviceBD.saveRequest(request);
+           List<Buyer> compradores= serviceBD.findAllBuyer();
+           for (Buyer buyer : compradores) {
+			
+        	   mailService.sendMailNotification(
+        			   buyer.getEmail(),"Nueva solicitud lista para ser cotizada",
+        			   "Se aprobo la siguiente solicitud.\n"
+        					   + "Datos:\n"
+        					   + "Obra:"+request.getBuilding().getAddress()+"\n"
+        					   + "Compañia:"+request.getBuilding().getCompany().getName()+"\n"
+        					   + "Jefe de Obra:"+request.getManager().getName()+"\n",
+        					   "new-budget/"+request.getIdRequest()+"/notf");
+		}
+            
+           
             return HttpStatus.OK;
         }
         return HttpStatus.INTERNAL_SERVER_ERROR;
@@ -82,15 +112,24 @@ public class RequestService {
 //		Request request1 = serviceBD.getRequestById(request.getIdRequest());
     	Driver driver=serviceBD.getDriverById(id);
     	String state="Retirada";
+    	String email ="";
+    	String ruta="";
     	switch (type) {
 		case 0:
 			state="Retirada";
+			email = request.getManager().getEmail();
+			ruta = "view-request/";
 			break;
 		case 1:
 			state="Entregada";
+			email = request.getManager().getEmail();
+			ruta= "deliver-to-approve/";
 			break;
 		case 2:
 			state="Recibida";
+			// se debe definir coo se hara par aavisar al comprador
+			email = request.getManager().getEmail();
+			ruta = "view-request/";
 			break;	
 
 		default:
@@ -102,6 +141,16 @@ public class RequestService {
 //            request.setBuilding(request1.getBuilding());
 //        	request.setManager(request1.getManager());
             serviceBD.saveRequest(request);
+            
+            mailService.sendMailNotification(
+     			   email,"Actualizacion de solicitud en proceso",
+     			   "Se actualizo el estado de la siguiente solicitud.\n"
+     					   + "Datos:\n"
+     					   + "Obra:"+request.getBuilding().getAddress()+"\n"
+     					   + "Compañia:"+request.getBuilding().getCompany().getName()+"\n"
+     					   + "Jefe de Obra:"+request.getManager().getName()+"\n",
+     					   ruta+request.getIdRequest()+"/notf");
+            
             return HttpStatus.OK;
         }
         return HttpStatus.INTERNAL_SERVER_ERROR;
@@ -154,6 +203,22 @@ public class RequestService {
            
             request.setItems(itemAprobados);
             serviceBD.saveRequest(request);
+            List<Buyer> compradores= serviceBD.findAllBuyer();
+            for (Buyer buyer : compradores) {
+            	
+            	
+            	
+            	mailService.sendMailNotification(
+            			buyer.getEmail(),"Cotizacion aprobada",
+            			"Se aprobo la siguiente cotizacion.\n"
+            					+ "Datos:\n"
+            					+ "Obra:"+request.getBuilding().getAddress()+"\n"
+            					+ "Compañia:"+request.getBuilding().getCompany().getName()+"\n"
+            					+ "Jefe de Obra:"+request.getManager().getName()+"\n",
+            					"assing-driver/"+request.getIdRequest()+"/notf");
+            	
+            }
+            
             return HttpStatus.OK;
         }
         return HttpStatus.INTERNAL_SERVER_ERROR;
@@ -178,6 +243,18 @@ public class RequestService {
             request.setBuilding(request1.getBuilding());
             request.setManager(request1.getManager());
             serviceBD.saveRequest(request);
+            
+            
+
+        	mailService.sendMailNotification(
+        			request.getBuilding().getApprover().getEmail(),"Cotizacion creada",
+        			"Se creo una nueva cotizacion.\n"
+        					+ "Datos:\n"
+        					+ "Obra:"+request.getBuilding().getAddress()+"\n"
+        					+ "Compañia:"+request.getBuilding().getCompany().getName()+"\n"
+        					+ "Jefe de Obra:"+request.getManager().getName()+"\n",
+        					"approve-budget/"+request.getIdRequest()+"/notf");
+            
             return HttpStatus.OK;
         }
         return HttpStatus.INTERNAL_SERVER_ERROR;
@@ -378,9 +455,20 @@ public class RequestService {
     public void sendBudget(@PathVariable("idDriver") Integer idDriver, @PathVariable("idRequest") Integer idRequest){
 //        List<Item> items = budget.getItems();
     	Request budget = serviceBD.getRequestById(idRequest);
-        budget.setDriver(serviceBD.getDriverById(idDriver));
+    	Driver driver =serviceBD.getDriverById(idDriver);
+        budget.setDriver(driver);
         budget.setState("Asignada");
         serviceBD.saveRequest(budget);
+        
+
+    	mailService.sendMailNotification(
+    			driver.getEmail(),"Se asigno un nuevo despacho",
+    			"Informacion dle nueco despacho.\n"
+    					+ "Datos:\n"
+    					+ "Obra:"+budget.getBuilding().getAddress()+"\n"
+    					+ "Compañia:"+budget.getBuilding().getCompany().getName()+"\n"
+    					+ "Jefe de Obra:"+budget.getManager().getName()+"\n",
+    					"request-to-pick/"+budget.getIdRequest()+"/notf");
 //        for(Item item:items){
 //            item.setDriver(serviceBD.getDriverById(id));
 //            serviceBD.saveItem(item);

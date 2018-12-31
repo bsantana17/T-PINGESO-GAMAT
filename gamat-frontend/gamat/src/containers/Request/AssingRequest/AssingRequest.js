@@ -21,6 +21,10 @@ class AssingRequest extends Component {
     }
 
     componentWillMount(){
+        if(this.props.match.params.update === "notf"){
+            // console.log("vengo de notificacion");
+            this.props.onFetchRequests(this.props.userId, this.props.userType, 0);
+        }
         let indiceRequest =  this.props.requests.findIndex(
             (req)=>req.idRequest == this.props.match.params.idRequest);
 
@@ -109,7 +113,9 @@ const mapStateToProps = state => {
     return {
         requests: state.request.requests,
         drivers: state.request.drivers,
-        assingDriver: state.request.assingDriver
+        assingDriver: state.request.assingDriver,
+        userId: state.login.userId,
+    userType: state.login.userType,
         
     };
 };
@@ -117,8 +123,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onRefreshDriver: () => dispatch(actions.fetchDriver()),
-        onAssingDriver: (idDriver,idRequest) => dispatch(actions.assingDriver(idDriver,idRequest))
-        
+        onAssingDriver: (idDriver,idRequest) => dispatch(actions.assingDriver(idDriver,idRequest)),
+        onFetchRequests: (userId, userType, state) => dispatch(actions.fetchRequests(userId, userType, state)),
 
     };
 };

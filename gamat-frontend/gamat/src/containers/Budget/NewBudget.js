@@ -105,6 +105,11 @@ class NewBudget extends Component {
     componentDidMount() {
         //Carga los elementos de una request
         // this.props.onFetchRequest();
+        if(this.props.match.params.update === "notf"){
+            // console.log("vengo de notificacion");
+            this.props.onFetchRequests(this.props.userId, this.props.userType, 0);
+        }
+
         let indiceRequest = this.props.requests.findIndex(
             (req) => req.idRequest == this.props.match.params.idRequest);
             console.log("REQUEST",this.props.requests[indiceRequest])
@@ -423,12 +428,15 @@ const mapStateToProps = state => {
         requests: state.request.requests,
         successBudget:state.request.budgetSuccess,
         loading: state.loading,
-        userId:state.login.userId
+        userId:state.login.userId,
+       
+    userType: state.login.userType,
     };
 }
 const mapDispatchToProps = dispatch => {
     return {
-        onBudgetAdded: (userId,budgetData) => dispatch(actions.addBudget(userId,budgetData))
+        onBudgetAdded: (userId,budgetData) => dispatch(actions.addBudget(userId,budgetData)),
+        onFetchRequests: (userId, userType, state) => dispatch(actions.fetchRequests(userId, userType, state)),
         
     }
 }

@@ -272,4 +272,11 @@ public class ServiceBdImp implements IServiceBD {
 	}
 
 
+	@Override
+	public List<Buyer> findAllBuyer() {
+		return (List<Buyer>) buyerRepository.findAll();
+		
+	}
+
+
 }

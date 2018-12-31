@@ -24,7 +24,10 @@ class RequestoToAprove extends Component {
 
     componentDidMount() {
         // this.props.onFalseVariables();
-
+        if(this.props.match.params.update === "notf"){
+            // console.log("vengo de notificacion");
+            this.props.onFetchRequests(this.props.userId, this.props.userType, 0);
+        }
         let indiceRequest =  this.props.requests.findIndex(
             (req)=>req.idRequest == this.props.match.params.idRequest);
         const newObservations= this.props.requests[indiceRequest].items.map(()=>"")
@@ -148,7 +151,9 @@ const mapStateToProps = state => {
     return {
         requests: state.request.requests,
         approve: state.request.requestApprove,
-        reject: state.request.requestReject
+        reject: state.request.requestReject,
+        userId: state.login.userId,
+    userType: state.login.userType,
     };
 };
 
@@ -156,7 +161,8 @@ const mapDispatchToProps = dispatch => {
     return {
         onApproveRequest: (requestId,request) => dispatch(actions.fetchApproveRequests(requestId,request)),
         onRejectRequest: (requestId,request) => dispatch(actions.fetchRejectRequests(requestId,request)),
-        onFalseVariables: () => dispatch(actions.removedToFalseRequest())
+        onFalseVariables: () => dispatch(actions.removedToFalseRequest()),
+        onFetchRequests: (userId, userType, state) => dispatch(actions.fetchRequests(userId, userType, state)),
 
     };
 };
