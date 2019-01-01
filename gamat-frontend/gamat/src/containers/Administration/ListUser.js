@@ -1,16 +1,18 @@
 import React from 'react';
-import {Table} from 'reactstrap';
 
 const ListUser = (props) => {
     return (
         <div>
-    <Table striped>
+    <table className="table table-primary table-striped">
         <thead>
           <tr>
             <th>#</th>
             <th>Nombre</th>
             <th>Email</th>
             <th>Rol</th>
+            <th>Empresa</th>
+            <th>Obra</th>
+            <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
@@ -22,11 +24,18 @@ const ListUser = (props) => {
             <td>{user.name}</td>
             <td>{user.email}</td>
             <td>{user.role}</td>
+            <td></td>
+            <td></td>
+            <td>
+              <button className="btn btn-sm btn-info">Editar</button>{' '}
+              <button className="btn btn-sm btn-danger">Borrar</button>
+            </td>
+
           </tr>
 
             ))}
         </tbody>
-      </Table>
+      </table>
         </div>
     );
 };

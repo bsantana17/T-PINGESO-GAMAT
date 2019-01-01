@@ -31,13 +31,25 @@ const AddUser = (props) => {
                 </FormGroup>
 
                 <FormGroup>
-                <Label for="rol">Rol</Label>
-            <Input value={props.rol} type="select" name="rol" id="rol" onChange={props.onChangeForm}>
-                {props.roles.map((r,i)=>(
-                    <option key={i} value={i}>{r}</option>
-                ))}
-            </Input>
-            </FormGroup>
+                    <Label for="rol">Rol</Label>
+                    <Input value={props.rol} type="select" name="rol" id="rol" onChange={props.onChangeForm}>
+                        {props.roles.map((r,i)=>(
+                            <option key={i} value={i}>{r}</option>
+                        ))}
+                    </Input>
+                </FormGroup>
+                
+                ESTO SOLO SE DEBE MOSTRAR SI EL ROL SELECCIONADO ES MANAGER O APPROVER:
+                <FormGroup>
+                    <Label for="building">Obra</Label>
+                    <Input value="" type="select" name="building" id="building" onChange={props.onChangeForm}>
+                        <option>Obra 1</option>
+                        <option>Obra 2</option>
+                        <option>Obra 3</option>
+                    </Input>
+                </FormGroup>
+
+
 
 
             

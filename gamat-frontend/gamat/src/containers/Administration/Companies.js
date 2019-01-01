@@ -1,34 +1,25 @@
 import React, { Component } from 'react';
-import ListUser from './ListUser';
+import ListCompany from './ListCompany';
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
-import AddUser from './AddUser';
+import AddCompany from './AddCompany';
+import AddBuilding from './AddBuilding';
 import AddIcon from '@material-ui/icons/Add';
-import { Button } from 'reactstrap';
 import Spinner from '../../components/UI/Spinner';
 
-class Users extends Component {
+class Companies extends Component {
     constructor(props) {
         super(props);
         this.state = {
             openModal: false,
             name: '',
-            email: '',
-            password: '',
-            rol: 0,
-            roles: [
-                'Manager'
-                , 'Approver',
-                'Buyer',
-                'Driver'],
-            rSelected: 1
-
+            rut:'',
         }
+
         this.toggleModal = this.toggleModal.bind(this)
-        this.handlerOnAddUser = this.handlerOnAddUser.bind(this)
+        this.handlerOnAddCompany = this.handlerOnAddCompany.bind(this)
         this.handlerOnChangeForm = this.handlerOnChangeForm.bind(this)
         this.onRadioBtnClick = this.onRadioBtnClick.bind(this)
-
 
     }
 
@@ -36,20 +27,14 @@ class Users extends Component {
         this.setState({ rSelected })
     }
 
-    handlerOnAddUser() {
-        let newUser = {
+    handlerOnAddCompany() {
+        let newCompany = {
             name: this.state.name,
-            email: this.state.email,
-            password: this.state.password,
-            role: this.state.roles[this.state.rol]
         }
-        this.props.onAddUser(newUser)
+        this.props.onAddCompany(newCompany)
 
         this.setState({
             name: '',
-            email: '',
-            password: '',
-            rol: '',
             openModal: false
         })
     }
@@ -68,43 +53,41 @@ class Users extends Component {
         })
     }
     componentDidMount() {
-        this.props.onFetchUsers();
+        // this.props.onFetchUsers();
     }
     render() {
 
         return (
             <div className="container">
-                {/* <div className="col-md-11 d-flex justify-content-center">
-
-                    <ButtonGroup>
-                        <Button color="primary" onClick={() => this.onRadioBtnClick(1)} active={this.state.rSelected === 1}>Usuarios Gamat</Button>
-                        <Button color="primary" onClick={() => this.onRadioBtnClick(2)} active={this.state.rSelected === 2}>Usuarios Externos</Button>
-
-                    </ButtonGroup>
-                </div> */}
-               
                 <div>
                     <div className="d-flex mb-3">
-                        <h3>Lista de usuarios</h3>
+                        <h3>Lista de empresas</h3>
                         <button className="btn btn-success ml-3" onClick={this.toggleModal}>Agregar <AddIcon /> </button>
                     </div>
 
-                    <AddUser
+                    <AddCompany
                         name={this.state.name}
-                        email={this.state.email}
-                        password={this.state.password}
-                        rol={this.state.rol}
-                        roles={this.state.roles}
+                        rut={this.state.rut}
                         onChangeForm={this.handlerOnChangeForm}
-                        onAddUser={this.handlerOnAddUser}
+                        onAddCompany={this.handlerOnAddCompany}
                         open={this.state.openModal}
                         toggle={this.toggleModal}
                         />
+
+                    
                 </div>
                     
                 {this.props.loading ? <Spinner /> :
-                    <ListUser users={this.props.users} />
+                    <ListCompany companies={'nada'} />
                 }
+                
+                <AddBuilding
+                        name={'nombre de la obra'}
+                        address={'direccion de la obra'}
+                        onChangeForm={this.handlerOnChangeForm}
+                        open={this.state.openModal}
+                        toggle={this.toggleModal}
+                        />
             </div>
         );
     }
@@ -114,20 +97,14 @@ class Users extends Component {
 
 const mapStateToProps = state => {
     return {
-        users: state.user.users,
         loading: state.user.loading
-
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        onFetchUsers: () => dispatch(actions.fetchUsers()),
-        onAddUser: (newUser) => dispatch(actions.addUser(newUser)),
-
-
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Users);
+export default connect(mapStateToProps, mapDispatchToProps)(Companies);
 

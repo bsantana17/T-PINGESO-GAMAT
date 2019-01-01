@@ -4,31 +4,31 @@ import {
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
+  NavItem,NavLink,
   DropdownItem } from 'reactstrap';
   import {Link}from 'react-router-dom';
   
   const MenuComprador = () => (
 
             <Nav className="" navbar>
-              <UncontrolledDropdown nav inNavbar>
-                <DropdownToggle nav caret>
-                
-                  Solicitudes
-                </DropdownToggle>
+
+              <NavItem>
+                <NavLink href='/requests'>Solicitudes</NavLink>
+              </NavItem>
+
+              <NavItem>
+                <NavLink href='/users'>Usuarios</NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink href='/companies'>Empresas</NavLink>
+              </NavItem>
+              {/* <UncontrolledDropdown nav inNavbar>
                 <DropdownMenu left="true" >
                   <DropdownItem>
                     <Link to='/requests'>
                       Solicitudes
                     </Link>
                   </DropdownItem>
-                  {/* <DropdownItem>
-                    <Link to='/requests'>
-                    Solicitudes Pendientes
-                    </Link>
-                  </DropdownItem>
-                  <DropdownItem>
-                    Historial de Solicitudes
-                  </DropdownItem> */}
                 </DropdownMenu>
               </UncontrolledDropdown>
               <UncontrolledDropdown nav inNavbar>
@@ -43,7 +43,7 @@ import {
                     Ver usuarios
                   </DropdownItem>
                 </DropdownMenu>
-              </UncontrolledDropdown>
+              </UncontrolledDropdown> */}
             </Nav>
   )
 

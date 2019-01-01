@@ -19,6 +19,7 @@ import testingQR from './containers/QRTest/testingQR';
 import AssingRequest from './containers/Request/AssingRequest/AssingRequest';
 import generadorQr from './containers/Qr/generadorQr';
 import Users from './containers/Administration/Users'
+import Companies from './containers/Administration/Companies'
 import NewBudget from './containers/Budget/NewBudget';
 
 
@@ -99,6 +100,9 @@ class App extends Component {
 
           <Route path="/users" exact
             render={(props) => VerificarRuta({...props},Users, this.props.uType, ['Buyer'])}></Route>
+
+          <Route path="/companies" exact
+            render={(props) => VerificarRuta({...props},Companies, this.props.uType, ['Buyer'])}></Route>
         </Layout>
       </div>
     );
