@@ -1,6 +1,4 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
-import {Card,CardTitle,CardText,Button} from 'reactstrap'
 
 const ResumeBudget = props => {
     return (
@@ -8,7 +6,7 @@ const ResumeBudget = props => {
                 <div className="card card-budget-request item-card">
                     <div className="card-body">
                         <div className="d-flex justify-content-between">
-                            <h5>Solicitud</h5><button onClick={props. onEditRequestInfo} className="btn btn-sm btn-info">Editar</button>
+                            <h5>Solicitud</h5>
                         </div>
                         <p><strong>Numero:</strong> {props.request.idRequest}</p>
                         <p><strong>Fecha:</strong> {props.request.date}</p>
@@ -24,7 +22,7 @@ const ResumeBudget = props => {
                 <div className="card card-budget-request item-card"> 
                     <div className="card-body">
                         <div className="d-flex justify-content-between">
-                            <h5>Cotización</h5><button onClick={props.onEditBudgetInfo} className="btn btn-sm btn-info">Editar</button>
+                            <h5>Cotización</h5>
                         </div>
                         <p><strong>Numero:</strong> </p>
                         <p><strong>Peso Total:</strong> {props.totalWeight}</p>
@@ -36,7 +34,6 @@ const ResumeBudget = props => {
                     </div>
                 </div> 
                 <br/>
-                <button className="btn btn-success" onClick={props.sendBudget}>Guardar Cotización.</button>
             </div>
     );
 };

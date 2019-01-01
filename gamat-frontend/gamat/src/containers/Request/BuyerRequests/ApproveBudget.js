@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import {Button} from 'reactstrap';
 import ItemApproveBudget from './ItemApproveBudget';
 import {  Redirect } from 'react-router-dom';
+import ResumeBudget from './ResumeApproveBudget'
 
 
 class ApproveBudget extends Component {
@@ -103,30 +104,19 @@ class ApproveBudget extends Component {
 
     render() {
         return (
-            <div>
-            {/* {this.props.approve &&
-                <UncontrolledAlert color="success"  >
-                    Solicitud aprobada correctamente
-             </UncontrolledAlert>}
 
-            {this.props.reject &&
-                <UncontrolledAlert color="warning"  >
-                    Solicitud rechazada correctamente
-                </UncontrolledAlert>
-            } */}
+        <div>
+            {console.log(this.props.requests[this.state.indiceRequest])}
             {(this.props.budgetApproveSuccess || this.props.budgetRejectSuccess) && <Redirect to='/requests' />}
-            <h2>Revisar Cotizacion</h2>
+            <h3>Revisar Cotizacion</h3>
+            <div className="budget-content" >
+                <div className="budget-table">
 
-            <div className="d-flex  mb-5">
-
-                {
-                    this.props.requests[this.state.indiceRequest].items.map((item, index) => (
-
-
+                    {this.props.requests[this.state.indiceRequest].items.map((item, index) => (
                         <ItemApproveBudget
                             key={index}
                             i={index}
-                            name={item.nombre}
+                            name={item.name}
                             quantity={item.quantity}
                             urgency={item.urgency}
                             description={item.description}
@@ -140,22 +130,43 @@ class ApproveBudget extends Component {
                             // onChangeForm={this.handleOnChangeForm}
                             // valueObservation={this.state.observations[index]}
                             onChangeState={this.handleOnChangeState}
-
                         />
+                        ))}
+
+                </div>
+                <div className="budget-resume">
+                    <ResumeBudget
+                        request={this.props.requests[this.state.indiceRequest]}
+                        totalWeight={this.state.totalWeight}
+                        shipping_price={this.state.shipping_price}
+                        administration_price={this.state.administration_price}
+                        total_price={this.state.total_price}
+                        true_price={this.state.true_price}
+                        payCondition={this.state.payCondition}
+                        expiration={this.state.expiration}
+                        hora={this.state.hora}
+                        sendBudget={this.sendBudget}
+                        onEditRequestInfo={this.toggleRequestInfo}
+                        onEditBudgetInfo={this.toggleInfo}
+                    />
+                </div>
+            </div>
 
 
+            
 
-                    ))}
+            <div className="d-flex  mb-5">
+
+               
             </div>
 
             <div className=" col-md-7 d-flex justify-content-around">
-                <Button color="primary" onClick={this.handleOnApprove}>Aprobar Cotizacion </Button>
-                <Button color="danger" onClick={this.handleOnReject}>Rechazar Cotizacion </Button>
-            <Button color="success" onClick={this.handleOnAutorizar}>Autorizar todos </Button>            
                 <Link to={'/requests'}>
                     <Button color="secondary">Volver </Button>
-
                 </Link>
+                <Button color="danger" onClick={this.handleOnReject}>Rechazar Cotizacion </Button>
+                <Button color="success" onClick={this.handleOnAutorizar}>Autorizar todos </Button>            
+                <Button color="primary" onClick={this.handleOnApprove}>Aprobar Cotizacion </Button>
             </div>
         </div>
 
