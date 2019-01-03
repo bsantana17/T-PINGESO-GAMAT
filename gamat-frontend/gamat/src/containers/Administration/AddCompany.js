@@ -17,14 +17,14 @@ const AddCompany = (props) => {
               <Form>
                 <FormGroup>
                 <Label for="name">Nombre</Label>
-                <Input value={props.name} type="text" name="name" id="name" onChange={props.onChangeForm}/>
+                <Input value={props.name} type="text" name="nameCompany" id="name" onChange={props.onChangeForm}/>
                 </FormGroup>
 
             </Form>
 
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={props.onAddUser}>
+            <Button color="primary" onClick={props.onAddCompany}>
            Agregar</Button>{' '}
             <Button color="secondary" onClick={props.toggle}>Volver</Button>
           </ModalFooter>

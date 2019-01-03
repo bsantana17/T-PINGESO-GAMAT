@@ -51,4 +51,16 @@ export const addUser = (user) =>{
     }
 }
 
+export const deleteUser = (idUser)=>{
+    return dispatch=>{
+        axios.delete(`/users/${idUser}`)
+        .then(res=>{
+            dispatch(fetchUsers())
+        })
+        .catch(err=>{
+            
+        })
+    }
+}
+
 

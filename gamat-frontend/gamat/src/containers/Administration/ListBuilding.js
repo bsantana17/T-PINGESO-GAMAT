@@ -1,33 +1,59 @@
 import React from 'react';
 
-const ListBuilding = () => {
+import {Modal,ModalBody,ModalHeader,ModalFooter,
+    Form,FormGroup,Label,
+    Input,Button,Table} from 'reactstrap'
+import Spinner from '../../components/UI/Spinner';
+
+const ListBuilding = (props) => {
     return (
         <div>
-            <Card>
-        <CardHeader>
-        <Label for="company">Compañias</Label>
-            <Input value={props.company} type="select" name="company" id="company" onChange={props.onChangeForm}>
-                {props.companies.map((com,i)=>(
-                    <option key={i} value={i}>{com.name}</option>
-                ))}
-            </Input>
+        <Modal isOpen={props.open} toggle={props.toggle} >
+          <ModalHeader 
+            toggle={props.toggle}> 
+           Lista de Obras
+          </ModalHeader>
+          <ModalBody>
+             {props.loading ?
+             <Spinner/>
+             :
+          <Table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Nombre</th>
+            <th>Direccion</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+            {props.buildings.map((building,i)=>(
+                
+                
+                
+                <tr key={i}>
+            <th scope="row">{building.idBuilding}</th>
+            <td>{building.name}</td>
+            <td>{building.address}</td>
+            <td>
+            <button className="btn btn-sm btn-info">Editar</button>{' '}
+              <button onClick={(e)=>props.onDelete(building.idBuilding)} className="btn btn-sm btn-danger">Borrar</button>{' '}    
+            </td>
+          </tr>
+            ))}
+         
+        </tbody>
+      </Table>
+        } 
+         
 
-        </CardHeader>
-        <CardBody>
-          <CardTitle>
-          <Label for="building">Obreas</Label>
-            <Input value={props.building} type="select" name="building" id="building" onChange={props.onChangeForm}>
-                {props.buildings.map((bui,i)=>(
-                    <option key={i} value={i}>{bui.address}</option>
-                ))}
-            </Input>
-
-          </CardTitle>
-          <CardText>With supporting text below as a natural lead-in to additional content.</CardText>
-          <Button>Go somewhere</Button>
-        </CardBody>
-        <CardFooter>Footer</CardFooter>
-      </Card>
+          </ModalBody>
+          <ModalFooter>
+            {/* <Button color="primary" onClick={props.onAddUser}>
+           Agregar</Button>{' '} */}
+            <Button color="secondary" onClick={props.toggle}>Volver</Button>
+          </ModalFooter>
+        </Modal>
         </div>
     );
 };

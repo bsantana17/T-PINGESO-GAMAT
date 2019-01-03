@@ -38,6 +38,9 @@ public class RequestService {
         if(request != null) {
             Manager user = serviceBD.getManagerById(idUser);
             Building building = user.getBuilding();
+            System.out.println("NOMBREE");
+            System.out.println(building.getAddress());
+            
             request.setBuilding(building);
             request.setManager(user);
             request.setState("Pendiente por revisar");

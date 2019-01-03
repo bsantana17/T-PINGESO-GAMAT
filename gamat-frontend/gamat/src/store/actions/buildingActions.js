@@ -11,7 +11,7 @@ export const fetchCompanySuccess = (companies) =>{
 
 export const addCompany = (newCompany) =>{
     return dispatch =>{
-        axios.post('/companies/create')
+        axios.post('/companies/create',newCompany)
         .then(res=>{
             console.log(res)
             dispatch(fetchCompanies())
@@ -21,6 +21,20 @@ export const addCompany = (newCompany) =>{
         })
     }
 }
+
+export const deleteCompany = (idCompany) =>{
+    return dispatch =>{
+        axios.delete(`/companies/${idCompany}`)
+        .then(res =>{
+            dispatch(fetchCompanies())
+        })
+        .catch(err=>{
+
+        })
+    }
+}
+
+
 
 export const fetchCompanyStart=()=>{
     return {
@@ -33,7 +47,7 @@ export const fetchCompanies= ()=>{
         dispatch(fetchCompanyStart())
         axios.get('/companies/')
         .then(res =>{
-            console.log(res)
+            console.log("Comp",res)
             dispatch(fetchCompanySuccess(res.data))
 
         })
@@ -72,7 +86,7 @@ export const fetchBuildings= (idCompany) =>{
 
 export const addBuilding= (newBuilding,idCompany) =>{
     return dispatch =>{
-        axios.post(`/buildings`)
+        axios.post(`/buildings/${idCompany}`,newBuilding)
         .then(res =>{
             console.log(res)
             dispatch(fetchBuildings(idCompany))
@@ -84,3 +98,14 @@ export const addBuilding= (newBuilding,idCompany) =>{
     }
 }
 
+export const deleteBuilding = (idBuilding,idCompany) =>{
+    return dispatch =>{
+        axios.delete(`/buildings/${idBuilding}`)
+        .then(res=>{
+            dispatch(fetchBuildings(idCompany))
+        })
+        .catch(err =>{
+
+        })
+    }
+}

@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import usach.cl.gamat.entities.Approver;
 import usach.cl.gamat.entities.Building;
+import usach.cl.gamat.entities.Company;
 import usach.cl.gamat.entities.Request;
 import usach.cl.gamat.facadeBD.IServiceBD;
 
@@ -41,13 +42,21 @@ public class BuildingService {
         }
         return null;
     }
+    
+    @GetMapping("/{idCompany}")
+    public List<Building> getBuilding(@PathVariable("idCompany")Integer idCompany){
+    	Company company =serviceBd.findCompanyById(idCompany);
+    	return company.getBuildings();
+    }
 
-    @PostMapping
+    @PostMapping("/{idCompany}")
     @ResponseBody
-    public Building createBuilding(@RequestBody Building building) {
-        if(building !=null)
-            return serviceBd.saveBuilding(building);
-        return null;
+    public HttpStatus createBuilding(@RequestBody Building building,@PathVariable("idCompany")Integer idCompany) {
+    	Company company = serviceBd.findCompanyById(idCompany);
+    	building.setCompany(company);
+    	serviceBd.saveBuilding(building);
+    	
+        return HttpStatus.OK;
     }
 
     @PutMapping

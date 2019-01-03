@@ -6,19 +6,32 @@ import AddCompany from './AddCompany';
 import AddBuilding from './AddBuilding';
 import AddIcon from '@material-ui/icons/Add';
 import Spinner from '../../components/UI/Spinner';
+import ListBuilding from './ListBuilding';
+// import { Disposable } from 'rx';
 
 class Companies extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            openModal: false,
-            name: '',
-            rut:'',
+            openModalComp: false,
+            openModalBuild:false,
+            openListBuilding: false,
+            nameCompany: '',
+            nameBuilding: '',
+            addressBuilding: '',
+            companyActual:0
+
         }
 
         this.toggleModal = this.toggleModal.bind(this)
+        this.toggleModalBuild= this.toggleModalBuild.bind(this)
+        this.toggleListBuilding= this.toggleListBuilding.bind(this)
         this.handlerOnAddCompany = this.handlerOnAddCompany.bind(this)
+        this.handleOnDeleteCompany=this.handleOnDeleteCompany.bind(this)
+        this.handlerOnAddBuilding = this.handlerOnAddBuilding.bind(this)
+        this.handleOnDeleteBuilding= this.handleOnDeleteBuilding.bind(this)
         this.handlerOnChangeForm = this.handlerOnChangeForm.bind(this)
+        this.handlerOnListBuilding= this.handlerOnListBuilding.bind(this)
         this.onRadioBtnClick = this.onRadioBtnClick.bind(this)
 
     }
@@ -29,13 +42,26 @@ class Companies extends Component {
 
     handlerOnAddCompany() {
         let newCompany = {
-            name: this.state.name,
+            name: this.state.nameCompany,
         }
+        console.log("new",newCompany)
         this.props.onAddCompany(newCompany)
 
         this.setState({
-            name: '',
+            nameCompany: '',
             openModal: false
+        })
+    }
+
+    handlerOnAddBuilding(){
+        let newBuilding ={
+            name: this.state.nameBuilding,
+            address: this.state.addressBuilding
+        }
+        this.props.onAddBuilding(newBuilding,this.state.companyActual)
+        
+        this.setState({
+            openListBuilding: false
         })
     }
 
@@ -47,13 +73,62 @@ class Companies extends Component {
         })
     }
 
+    
+
     toggleModal() {
+
+ 
+
+            this.setState({
+                openModal: !this.state.openModal,
+                nameCompany:''
+                
+            })
+        
+    }
+
+    toggleModalBuild (idCompany){
+        if(idCompany){
+            this.setState({
+                companyActual:idCompany
+            })
+        }
         this.setState({
-            openModal: !this.state.openModal
+            openModalBuild: !this.state.openModalBuild,
+            nameBuilding:'',
+            addressBuilding:''
+
+        })
+    }
+
+    toggleListBuilding(){
+        this.setState({
+            openListBuilding: !this.state.openListBuilding
         })
     }
     componentDidMount() {
-        // this.props.onFetchUsers();
+        this.props.onFetchCompanies();
+        
+    }
+
+    handlerOnListBuilding(idCompany){
+        this.props.onFetchBUildings(idCompany)
+        this.setState({
+            openListBuilding: true,
+            companyActual:idCompany
+        })
+
+    }
+
+    handleOnDeleteCompany(idCompany){
+        const res= window.confirm("¿Esta seguro de que desea eliminar esta compañia?")
+        res && (this.props.onDeleteCompany(idCompany));
+    }
+
+    handleOnDeleteBuilding(idBuilding){
+        let res= window.confirm("¿Esta seguro de que desea eliminar esta obra?")
+        res && (this.props.onDeleteBuilding(idBuilding,this.state.companyActual));
+
     }
     render() {
 
@@ -66,8 +141,8 @@ class Companies extends Component {
                     </div>
 
                     <AddCompany
-                        name={this.state.name}
-                        rut={this.state.rut}
+                        name={this.state.nameCompany}
+                       
                         onChangeForm={this.handlerOnChangeForm}
                         onAddCompany={this.handlerOnAddCompany}
                         open={this.state.openModal}
@@ -78,15 +153,28 @@ class Companies extends Component {
                 </div>
                     
                 {this.props.loading ? <Spinner /> :
-                    <ListCompany companies={'nada'} />
+                    <ListCompany  
+                        companies={this.props.companies}
+                        toggle={this.toggleModalBuild}
+                        onListBuilding={this.handlerOnListBuilding}
+                        onDelete={this.handleOnDeleteCompany}
+
+                    />
                 }
-                
+                <ListBuilding
+                    open={this.state.openListBuilding}
+                    toggle={this.toggleListBuilding}
+                    buildings={this.props.buildings}
+                    loading={this.props.loadingBuilding}
+                    onDelete={this.handleOnDeleteBuilding}
+                />
                 <AddBuilding
-                        name={'nombre de la obra'}
-                        address={'direccion de la obra'}
+                        name={this.state.nameBuilding}
+                        address={this.state.addressBuilding}
                         onChangeForm={this.handlerOnChangeForm}
-                        open={this.state.openModal}
-                        toggle={this.toggleModal}
+                        open={this.state.openModalBuild}
+                        toggle={this.toggleModalBuild}
+                        onAddBuilding={this.handlerOnAddBuilding}
                         />
             </div>
         );
@@ -97,12 +185,21 @@ class Companies extends Component {
 
 const mapStateToProps = state => {
     return {
-        loading: state.user.loading
+        loading: state.building.loading,
+        companies:state.building.companies,
+        buildings:state.building.buildings,
+        loadingBuilding:state.building.loadingBuilding
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
+        onFetchCompanies: ()=> dispatch(actions.fetchCompanies()),
+        onAddCompany: (newCompany)=> dispatch(actions.addCompany(newCompany)),
+        onDeleteCompany :(idCompany) => dispatch(actions.deleteCompany(idCompany)),
+        onFetchBUildings: (idCompany) => dispatch(actions.fetchBuildings(idCompany)),
+        onAddBuilding: (newBuilding,idCompany) => dispatch(actions.addBuilding(newBuilding,idCompany)),
+        onDeleteBuilding: (idBuilding,idCompany) => dispatch(actions.deleteBuilding(idBuilding,idCompany))
     };
 };
 

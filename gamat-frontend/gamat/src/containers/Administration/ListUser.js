@@ -28,7 +28,7 @@ const ListUser = (props) => {
             <td></td>
             <td>
               <button className="btn btn-sm btn-info">Editar</button>{' '}
-              <button className="btn btn-sm btn-danger">Borrar</button>
+              <button onClick={(e)=>props.onDelete(user.idUser)} className="btn btn-sm btn-danger">Borrar</button>
             </td>
 
           </tr>

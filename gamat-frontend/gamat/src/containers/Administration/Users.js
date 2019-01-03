@@ -28,6 +28,7 @@ class Users extends Component {
         this.handlerOnAddUser = this.handlerOnAddUser.bind(this)
         this.handlerOnChangeForm = this.handlerOnChangeForm.bind(this)
         this.onRadioBtnClick = this.onRadioBtnClick.bind(this)
+        this.handlerOnDeleteUser = this.handlerOnDeleteUser.bind(this)
 
 
     }
@@ -67,6 +68,11 @@ class Users extends Component {
             openModal: !this.state.openModal
         })
     }
+
+    handlerOnDeleteUser(idUser){
+        const res= window.confirm("¿Esta seguro de que desea eliminar este usuario?")
+        res && (this.props.onDeleteUser(idUser));
+    }
     componentDidMount() {
         this.props.onFetchUsers();
     }
@@ -103,7 +109,9 @@ class Users extends Component {
                 </div>
                     
                 {this.props.loading ? <Spinner /> :
-                    <ListUser users={this.props.users} />
+                    <ListUser 
+                    users={this.props.users}
+                    onDelete={this.handlerOnDeleteUser} />
                 }
             </div>
         );
@@ -124,6 +132,7 @@ const mapDispatchToProps = dispatch => {
     return {
         onFetchUsers: () => dispatch(actions.fetchUsers()),
         onAddUser: (newUser) => dispatch(actions.addUser(newUser)),
+        onDeleteUser: (idUser) => dispatch(actions.deleteUser(idUser))
 
 
     };

@@ -133,4 +133,8 @@ public interface IServiceBD {
 
 
 
+	public boolean deleteCompany(Company company);
+
+
+
 }

@@ -279,4 +279,11 @@ public class ServiceBdImp implements IServiceBD {
 	}
 
 
+	@Override
+	public boolean deleteCompany(Company company) {
+		companyRepository.delete(company);
+		return true;
+	}
+
+
 }

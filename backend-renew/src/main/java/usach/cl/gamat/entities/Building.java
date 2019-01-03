@@ -16,6 +16,8 @@ public class Building {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true)
     private int idBuilding;
+    
+    private String name;
 
     @NotNull
     @Column(name = "address")
@@ -99,4 +101,14 @@ public class Building {
     public void setManager(Manager manager) {
         this.manager = manager;
     }
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+    
+    
 }

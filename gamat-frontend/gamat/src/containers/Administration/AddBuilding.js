@@ -17,19 +17,19 @@ const AddBuilding = (props) => {
             <Form>
                 <FormGroup>
                 <Label for="name">Nombre</Label>
-                <Input value={props.name} type="text" name="name" id="name" onChange={props.onChangeForm}/>
+                <Input value={props.name} type="text" name="nameBuilding" id="name" onChange={props.onChangeForm}/>
                 </FormGroup>
 
                 <FormGroup>
                 <Label for="name">Dirección</Label>
-                <Input value={props.name} type="text" name="name" id="name" onChange={props.onChangeForm}/>
+                <Input value={props.address} type="text" name="addressBuilding" id="name" onChange={props.onChangeForm}/>
                 </FormGroup>
 
             </Form>
 
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={props.onAddUser}>
+            <Button color="primary" onClick={props.onAddBuilding}>
            Agregar</Button>{' '}
             <Button color="secondary" onClick={props.toggle}>Volver</Button>
           </ModalFooter>

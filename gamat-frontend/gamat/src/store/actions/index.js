@@ -22,12 +22,15 @@ export {
 
 export {
     fetchUsers,
-    addUser
+    addUser,
+    deleteUser
 } from './userActions'
 
 export {
     fetchCompanies,
     addCompany,
+    deleteCompany,
     fetchBuildings,
-    addBuilding
+    addBuilding,
+    deleteBuilding
 } from './buildingActions'
