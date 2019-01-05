@@ -135,6 +135,14 @@ public interface IServiceBD {
 
 	public boolean deleteCompany(Company company);
 
+    //Log
 
+    public List<Log> findAllLog();
+
+    public Log findLogById(Integer id);
+
+    public Log saveLog(Log log);
+
+    public boolean deleteLog(int id);
 
 }

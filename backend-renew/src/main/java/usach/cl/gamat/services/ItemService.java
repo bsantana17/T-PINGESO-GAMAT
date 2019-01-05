@@ -27,7 +27,7 @@ public class ItemService {
         return null;
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{idItem}")
     @ResponseBody
     public HttpStatus deleteItem(@PathVariable("id") Integer idItem) {
         if(serviceBd.deleteItem(idItem))

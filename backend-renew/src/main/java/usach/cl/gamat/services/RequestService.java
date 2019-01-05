@@ -89,6 +89,8 @@ public class RequestService {
 //        	request.setDriver(request1.getDriver());
             request.setState("Aprobado");
             System.out.println("llegue aca");
+            Log log = new Log(request.getState(), request);
+            serviceBD.saveLog(log);
             serviceBD.saveRequest(request);
            List<Buyer> compradores= serviceBD.findAllBuyer();
            for (Buyer buyer : compradores) {
@@ -143,6 +145,8 @@ public class RequestService {
             request.setDriver(driver);
 //            request.setBuilding(request1.getBuilding());
 //        	request.setManager(request1.getManager());
+            Log log = new Log(request.getState(), request);
+            serviceBD.saveLog(log);
             serviceBD.saveRequest(request);
             
             mailService.sendMailNotification(
@@ -205,6 +209,8 @@ public class RequestService {
             }
            
             request.setItems(itemAprobados);
+            Log log = new Log(request.getState(), request);
+            serviceBD.saveLog(log);
             serviceBD.saveRequest(request);
             List<Buyer> compradores= serviceBD.findAllBuyer();
             for (Buyer buyer : compradores) {
@@ -232,6 +238,8 @@ public class RequestService {
 //		Request request = serviceBd.getRequestById(id);
         if (request != null) {
             request.setState("Rechazada");
+            Log log = new Log(request.getState(), request);
+            serviceBD.saveLog(log);
             serviceBD.saveRequest(request);
             return HttpStatus.OK;
         }
@@ -245,6 +253,8 @@ public class RequestService {
             request.setState("Cotizacion");
             request.setBuilding(request1.getBuilding());
             request.setManager(request1.getManager());
+            Log log = new Log(request.getState(), request);
+            serviceBD.saveLog(log);
             serviceBD.saveRequest(request);
             
             
@@ -269,6 +279,8 @@ public class RequestService {
 //		Request request = serviceBd.getRequestById(id);
         if (request != null) {
             request.setState("Cancelada");
+            Log log = new Log(request.getState(), request);
+            serviceBD.saveLog(log);
             serviceBD.saveRequest(request);
             return HttpStatus.OK;
         }
@@ -461,6 +473,8 @@ public class RequestService {
     	Driver driver =serviceBD.getDriverById(idDriver);
         budget.setDriver(driver);
         budget.setState("Asignada");
+        Log log = new Log(budget.getState(), budget);
+        serviceBD.saveLog(log);
         serviceBD.saveRequest(budget);
         
 
@@ -513,6 +527,9 @@ public class RequestService {
         if(request.getDriverValidation() || request.getManagerValidation()){
             if(!request.getState().equals("Recibida") && !request.getState().equals("Disconforme")){
                 request.setState("Recibida");
+                Log log = new Log(request.getState(), request);
+                serviceBD.saveLog(log);
+                serviceBD.saveRequest(request);
             }
             return 1;
         }

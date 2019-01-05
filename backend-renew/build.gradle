@@ -32,4 +32,6 @@ dependencies {
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '2.0.4.RELEASE'
 	compile group: 'org.json', name: 'json', version: '20180130'
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '1.5.3.RELEASE'
+	compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.7.0'
 }

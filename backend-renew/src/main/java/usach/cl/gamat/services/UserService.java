@@ -4,6 +4,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import usach.cl.gamat.entities.*;
 import usach.cl.gamat.facadeBD.ServiceBdImp;
@@ -24,6 +26,8 @@ public class UserService {
     private UserRepository userRepository;
     @Autowired
     private DriverRepository driverRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     @ResponseBody
@@ -57,6 +61,7 @@ public class UserService {
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public User create(@RequestBody User resource){
+        resource.setPassword(passwordEncoder.encode(resource.getPassword()));
         return userRepository.save(resource);
     }
 
@@ -64,6 +69,7 @@ public class UserService {
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public User createManager(@RequestBody Manager resource){
+        resource.setPassword(passwordEncoder.encode(resource.getPassword()));
         return serviceBdImp.saveManager(resource);
     }
 
@@ -71,6 +77,7 @@ public class UserService {
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public User createApprover(@RequestBody Approver resource){
+        resource.setPassword(passwordEncoder.encode(resource.getPassword()));
         return serviceBdImp.saveApprover(resource);
     }
 
@@ -78,6 +85,7 @@ public class UserService {
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public User createDriver(@RequestBody Driver resource){
+        resource.setPassword(passwordEncoder.encode(resource.getPassword()));
         return serviceBdImp.saveDriver(resource);
     }
 
@@ -85,7 +93,17 @@ public class UserService {
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public User createBuyer(@RequestBody Buyer resource){
+        resource.setPassword(passwordEncoder.encode(resource.getPassword()));
         return serviceBdImp.saveBuyer(resource);
+    }
+
+    @PutMapping(value = "/{id}/edit")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public void update(@RequestBody User resource, @PathVariable Integer id){
+        User user = serviceBdImp.getUserById(id);
+        user.setPassword(passwordEncoder.encode(resource.getPassword()));
+        userRepository.save(user);
     }
 
     //Get Drivers

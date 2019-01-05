@@ -27,6 +27,11 @@ public class Request {
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
 
+    @PrePersist
+    protected void onCreate(){
+        date = new Date();
+    }
+
     @Column(name = "totalPrice")
     private Integer totalPrice;
 

@@ -41,6 +41,9 @@ public class ServiceBdImp implements IServiceBD {
     @Autowired
     private CompanyRepository companyRepository;
 
+    @Autowired
+    private LogRepository logRepository;
+
 
 
     // operaciones Request
@@ -284,6 +287,31 @@ public class ServiceBdImp implements IServiceBD {
 		companyRepository.delete(company);
 		return true;
 	}
+
+    @Override
+    public List<Log> findAllLog() {
+        return (List<Log>) logRepository.findAll();
+    }
+
+    @Override
+    public Log findLogById(Integer id) {
+        return logRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public Log saveLog(Log log) {
+        return logRepository.save(log);
+    }
+
+    @Override
+    public boolean deleteLog(int id) {
+        Log log = logRepository.findById(id).orElse(null);
+        if(log != null){
+            logRepository.delete(log);
+            return true;
+        }
+        return false;
+    }
 
 
 }
