@@ -1,5 +1,6 @@
 import * as actionTypes from './actionTypes';
-import axios from '../../axios-config';
+// import axios from '../../axios-config';
+import axios from 'axios'
 
 
 export const loginStart = () => {
@@ -34,14 +35,26 @@ export const logout = () => {
 export const login =  (email,password) => {
     return dispatch => {
         dispatch(loginStart());
+
+        
         const loginData = {
-            email: email,
+           username: email,
             password: password,
         }
-
+        
+        // const config = {
+        //     headers: {
+        //       'Content-Type': 'application/json',
+        //       Authorization: `Bearer ${user.jwt}`,
+        //     },
+        //     data: {},
+        //   };
        // dispatch(loginSuccess('2', 6));
-
-        axios.post( '/users/login',loginData)
+        console.log(loginData)
+        axios.post( 'http://localhost:8080/login',loginData,{headers: {
+           
+            'Content-Type': "application/json",
+          }}  )
             .then( response => {
                 //console.log('post success');
               

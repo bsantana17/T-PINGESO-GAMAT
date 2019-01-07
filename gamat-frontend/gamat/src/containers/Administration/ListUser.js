@@ -1,4 +1,5 @@
 import React from 'react';
+import ListIcon from '@material-ui/icons/List'
 
 const ListUser = (props) => {
     return (
@@ -25,7 +26,15 @@ const ListUser = (props) => {
             <td>{user.email}</td>
             <td>{user.role}</td>
             <td></td>
-            <td></td>
+            {user.role==='Approver' &&
+            <td>{<button onClick={(e)=>props.onListBuilding(user.company.idCompany)} className="btn btn-sm btn-secondary">Ver <ListIcon/></button>}</td>
+            }
+              {user.role==='Manager' &&
+            <td>{user.building.address}</td>
+            }
+            {user.role==='Driver' || user.role ==='Buyer' &&
+            <td>-----</td>
+            }
             <td>
               <button className="btn btn-sm btn-info">Editar</button>{' '}
               <button onClick={(e)=>props.onDelete(user.idUser)} className="btn btn-sm btn-danger">Borrar</button>
