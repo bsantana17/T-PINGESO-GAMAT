@@ -1,6 +1,7 @@
 import * as actionTypes from './actionTypes';
-// import axios from '../../axios-config';
-import axios from 'axios'
+import axios from '../../axios-config';
+// import axios from 'axios'
+import jwt_decode from 'jwt-decode'
 
 
 export const loginStart = () => {
@@ -27,6 +28,7 @@ export const loginFail = (error) => {
 export const logout = () => {
     localStorage.removeItem('userType');
     localStorage.removeItem('idUser');
+    localStorage.removeItem('token');
     return {
         type: actionTypes.LOGIN_LOGOUT
     };
@@ -51,13 +53,10 @@ export const login =  (email,password) => {
         //   };
        // dispatch(loginSuccess('2', 6));
         console.log(loginData)
-        axios.post( 'http://localhost:8080/login',loginData,{headers: {
-           
-            'Content-Type': "application/json",
-          }}  )
+        axios.post( '/login',loginData)
             .then( response => {
                 //console.log('post success');
-              
+                console.log("RESPONSE",jwt_decode(response.headers.authorization))
                 if(response.data === "NOT_FOUND"){
                     //console.log(response.data);
                     dispatch(loginFail("Ups, hubo un error al intentar iniciar sesión"));
@@ -65,7 +64,7 @@ export const login =  (email,password) => {
                 else{
                     localStorage.setItem('userType', response.data.role);
                     localStorage.setItem('idUser', response.data.idUser);
-                   
+                    localStorage.setItem('token',response.headers.authorization)
                     dispatch(loginSuccess(response.data.role, response.data.idUser));
                 }
             } )
