@@ -39,15 +39,37 @@ const AddUser = (props) => {
                     </Input>
                 </FormGroup>
                 
-                ESTO SOLO SE DEBE MOSTRAR SI EL ROL SELECCIONADO ES MANAGER O APPROVER:
+                { (props.rol == 0 || props.rol ==1) &&
+
                 <FormGroup>
+                <Label for="companySelect">Compañia</Label>
+                <Input value={props.companySelect} type="select" name="companySelect" id="companySelect" onChange={props.onChangeForm}>
+                   {props.companies.map((com,i)=>(
+                         <option value={i} key={i}>{com.name}</option>
+
+                   ))}
+                </Input>
+                </FormGroup>
+                }
+               
+                { (props.rol == 0) &&
+
+                    <FormGroup>
                     <Label for="building">Obra</Label>
-                    <Input value="" type="select" name="building" id="building" onChange={props.onChangeForm}>
-                        <option>Obra 1</option>
-                        <option>Obra 2</option>
-                        <option>Obra 3</option>
+                    <Input value={props.buildingSelect} type="select" name="buildingSelect" id="buildingSelect" onChange={props.onChangeForm}>
+                    {props.loadingBuilding ? 
+                        <option value={0}>Cargando...</option> 
+                        :
+                        props.buildings.map((buil,i)=>(
+                            <option value={i} key={i}>{buil.address}</option>
+                            
+                            ))
+                        
+                        }
                     </Input>
                 </FormGroup>
+                }
+
 
 
 

@@ -23,7 +23,8 @@ export {
 export {
     fetchUsers,
     addUser,
-    deleteUser
+    deleteUser,
+    updateAssingApprover
 } from './userActions'
 
 export {

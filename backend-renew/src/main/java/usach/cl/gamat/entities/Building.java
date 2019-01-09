@@ -37,14 +37,14 @@ public class Building {
     private List<Request> requests;
 
     @JsonIgnore
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne(fetch=FetchType.LAZY,cascade=CascadeType.MERGE)
     @JoinColumn(name="user_id")
     private Approver approver;
 
     @JsonIgnore
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @OneToOne(mappedBy = "building")
-    private Manager manager;
+    @OneToMany(mappedBy = "building")
+    private List<Manager> manager;
 
     public int getIdBuilding() {
         return idBuilding;
@@ -94,11 +94,11 @@ public class Building {
         this.approver = approver;
     }
 
-    public Manager getManager() {
+    public List<Manager> getManager() {
         return manager;
     }
 
-    public void setManager(Manager manager) {
+    public void setManager(List<Manager> manager) {
         this.manager = manager;
     }
 

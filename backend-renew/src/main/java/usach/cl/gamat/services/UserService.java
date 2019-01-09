@@ -81,6 +81,20 @@ public class UserService {
         resource.setPassword(passwordEncoder.encode(resource.getPassword()));
         return serviceBdImp.saveApprover(resource);
     }
+    
+    @PutMapping("/assingApprover")
+    
+    public HttpStatus assingApprover(@RequestBody Approver resource){
+    	System.out.println("llegue");
+       for (Building build : resource.getBuildings()) {
+    	   build.setApprover(resource);
+    	   serviceBdImp.saveBuilding(build);
+    	   System.out.println("uodate");
+		
+	}
+        return HttpStatus.OK;
+    }
+
 
     @RequestMapping(method = RequestMethod.POST, value = "/createDriver")
     @ResponseStatus(HttpStatus.CREATED)

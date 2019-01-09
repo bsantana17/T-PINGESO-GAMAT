@@ -2,7 +2,7 @@ import React from 'react';
 
 import {Modal,ModalBody,ModalHeader,ModalFooter,
     Form,FormGroup,Label,
-    Input,Button,Table} from 'reactstrap'
+    Input,Button,Table,CustomInput} from 'reactstrap'
 import Spinner from '../../components/UI/Spinner';
 
 const ListBuildingApprover = (props) => {
@@ -21,21 +21,28 @@ const ListBuildingApprover = (props) => {
         <thead>
           <tr>
             <th>#</th>
-            <th>Nombre</th>
+            <th>Asiganda</th>
             <th>Direccion</th>
-            <th>Acciones</th>
+            
           </tr>
         </thead>
         <tbody>
             {props.buildings.map((building,i)=>(
                 
-                <FormGroup>
-                <Label for="exampleCheckbox">Checkboxes</Label>
-                <div>
-                  <CustomInput type="checkbox" checked id="exampleCustomCheckbox" label={building.address} />
-               
-                </div>
-              </FormGroup>
+            <tr key={i}>
+             <th>
+              {building.idBuilding}
+             </th>
+             <td>
+
+              <CustomInput type="checkbox"  onChange={(e)=>props.onChangeCheck(e,i)} checked={props.checks[i]} id={i} />
+             </td>
+             <td>
+               {building.address}
+               </td> 
+          
+            </tr>
+         
                 
         
             ))}
@@ -47,8 +54,8 @@ const ListBuildingApprover = (props) => {
 
           </ModalBody>
           <ModalFooter>
-            {/* <Button color="primary" onClick={props.onAddUser}>
-           Agregar</Button>{' '} */}
+            <Button color="primary" onClick={props.onSaveBuildings}>
+          Guardar</Button>{' '}
             <Button color="secondary" onClick={props.toggle}>Volver</Button>
           </ModalFooter>
         </Modal>

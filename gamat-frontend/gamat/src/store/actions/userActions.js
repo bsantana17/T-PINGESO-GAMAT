@@ -38,9 +38,23 @@ export const fetchUsers = () =>{
     }
 }
 
+export const updateAssingApprover=(approver) =>{
+    return dispatch =>{
+        axios.put(`/users/assingApprover`,approver)
+        .then(res =>{
+            console.log (res)
+            dispatch(fetchUsers())
+        })
+        .catch(err=>{
+            console.log (err)
+
+        })
+    }
+}
+
 export const addUser = (user) =>{
     return dispatch =>{
-        axios.post('/users',user)
+        axios.post(`/users/create${user.role}`,user)
         .then(res =>{
             console.log (res)
             dispatch(fetchUsers())

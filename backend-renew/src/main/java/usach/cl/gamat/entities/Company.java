@@ -29,9 +29,9 @@ public class Company {
     @OneToMany(mappedBy="company",fetch=FetchType.LAZY,cascade=CascadeType.ALL)
     private List<Building> buildings;
     
-    
-//    @OneToMany(mappedBy="company",fetch=FetchType.LAZY,cascade=CascadeType.ALL)
-//    private List<Approver> approvers;
+    @JsonIgnore
+    @OneToMany(mappedBy="company",fetch=FetchType.LAZY)
+    private List<Approver> approvers;
 
     public int getIdCompany() {
         return idCompany;
@@ -64,6 +64,16 @@ public class Company {
 	public void setBuildings(List<Building> buildings) {
 		this.buildings = buildings;
 	}
+
+	public List<Approver> getApprovers() {
+		return approvers;
+	}
+
+	public void setApprovers(List<Approver> approvers) {
+		this.approvers = approvers;
+	}
+	
+	
     
     
 }

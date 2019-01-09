@@ -3,19 +3,22 @@ package usach.cl.gamat.entities;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.Set;
 
 @Entity
 @DiscriminatorValue("Approver")
 public class Approver extends User{
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "approver")
+    @OneToMany(fetch = FetchType.LAZY)
+//    @JsonIgnore	
     private Set<Building> buildings;
     
-//    @ManyToOne(fetch=FetchType.LAZY)
-//    @JoinColumn(name="company_id")
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="company_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 //    @JsonIgnore
-//    private Company company;
+    private Company company;
 
     public Set<Building> getBuildings() {
         return buildings;
@@ -25,12 +28,12 @@ public class Approver extends User{
         this.buildings = buildings;
     }
 
-//	public Company getCompany() {
-//		return company;
-//	}
-//
-//	public void setCompany(Company company) {
-//		this.company = company;
-//	}
-//    
+	public Company getCompany() {
+		return company;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
+	}
+    
 }
