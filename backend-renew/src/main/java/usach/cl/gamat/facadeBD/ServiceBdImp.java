@@ -314,4 +314,10 @@ public class ServiceBdImp implements IServiceBD {
     }
 
 
+	public void deleteUser(User user) {
+		userRepository.delete(user);
+		
+	}
+
+
 }

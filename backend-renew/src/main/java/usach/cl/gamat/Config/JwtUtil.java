@@ -33,7 +33,7 @@ public class JwtUtil {
 
     // Método para validar el token enviado por el cliente
     static Authentication getAuthentication(HttpServletRequest request) {
-
+    	System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAa8");
         // Obtenemos el token que viene en el encabezado de la peticion
         String token = request.getHeader("Authorization");
 
@@ -52,6 +52,7 @@ public class JwtUtil {
                     new UsernamePasswordAuthenticationToken(user, null, emptyList()) :
                     null;
         }
+        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAa9");
         return null;
     }
 }

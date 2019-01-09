@@ -145,4 +145,8 @@ public interface IServiceBD {
 
     public boolean deleteLog(int id);
 
+	public void deleteUser(User user);
+
+
+
 }

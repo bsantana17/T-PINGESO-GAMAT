@@ -8,6 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import usach.cl.gamat.entities.*;
+import usach.cl.gamat.facadeBD.IServiceBD;
 import usach.cl.gamat.facadeBD.ServiceBdImp;
 import usach.cl.gamat.repositories.DriverRepository;
 import usach.cl.gamat.repositories.UserRepository;
@@ -21,7 +22,7 @@ import java.util.Set;
 public class UserService {
 
     @Autowired
-    private ServiceBdImp serviceBdImp;
+    private IServiceBD serviceBdImp;
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -111,6 +112,13 @@ public class UserService {
     @ResponseBody
     public Iterable<Driver> getDrivers(){
         return driverRepository.findAll();
+    }
+    
+    @DeleteMapping("/{id}")
+    @ResponseBody
+    public void deleteUser(@PathVariable("id")Integer id) {
+    	User user= serviceBdImp.getUserById(id);
+    	serviceBdImp.deleteUser(user);
     }
 
 }
