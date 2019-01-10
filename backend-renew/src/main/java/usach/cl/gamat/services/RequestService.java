@@ -1,13 +1,26 @@
 package usach.cl.gamat.services;
 
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.encryption.InvalidPasswordException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import usach.cl.gamat.entities.*;
 import usach.cl.gamat.facadeBD.IServiceBD;
 import usach.cl.gamat.serviceMail.IServiceMail;
 
 import javax.validation.constraints.Null;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -550,4 +563,99 @@ public class RequestService {
         if(serviceBD.deleteRequest(idRequest)) return HttpStatus.OK;
         return HttpStatus.INTERNAL_SERVER_ERROR;
     }
+    
+	@GetMapping("download-request-pdf/{id}")
+	public ResponseEntity<Resource> downloadFile(
+			@PathVariable("id")Integer idRequest
+			) throws IOException {
+		Request request = serviceBD.getRequestById(idRequest);
+		
+		PDDocument doc = new PDDocument();
+	    PDPage page = new PDPage();
+	    doc.addPage( page );
+	    PDPageContentStream contentStream = new PDPageContentStream(doc, page);
+	    ByteArrayOutputStream out = new ByteArrayOutputStream();
+	    int i=1;
+	    System.out.println(request.getItems().size());
+	    String[][] content = new String[request.getItems().size()+1][3];
+	    content[0][0]= "id";
+	    content[0][1]= "nombre";
+
+	    content[0][2]= "unidad";
+	    
+	 
+	    for (Item item: request.getItems()) {
+	    	System.out.println(i);
+	    	 content[i][0]= Integer.toString(item.getIdItem());
+	 	    content[i][1]= item.getName();
+
+	 	    content[i][2]= item.getMeasure();
+	 	    i++;
+		}
+	   
+		
+	   
+	    PdfUtils.drawTable(page, contentStream, 700, 100, content);
+	    contentStream.close();
+	    doc.save(out);
+//		byte[] data = FilePlantilla.rellenarCertificado(plantilla, nombre, nombreTaller);
+		byte[] data=out.toByteArray();
+		String contentType = "application/pdf";
+		//String fileName = user.getNombre()+"_"+conferencia.getNombre()+"_"+taller.getCodigo()+".pdf
+		String fileName = "Request_"+request.getIdRequest()+".xlsx";
+	
+		
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(contentType))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")
+                .body(new ByteArrayResource(data));
+	
+	}
+	
+	
+	@GetMapping("download-request-excel/{id}")
+	public ResponseEntity<Resource> downloadFileExcel(
+			@PathVariable("id")Integer idRequest
+			) throws IOException {
+		Request request = serviceBD.getRequestById(idRequest);
+		
+		
+	   
+	    int i=1;
+	   
+	    String[][] content = new String[request.getItems().size()+1][4];
+	    content[0][0]= "id";
+	    content[0][1]= "nombre";
+	    content[0][2]= "descripcion";
+	    content[0][3]= "unidad";
+	    
+	 
+	    for (Item item: request.getItems()) {
+	    	
+	    	 content[i][0]= Integer.toString(item.getIdItem());
+	 	    content[i][1]= item.getName();
+	 	    content[i][2]= item.getDescription();
+	 	    content[i][3]= item.getMeasure();
+	 	    i++;
+		}
+	   
+		
+	   
+	   
+//		byte[] data = FilePlantilla.rellenarCertificado(plantilla, nombre, nombreTaller);
+		byte[] data=ExcelUtils.generateExcel(content);
+		String contentType = "application/xlsx";
+		//String fileName = user.getNombre()+"_"+conferencia.getNombre()+"_"+taller.getCodigo()+".pdf
+		String fileName= "Request_"+request.getIdRequest()+".xlsx";
+	
+		
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(contentType))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")
+                .body(new ByteArrayResource(data));
+	
+	}
+    
 }
