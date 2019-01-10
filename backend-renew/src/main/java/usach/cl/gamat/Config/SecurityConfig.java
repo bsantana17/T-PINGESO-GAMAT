@@ -32,18 +32,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        http.cors().and().csrf().disable().authorizeRequests()
-//                .antMatchers("/login").permitAll()
-//                .anyRequest().authenticated() //cualquier otra peticion requiere autenticacion
-//                .and()
-//                // Las peticiones /login pasaran previamente por este filtro
-//                .addFilterBefore(new LoginFilter("/login", authenticationManager(),userRepository),
-//                        UsernamePasswordAuthenticationFilter.class)
-//
-//                // Las demás peticiones pasarán por este filtro para validar el token
-//                .addFilterBefore(new JwtFilter(),
-//                        UsernamePasswordAuthenticationFilter.class);
-//        http.cors().and().csrf().disable().authorizeRequests();
+        http.cors().and().csrf().disable().authorizeRequests()
+                .antMatchers("/login").permitAll()
+                .anyRequest().authenticated() //cualquier otra peticion requiere autenticacion
+                .and()
+                // Las peticiones /login pasaran previamente por este filtro
+                .addFilterBefore(new LoginFilter("/login", authenticationManager(),userRepository),
+                        UsernamePasswordAuthenticationFilter.class)
+
+                // Las demás peticiones pasarán por este filtro para validar el token
+                .addFilterBefore(new JwtFilter(),
+                        UsernamePasswordAuthenticationFilter.class);
+        http.cors().and().csrf().disable().authorizeRequests();
         
     }
 
@@ -56,7 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .roles("ADMIN");*/
     	System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAa");
 
-//        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
 }
     
     

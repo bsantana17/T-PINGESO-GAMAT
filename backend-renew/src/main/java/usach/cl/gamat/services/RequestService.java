@@ -602,7 +602,7 @@ public class RequestService {
 		byte[] data=out.toByteArray();
 		String contentType = "application/pdf";
 		//String fileName = user.getNombre()+"_"+conferencia.getNombre()+"_"+taller.getCodigo()+".pdf
-		String fileName = "Request_"+request.getIdRequest()+".xlsx";
+		String fileName = "Request_"+request.getIdRequest()+".pdf";
 	
 		
 
