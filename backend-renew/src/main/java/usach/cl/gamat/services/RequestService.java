@@ -218,6 +218,8 @@ public class RequestService {
                 nuevaRequest.setBuilding(request.getBuilding());
                 nuevaRequest.setObservation("Solicitud creada debido a item rechazados de otra: " + request.getObservation());
                 nuevaRequest.setPayCondition(request.getPayCondition());
+                Log log2 = new Log(nuevaRequest.getState(), nuevaRequest);
+                serviceBD.saveLog(log2);
                 serviceBD.saveRequest(nuevaRequest);
             }
            
