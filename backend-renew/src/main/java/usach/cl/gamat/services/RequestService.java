@@ -569,37 +569,10 @@ public class RequestService {
 			@PathVariable("id")Integer idRequest
 			) throws IOException {
 		Request request = serviceBD.getRequestById(idRequest);
-		
-		PDDocument doc = new PDDocument();
-	    PDPage page = new PDPage();
-	    doc.addPage( page );
-	    PDPageContentStream contentStream = new PDPageContentStream(doc, page);
-	    ByteArrayOutputStream out = new ByteArrayOutputStream();
-	    int i=1;
-	    System.out.println(request.getItems().size());
-	    String[][] content = new String[request.getItems().size()+1][3];
-	    content[0][0]= "id";
-	    content[0][1]= "nombre";
-
-	    content[0][2]= "unidad";
-	    
-	 
-	    for (Item item: request.getItems()) {
-	    	System.out.println(i);
-	    	 content[i][0]= Integer.toString(item.getIdItem());
-	 	    content[i][1]= item.getName();
-
-	 	    content[i][2]= item.getMeasure();
-	 	    i++;
-		}
-	   
-		
-	   
-	    PdfUtils.drawTable(page, contentStream, 700, 100, content);
-	    contentStream.close();
-	    doc.save(out);
+		FilePlantillaPdf plantilla = serviceBD.findPlantillaById(1);
+		FilePlantillaPdf plantilla2 = serviceBD.findPlantillaById(2);
 //		byte[] data = FilePlantilla.rellenarCertificado(plantilla, nombre, nombreTaller);
-		byte[] data=out.toByteArray();
+		byte[] data=FilePlantillaPdf.rellenarCertificado(plantilla.getData(),plantilla2.getData(),request);
 		String contentType = "application/pdf";
 		//String fileName = user.getNombre()+"_"+conferencia.getNombre()+"_"+taller.getCodigo()+".pdf
 		String fileName = "Request_"+request.getIdRequest()+".pdf";
@@ -622,29 +595,13 @@ public class RequestService {
 		
 		
 	   
-	    int i=1;
-	   
-	    String[][] content = new String[request.getItems().size()+1][4];
-	    content[0][0]= "id";
-	    content[0][1]= "nombre";
-	    content[0][2]= "descripcion";
-	    content[0][3]= "unidad";
 	    
-	 
-	    for (Item item: request.getItems()) {
-	    	
-	    	 content[i][0]= Integer.toString(item.getIdItem());
-	 	    content[i][1]= item.getName();
-	 	    content[i][2]= item.getDescription();
-	 	    content[i][3]= item.getMeasure();
-	 	    i++;
-		}
 	   
 		
 	   
 	   
 //		byte[] data = FilePlantilla.rellenarCertificado(plantilla, nombre, nombreTaller);
-		byte[] data=ExcelUtils.generateExcel(content);
+		byte[] data=ExcelUtils.generateExcel(request);
 		String contentType = "application/xlsx";
 		//String fileName = user.getNombre()+"_"+conferencia.getNombre()+"_"+taller.getCodigo()+".pdf
 		String fileName= "Request_"+request.getIdRequest()+".xlsx";

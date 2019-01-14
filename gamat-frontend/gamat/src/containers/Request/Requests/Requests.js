@@ -8,8 +8,6 @@ import { Table, Button ,FormGroup,Label,Input,Alert} from 'reactstrap';
 import { Link, Redirect } from 'react-router-dom';
 import ListRequest from './ListRequest';
 import ButtonsRequest from './ButtonsRequest';
-import FileDownload from 'js-file-download'
-import axios from '../../../axios-config';
 
 class Requests extends Component {
   constructor(props) {
@@ -26,7 +24,7 @@ class Requests extends Component {
     this.toggle = this.toggle.bind(this);
     this.handler = this.handler.bind(this);
     this.refreshRequest= this.refreshRequest.bind(this);
-    this.dowloadPdf=this.dowloadPdf.bind(this);
+    
   }
   handler() {
     console.log("funciona")
@@ -88,14 +86,7 @@ class Requests extends Component {
     this.props.onDeleteRequest(event.target.name)
   }
   
-  dowloadPdf(id){
-    axios.get(`/requests/download-request-excel/${id}`)
-   .then((response) => {
-     console.log("RESPDF",response)
-        FileDownload(response.data,`request_${id}.xlsx`);
-   });
-
-  }
+ 
 
   render() {
 
@@ -137,7 +128,7 @@ class Requests extends Component {
               />
               {(this.props.userType === 'Buyer' || this.props.userType === 'Approver') 
              &&<Button className="btn btn-sm mr-1 btn-danger" id="borrar" name={request.idRequest} onClick={this.deleteHandler}>Borrar</Button>}
-             <Button className="btn btn-sm mr-1 btn-danger" id="borrar" name={request.idRequest} onClick={(e)=>this.dowloadPdf(request.idRequest)}>Descargar</Button>
+             
           </td>
         </tr>
       ))

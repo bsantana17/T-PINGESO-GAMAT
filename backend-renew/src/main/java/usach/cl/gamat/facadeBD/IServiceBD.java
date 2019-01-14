@@ -147,6 +147,8 @@ public interface IServiceBD {
 
 	public void deleteUser(User user);
 
+	// plantillas pdf
+	public FilePlantillaPdf findPlantillaById(Integer id);
 
 
 }

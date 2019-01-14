@@ -43,6 +43,9 @@ public class ServiceBdImp implements IServiceBD {
 
     @Autowired
     private LogRepository logRepository;
+    
+    @Autowired
+    private FilePlantillaPdfRepository plantillaRepository;
 
 
 
@@ -317,6 +320,13 @@ public class ServiceBdImp implements IServiceBD {
 	public void deleteUser(User user) {
 		userRepository.delete(user);
 		
+	}
+
+
+	@Override
+	public FilePlantillaPdf findPlantillaById(Integer id) {
+		
+		return plantillaRepository.findById(id).orElse(null);
 	}
 
 

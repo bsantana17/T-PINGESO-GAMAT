@@ -11,9 +11,16 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.ss.usermodel.BorderStyle;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 
@@ -22,62 +29,154 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 public class ExcelUtils {
 
 //	private static final Logger LOGGER = Logger.getLogger("mx.com.hash.newexcel.ExcelOOXML");
-	public static byte[] generateExcel(String[][] datos) throws IOException {
-		 // Creamos el archivo donde almacenaremos la hoja
-        // de calculo, recuerde usar la extension correcta,
-        // en este caso .xlsx
-//        File archivo = new File("reporte.xlsx");
-        System.out.println("aa1");
+	public static byte[] generateExcel(Request request) throws IOException {
 
-        // Creamos el libro de trabajo de Excel formato OOXML
-        Workbook workbook = new XSSFWorkbook();
-        System.out.println("aa1");
+		Workbook workbook = new XSSFWorkbook();
+		Sheet pagina = workbook.createSheet("Request");
+				   
+        XSSFFont defaultFont= (XSSFFont) workbook.createFont();
+        defaultFont.setFontHeightInPoints((short)10);
+        defaultFont.setFontName("Arial");
+        defaultFont.setColor(IndexedColors.BLACK.getIndex());
+        defaultFont.setBold(false);
+        defaultFont.setItalic(false);
 
-        // La hoja donde pondremos los datos
-        Sheet pagina = workbook.createSheet("Request");
-        System.out.println("aa1");
-        // Creamos el estilo paga las celdas del encabezado
-//        CellStyle style = workbook.createCellStyle();
+        XSSFFont font= (XSSFFont) workbook.createFont();
+        font.setFontHeightInPoints((short)10);
+        font.setFontName("Arial");
+//        font.setColor(IndexedColors.WHITE.getIndex());
+        font.setBold(true);
+        font.setItalic(false);
+	    
+        CellStyle styleHeader = workbook.createCellStyle();
+        CellStyle styleTableHeader = workbook.createCellStyle();
+        CellStyle styleBody = workbook.createCellStyle();
+        
+        styleHeader.setFont(font);
         // Indicamos que tendra un fondo azul aqua
         // con patron solido del color indicado
-//        style.setFillForegroundColor(IndexedColors.AQUA.getIndex());
-//        style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-
-//        String[] titulos = {"Identificador", "Consumos",
-//            "Precio Venta", "Precio Compra"};
-//        Double[] datos = {1.0, 10.0, 45.5, 25.50};
-
-        // Creamos una fila en la hoja en la posicion 0
+        styleTableHeader.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.index);
+        styleTableHeader.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+//        style.setAlignment();
+        styleTableHeader.setFont(font);
+        styleTableHeader.setBorderBottom(BorderStyle.HAIR);
+        styleTableHeader.setBorderTop(BorderStyle.HAIR);
+        styleTableHeader.setBorderRight(BorderStyle.HAIR);
+        styleTableHeader.setBorderLeft(BorderStyle.HAIR);
         
-        Row fila = pagina.createRow(0);
-        fila.createCell(0).setCellValue(datos[0][0]);
-        fila.createCell(1).setCellValue(datos[0][1]);
-        fila.createCell(2).setCellValue(datos[0][2]);
-        fila.createCell(3).setCellValue(datos[0][3]);
-        // Creamos el encabezado
-   
+        styleBody.setBorderBottom(BorderStyle.HAIR);
+        styleBody.setBorderTop(BorderStyle.HAIR);
+        styleBody.setBorderRight(BorderStyle.HAIR);
+        styleBody.setBorderLeft(BorderStyle.HAIR);
 
-        // Ahora creamos una fila en la posicion 1
-        
 
-        // Y colocamos los datos en esa fila
-        for (int i = 1; i < datos.length; i++) {
-        	fila = pagina.createRow(i);
+	 
+	    Row fila = pagina.createRow(0);
+	    Cell celda = fila.createCell(0);
+	    celda.setCellValue("Detalles Solicitud");
+	    celda.setCellStyle(styleHeader);
+	    
+	    
+	    fila = pagina.createRow(1);
+	    celda=fila.createCell(0);
+	    celda.setCellValue("Solicitante:");
+	    celda.setCellStyle(styleHeader);
+	    celda=fila.createCell(1);
+	    celda.setCellValue(request.getManager().getName());
+	    celda.setCellStyle(styleHeader);
+	    
+	    fila = pagina.createRow(2);
+	    celda=fila.createCell(0);
+	    celda.setCellValue("Compañía:");
+	    celda.setCellStyle(styleHeader);
+	    celda=fila.createCell(1);
+	    celda.setCellValue(request.getBuilding().getCompany().getName());
+	    celda.setCellStyle(styleHeader);
+	    
+	    fila = pagina.createRow(3);
+	    celda=fila.createCell(0);
+	    celda.setCellValue("Direccion de Obra:");
+	    celda.setCellStyle(styleHeader);
+	    celda=fila.createCell(1);
+	    celda.setCellValue(request.getBuilding().getAddress());
+	    celda.setCellStyle(styleHeader);
+	    
+	    fila = pagina.createRow(4);
+	    celda=fila.createCell(0);
+	    celda.setCellValue("Fecha de Solicitud:");
+	    celda.setCellStyle(styleHeader);
+	    celda=fila.createCell(1);
+	    celda.setCellValue(request.getDate());
+	    celda.setCellStyle(styleHeader);
+	    
+	    
+	    fila = pagina.createRow(4);
+	    celda=fila.createCell(0);
+	    celda.setCellValue("Estado de Solicitud:");
+	    celda.setCellStyle(styleHeader);
+	    celda=fila.createCell(1);
+	    celda.setCellValue(request.getState());
+	    celda.setCellStyle(styleHeader);
+	    
+	    fila = pagina.createRow(6);
+	    celda=fila.createCell(0);
+	    celda.setCellValue("Items:");
+	    celda.setCellStyle(styleHeader);
+	    
+	    fila = pagina.createRow(7);
+	    celda=fila.createCell(0);
+	    celda.setCellValue("Id");
+	    celda.setCellStyle(styleTableHeader);
+	    celda=fila.createCell(1);
+	    celda.setCellValue("Nombre");
+	    celda.setCellStyle(styleTableHeader);
+	    celda=fila.createCell(2);
+	    celda.setCellValue("Descripcion");
+	    celda.setCellStyle(styleTableHeader);
+	    celda=fila.createCell(3);
+	    celda.setCellValue("Unidad");
+	    celda.setCellStyle(styleTableHeader);
+	    celda=fila.createCell(4);
+	    celda.setCellValue("Cantidad");
+	    celda.setCellStyle(styleTableHeader);
+	    celda=fila.createCell(5);
+	    celda.setCellValue("Precio");
+	    celda.setCellStyle(styleTableHeader);
+	    
+	    int i=8;
+	    int y=1;
+	    for (Item item: request.getItems()) {
+	    	
+	    	fila = pagina.createRow(i);
             // Creamos una celda en esa fila, en la
             // posicion indicada por el contador del ciclo
-        	 fila.createCell(0).setCellValue(datos[i][0]);
-             fila.createCell(1).setCellValue(datos[i][1]);
-             fila.createCell(2).setCellValue(datos[i][2]);
-             fila.createCell(3).setCellValue(datos[i][3]);
-        }
-        System.out.println("aa1");
-        // Ahora guardaremos el archivo
-        
-            // Creamos el flujo de salida de datos,
-            // apuntando al archivo donde queremos 
-            // almacenar el libro de Excel
-//            FileOutputStream salida = new FileOutputStream(archivo);
-        	 System.out.println("aa1");
+	    	celda=fila.createCell(0);
+	    	celda.setCellValue(Integer.toString(item.getIdItem()));
+	    	 celda.setCellStyle(styleBody);
+	    	 
+        	 celda=fila.createCell(1);
+        	 celda.setCellValue(item.getName());
+        	 celda.setCellStyle(styleBody);
+        	 
+             celda=fila.createCell(2);
+             celda.setCellValue(item.getDescription());
+             celda.setCellStyle(styleBody);
+             
+             celda=fila.createCell(3);
+             celda.setCellValue(item.getMeasure());
+             celda.setCellStyle(styleBody);
+             
+             celda=fila.createCell(4);
+             celda.setCellValue(item.getQuantity());
+             celda.setCellStyle(styleBody);
+             
+             celda=fila.createCell(5);
+//             celda.setCellValue(item.getQuantity());
+             celda.setCellStyle(styleBody);
+	 
+	 	    i++;
+		}
+
             ByteArrayOutputStream out = new ByteArrayOutputStream();
 
             // Almacenamos el libro de 

@@ -4,15 +4,45 @@ import {Button} from 'reactstrap';
 import { connect } from 'react-redux';
 import Moment from 'moment'
 import * as actions from '../../../store/actions/index';
+import axios from '../../../axios-config';
+import FileDownload from 'js-file-download'
+import DownIcon from '@material-ui/icons/CloudDownload'
 
  class ViewRequest extends Component {
+  
 
   componentDidMount(){
     if(this.props.match.params.update === "notf"){
       // console.log("vengo de notificacion");
       this.props.onFetchRequests(this.props.userId, this.props.userType, 0);
   }
+
   }
+
+  onDownloadExcel= ()=>{
+    const id =this.props.match.params.idRequest
+    axios.get(`/requests/download-request-excel/${id}`,{
+      responseType: 'arraybuffer'
+  })
+   .then((response) => {
+     console.log("RESPDF",response)
+        FileDownload(response.data,`GamatRequest_${id}.xlsx`);
+   });
+
+  }
+
+  onDownloadPDF= ()=>{
+    const id =this.props.match.params.idRequest
+    axios.get(`/requests/download-request-pdf/${id}`,{
+      responseType: 'arraybuffer'
+  })
+   .then((response) => {
+     console.log("RESPDF",response)
+        FileDownload(response.data,`GamatRequest_${id}.pdf`);
+   });
+
+  }
+
   render() {
     // esto es para qeu se pueda acceder directamente usando la ruta
     let request= this.props.requests.find(
@@ -25,6 +55,15 @@ import * as actions from '../../../store/actions/index';
         <p><strong>Dirección de obra:</strong> {request.building ? request.building.address : '---'}</p>
         <p><strong>Fecha:</strong> {request.date ? Moment(request.date).format("DD/MM/YYYY hh:mm") : '---'}</p>
         <p><strong>Estado de la solicitud:</strong> {request.state} </p>
+      
+      <div className="d-flex ml-0 col-md-4 justify-content-between">
+        
+        <Button onClick={this.onDownloadPDF} color="info">Descargar PDF <DownIcon/> </Button>
+        <Button onClick={this.onDownloadExcel} color="success">Descargar EXCEL <DownIcon/> </Button>
+        
+        
+        </div>
+
 
         <h4>Items Solicitados: </h4>
         <table className="table table-primary table-responsive-lg table-sm">
