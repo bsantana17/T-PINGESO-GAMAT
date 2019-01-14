@@ -6,7 +6,7 @@ const ItemApproveBudget = (props) => {
 
     let succesBtn = null;
     let dangerBtn = null;
-    if(props.picked === true){
+    if(props.active === true){
         succesBtn = 'btn btn-sm mr-2 btn-success'
         dangerBtn = 'btn btn-sm mr-2 btn-outline-danger'
     }else{
@@ -35,8 +35,8 @@ const ItemApproveBudget = (props) => {
                 </div>
                 <div className="row">
                     <div className="col-12 my-2">    
-                        <button onClick={props.onChangeState} className={succesBtn}>Autorizar</button>
-                        <button onClick={props.onChangeState} className={dangerBtn}>Rechazar</button>
+                        <button onClick={(e)=>props.onChangeState(props.i,true)} className={succesBtn}>Autorizar</button>
+                        <button onClick={(e)=>props.onChangeState(props.i,false)} className={dangerBtn}>Rechazar</button>
                     </div>
                 </div>           
             </div>

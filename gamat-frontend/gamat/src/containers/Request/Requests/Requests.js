@@ -83,7 +83,8 @@ class Requests extends Component {
 
 
   deleteHandler = (event) => {
-    this.props.onDeleteRequest(event.target.name)
+    const res= window.confirm("¿Esta seguro de que desea eliminar esta solicitud?")
+    res && (this.props.onDeleteRequest(event.target.name))
   }
   
  

@@ -14,7 +14,8 @@ class ApproveBudget extends Component {
         this.state={
             indiceRequest:0,
             items:[],
-            states:[]
+            states:[],
+            disabled:true
 
         }
 
@@ -23,6 +24,7 @@ class ApproveBudget extends Component {
         this.handleOnChangeState=this.handleOnChangeState.bind(this)
         this.helperRefreshItems=this.helperRefreshItems.bind(this)
         this.handleOnAutorizar=this.handleOnAutorizar.bind(this)
+        this.disabledBoton=this.disabledBoton.bind(this)
 
 
     }
@@ -57,18 +59,34 @@ class ApproveBudget extends Component {
         }
         console.log(newState)
         this.setState({
-            states:newState
+            states:newState,
+            disabled:false
         })
     }
     
-    handleOnChangeState(indice){
+    handleOnChangeState(indice,valor){
         console.log("CAMBIANDO",indice)
         let  newState= [...this.state.states]
-        newState[indice]=!this.state.states[indice]
+        newState[indice]=valor
+        const disabled=this.disabledBoton(newState)
         this.setState({
-            states:newState
+            states:newState,
+            disabled:disabled
         },()=>console.log(this.state.states))
     }
+
+    disabledBoton(state){
+        for (let i = 0; i < state.length; i++) {
+            const actual = state[i];
+            if(actual){
+                console.log("entre",actual)
+                return false
+            }
+            
+        }
+         return true;
+ 
+     }
     helperRefreshItems(){
        
         
@@ -166,7 +184,7 @@ class ApproveBudget extends Component {
                 </Link>
                 <Button color="danger" onClick={this.handleOnReject}>Rechazar Cotizacion </Button>
                 <Button color="success" onClick={this.handleOnAutorizar}>Autorizar todos </Button>            
-                <Button color="primary" onClick={this.handleOnApprove}>Aprobar Cotizacion </Button>
+                <Button color="primary" disabled={this.state.disabled} onClick={this.handleOnApprove}>Aprobar Cotizacion </Button>
             </div>
         </div>
 

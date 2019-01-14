@@ -13,13 +13,15 @@ class RequestoToAprove extends Component {
             indice: 0,
             items: [],
             observations:[],
-            states:[]
+            states:[],
+            disabled:true
         };
         this.handleOnApprove = this.handleOnApprove.bind(this);
         this.handleOnReject = this.handleOnReject.bind(this);
         this.handleOnChangeState = this.handleOnChangeState.bind(this);
         this.handleOnChangeForm=this.handleOnChangeForm.bind(this);
         this.helperRefreshItems=this.helperRefreshItems.bind(this);
+        this.disabledBoton=this.disabledBoton.bind(this);
     }
 
     componentDidMount() {
@@ -46,9 +48,24 @@ class RequestoToAprove extends Component {
         
        let copiaStates = [...this.state.states]
        copiaStates[i]=state;
+       const disabled=this.disabledBoton(copiaStates)
+       console.log(disabled)
        this.setState({
-           states:copiaStates
+           states:copiaStates,
+           disabled:disabled
        })
+    }
+    disabledBoton(state){
+       for (let i = 0; i < state.length; i++) {
+           const actual = state[i];
+           if(actual=='autorizado'){
+               console.log("entre",actual)
+               return false
+           }
+           
+       }
+        return true;
+
     }
 
     handleOnChangeForm(e,i){
@@ -132,7 +149,7 @@ class RequestoToAprove extends Component {
 
                 <div className=" col-md-7 d-flex justify-content-around">
 
-                    <Button color="success" onClick={this.handleOnApprove}>Aprobar Solicitud </Button>
+                    <Button color="success"  disabled={this.state.disabled} onClick={this.handleOnApprove}>Aprobar Solicitud </Button>
                     <Button color="danger" onClick={this.handleOnReject}>Rechazar Solicitud </Button>
                     <Link to={'/requests'}>
                         <Button color="secondary">Volver </Button>
