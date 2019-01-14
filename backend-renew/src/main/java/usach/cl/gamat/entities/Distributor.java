@@ -19,6 +19,9 @@ public class Distributor {
     @NotNull
     private String address;
 
+    private String schedule;
+    private String observation;
+
     @Column(name="create_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
@@ -61,5 +64,19 @@ public class Distributor {
         this.date = date;
     }
 
+    public String getSchedule() {
+        return schedule;
+    }
 
+    public void setSchedule(String schedule) {
+        this.schedule = schedule;
+    }
+
+    public String getObservation() {
+        return observation;
+    }
+
+    public void setObservation(String observation) {
+        this.observation = observation;
+    }
 }
