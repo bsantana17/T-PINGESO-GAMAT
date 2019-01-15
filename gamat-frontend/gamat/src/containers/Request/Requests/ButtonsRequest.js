@@ -14,7 +14,7 @@ const ButtonsRequest = props => {
 
     ))
     return (
-        <div>
+        <div className="d-flex justify-content-center justify-content-lg-start flex-wrap">
 
             {buttons}
         </div>

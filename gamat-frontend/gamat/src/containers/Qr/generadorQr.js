@@ -23,12 +23,11 @@ class generadorQr extends Component {
     render() {
         return (
             <div className="row m-0">
-                <div className="col-12">
-                    <center>
-                    <h3>Escanea el siguiente código</h3>
+                <div className="col-12 d-flex flex-column align-items-center">
+                    <h3 className="text-center">Escanea el siguiente código</h3>
                     <QRCode value={this.state.idRequest}></QRCode>  
-                    <Link to='/requests'><button className="btn btn-secondary">Volver</button></Link>
-                    </center>
+                    <Link to='/requests'><button className="btn btn-secondary mt-3">Volver</button></Link>
+
                 </div>   
             </div>
         );
