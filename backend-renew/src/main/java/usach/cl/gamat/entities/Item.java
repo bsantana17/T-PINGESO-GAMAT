@@ -8,10 +8,10 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "item")
-public class Item {
+public class Item implements Cloneable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idItem;
+    private Integer idItem;
 
     @NotNull
     private String name;
@@ -42,6 +42,11 @@ public class Item {
 //    private Distributor distributor;
     
     private String distributor;
+    
+    public Item clone() throws CloneNotSupportedException{
+        Item clon = (Item) super.clone();
+        return clon;
+   }
 
     public int getIdItem() {
         return idItem;
@@ -171,5 +176,7 @@ public class Item {
     public void setMeasure(String measure) {
         this.measure = measure;
     }
+    
+    
     
 }

@@ -94,18 +94,35 @@ public class RequestService {
     }
     //Aprobar request
     @PostMapping("/approve/{idRequest}")
-    public HttpStatus aprobarRequest(@PathVariable("idRequest") Integer id,@RequestBody Request request) {
-		Request request1 = serviceBD.getRequestById(id);
+    public HttpStatus aprobarRequest(@PathVariable("idRequest") Integer id,@RequestBody Request request) throws CloneNotSupportedException {
+		
         if (request != null) {
+        	Request nuevaRequest = null;
+        	List<Item> itemPendientes = new ArrayList<>();
+        	List<Item> itemAprobados = new ArrayList<>();
 //        	request.setBuilding(request1.getBuilding());
 //        	request.setManager(request1.getManager());
-//        	request.setDriver(request1.getDriver());
+           
+         
+            nuevaRequest = Request.filterItems(itemAprobados, itemPendientes, request,"autorizado","pendiente");
+            if(nuevaRequest != null) {
+            	Log log2 = new Log(nuevaRequest.getState(), nuevaRequest);
+            	nuevaRequest.setState("Pendiente por revisar");
+                serviceBD.saveLog(log2);
+                serviceBD.saveRequest(nuevaRequest);
+            }
+            request.setItems(itemAprobados);
+           
+
             request.setState("Aprobado");
-            System.out.println("llegue aca");
+          
             Log log = new Log(request.getState(), request);
             serviceBD.saveLog(log);
             serviceBD.saveRequest(request);
+            
            List<Buyer> compradores= serviceBD.findAllBuyer();
+           
+    
            for (Buyer buyer : compradores) {
 			
         	   mailService.sendMailNotification(
@@ -178,51 +195,22 @@ public class RequestService {
 
     //Aprobar request
     @PostMapping("/budget/approve")
-    public HttpStatus aprobarBudget(@RequestBody Request request) {
+    public HttpStatus aprobarBudget(@RequestBody Request request) throws CloneNotSupportedException {
 //		Request request1 = serviceBD.getRequestById(request.getIdRequest());
-        Request nuevaRequest = new Request();
+        Request nuevaRequest = null;
         List<Item> itemPendientes = new ArrayList<>();
         List<Item> itemAprobados = new ArrayList<>();
         if (request != null) {
 //        	request.setBuilding(request1.getBuilding());
 //        	request.setManager(request1.getManager());
             request.setState("Autorizada");
-            for (Item item:request.getItems()){
-                if (item.getState().equals("no autorizado")){
-                	Item newItem = new Item ();
-                	newItem.setComment(item.getComment());
-                	newItem.setDescription(item.getDescription());
-                	newItem.setDistributor(item.getDistributor());
-                	newItem.setMeasure(item.getMeasure());
-                	newItem.setObservation(item.getObservation());
-                	newItem.setPrice(item.getPrice());
-                	newItem.setName(item.getName());
-                	newItem.setQuantity(item.getQuantity());
-                	newItem.setState("Aprobado");
-                	newItem.setTotalPrice(item.getTotalPrice());
-                	newItem.setTotalWeight(item.getTotalWeight());
-                	newItem.setWeight(item.getWeight());
-                	newItem.setUrgency(item.isUrgency());
-                	itemPendientes.add(newItem);
-                }
-                else{
-                    itemAprobados.add(item);
-                }
-            }
-            if(itemPendientes.size() > 0){
-                
-            	nuevaRequest.setItems(itemPendientes);
-                nuevaRequest.setState("Aprobado");
-                nuevaRequest.setManager(request.getManager());
-                nuevaRequest.setDriver(request.getDriver());
-                nuevaRequest.setBuilding(request.getBuilding());
-                nuevaRequest.setObservation("Solicitud creada debido a item rechazados de otra: " + request.getObservation());
-                nuevaRequest.setPayCondition(request.getPayCondition());
-                Log log2 = new Log(nuevaRequest.getState(), nuevaRequest);
+         
+            nuevaRequest = Request.filterItems(itemAprobados, itemPendientes, request,"autorizado","no autorizado");
+            if(nuevaRequest != null) {
+            	Log log2 = new Log(nuevaRequest.getState(), nuevaRequest);
                 serviceBD.saveLog(log2);
                 serviceBD.saveRequest(nuevaRequest);
             }
-           
             request.setItems(itemAprobados);
             Log log = new Log(request.getState(), request);
             serviceBD.saveLog(log);

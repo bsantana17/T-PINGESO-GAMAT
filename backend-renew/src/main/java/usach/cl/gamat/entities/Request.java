@@ -13,7 +13,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "request")
-public class Request {
+public class Request  implements Cloneable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idRequest;
@@ -85,6 +85,12 @@ public class Request {
     @JoinColumn(name ="driver_id")
     //@JsonIgnore
     private Driver driver;
+    
+    
+    public Request clone() throws CloneNotSupportedException{
+        Request clon = (Request) super.clone();
+        return clon;
+   }
 
     public Integer getIdRequest() {
         return idRequest;
@@ -212,5 +218,29 @@ public class Request {
 
     public void setManagerValidation(Boolean managerValidation) {
         this.managerValidation = managerValidation;
+    }
+    
+    public static Request filterItems(List<Item> itemAprobados,List<Item>itemPendientes,Request request,String aprobado, String pendiente) throws CloneNotSupportedException{
+    	Request nuevaRequest= null;
+    	Integer idNull= null;
+    	for (Item item:request.getItems()){
+            if (item.getState().equals(pendiente)){
+            	Item newItem =item.clone();
+            	newItem.setIdItem(idNull);
+            	itemPendientes.add(newItem);
+            }
+            else if (item.getState().equals(aprobado)) {
+                itemAprobados.add(item);
+            }
+        }
+        if(itemPendientes.size() > 0){
+            nuevaRequest= request.clone();
+            nuevaRequest.setIdRequest(idNull);
+        	nuevaRequest.setItems(itemPendientes);
+            nuevaRequest.setState("Aprobado");
+            nuevaRequest.setObservation("Solicitud creada de: " + request.getObservation());
+           
+        }
+        return  nuevaRequest;
     }
 }
