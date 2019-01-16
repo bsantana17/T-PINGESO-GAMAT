@@ -33,7 +33,7 @@ class RequestoToAprove extends Component {
         let indiceRequest =  this.props.requests.findIndex(
             (req)=>req.idRequest == this.props.match.params.idRequest);
         const newObservations= this.props.requests[indiceRequest].items.map(()=>"")
-        const newStates=this.props.requests[indiceRequest].items.map(()=>"");
+        const newStates=this.props.requests[indiceRequest].items.map(()=>"autorizado");
       
             console.log( this.props.requests[indiceRequest])
         this.setState({

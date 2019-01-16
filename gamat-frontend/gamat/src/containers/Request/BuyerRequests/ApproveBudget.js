@@ -38,7 +38,7 @@ class ApproveBudget extends Component {
         let indiceRequest =  this.props.requests.findIndex(
             (req)=>req.idRequest == this.props.match.params.idRequest);
       
-        const newStates=this.props.requests[indiceRequest].items.map(()=>false);
+        const newStates=this.props.requests[indiceRequest].items.map(()=>true);
             console.log("nesStates",newStates)
 
         this.setState({

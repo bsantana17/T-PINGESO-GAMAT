@@ -153,30 +153,40 @@ public class ExcelUtils {
 	    	celda=fila.createCell(0);
 	    	celda.setCellValue(Integer.toString(item.getIdItem()));
 	    	 celda.setCellStyle(styleBody);
+	    	 pagina.autoSizeColumn(0);
 	    	 
         	 celda=fila.createCell(1);
         	 celda.setCellValue(item.getName());
         	 celda.setCellStyle(styleBody);
+        	  pagina.autoSizeColumn(1);
         	 
              celda=fila.createCell(2);
              celda.setCellValue(item.getDescription());
              celda.setCellStyle(styleBody);
+             pagina.autoSizeColumn(2);
              
              celda=fila.createCell(3);
              celda.setCellValue(item.getMeasure());
              celda.setCellStyle(styleBody);
+             pagina.autoSizeColumn(3);
              
              celda=fila.createCell(4);
              celda.setCellValue(item.getQuantity());
              celda.setCellStyle(styleBody);
+             pagina.autoSizeColumn(4);
              
              celda=fila.createCell(5);
 //             celda.setCellValue(item.getQuantity());
              celda.setCellStyle(styleBody);
+             pagina.autoSizeColumn(5);
 	 
 	 	    i++;
 		}
-
+	    
+	    pagina.autoSizeColumn(0);
+//	    	for (int j = 0; j < 5; j++) {
+//	    		
+//			}
             ByteArrayOutputStream out = new ByteArrayOutputStream();
 
             // Almacenamos el libro de 
