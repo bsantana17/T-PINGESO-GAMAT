@@ -61,7 +61,8 @@ class Companies extends Component {
         this.props.onAddBuilding(newBuilding,this.state.companyActual)
         
         this.setState({
-            openListBuilding: false
+            openListBuilding: false,
+            openModalBuild:false
         })
     }
 

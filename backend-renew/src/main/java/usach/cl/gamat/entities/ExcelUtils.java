@@ -34,12 +34,12 @@ public class ExcelUtils {
 		Workbook workbook = new XSSFWorkbook();
 		Sheet pagina = workbook.createSheet("Request");
 				   
-        XSSFFont defaultFont= (XSSFFont) workbook.createFont();
-        defaultFont.setFontHeightInPoints((short)10);
-        defaultFont.setFontName("Arial");
-        defaultFont.setColor(IndexedColors.BLACK.getIndex());
-        defaultFont.setBold(false);
-        defaultFont.setItalic(false);
+//        XSSFFont defaultFont= (XSSFFont) workbook.createFont();
+//        defaultFont.setFontHeightInPoints((short)10);
+//        defaultFont.setFontName("Arial");
+//        defaultFont.setColor(IndexedColors.BLACK.getIndex());
+//        defaultFont.setBold(false);
+//        defaultFont.setItalic(false);
 
         XSSFFont font= (XSSFFont) workbook.createFont();
         font.setFontHeightInPoints((short)10);

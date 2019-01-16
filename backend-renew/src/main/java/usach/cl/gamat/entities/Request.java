@@ -230,9 +230,24 @@ public class Request  implements Cloneable{
     	Integer idNull= null;
     	for (Item item:request.getItems()){
             if (item.getState().equals(pendiente)){
-            	Item newItem =item.clone();
-            	newItem.setIdItem(idNull);
-            	itemPendientes.add(newItem);
+//            	Item newItem =item.clone();
+//            	newItem.setIdItem(0);
+//            	itemPendientes.add(newItem);
+            	Item newItem = new Item (); 
+            	newItem.setComment(item.getComment()); 
+            	newItem.setDescription(item.getDescription()); 
+            	newItem.setDistributor(item.getDistributor()); 
+            	newItem.setMeasure(item.getMeasure()); 
+            	newItem.setObservation(item.getObservation()); 
+            	newItem.setPrice(item.getPrice()); 
+            	newItem.setName(item.getName()); 
+            	newItem.setQuantity(item.getQuantity()); 
+            	newItem.setState("Aprobado"); 
+            	newItem.setTotalPrice(item.getTotalPrice()); 
+            	newItem.setTotalWeight(item.getTotalWeight()); 
+            	newItem.setWeight(item.getWeight()); 
+            	newItem.setUrgency(item.isUrgency()); 
+            	itemPendientes.add(newItem); 
             }
             else if (item.getState().equals(aprobado)) {
                 itemAprobados.add(item);
@@ -240,7 +255,7 @@ public class Request  implements Cloneable{
         }
         if(itemPendientes.size() > 0){
             nuevaRequest= request.clone();
-            nuevaRequest.setIdRequest(idNull);
+            nuevaRequest.setIdRequest(0);
         	nuevaRequest.setItems(itemPendientes);
             nuevaRequest.setState("Aprobado");
             nuevaRequest.setObservation("Solicitud creada de: " + request.getObservation());

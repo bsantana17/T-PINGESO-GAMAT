@@ -14,7 +14,7 @@ class RequestoToAprove extends Component {
             items: [],
             observations:[],
             states:[],
-            disabled:true
+            disabled:false
         };
         this.handleOnApprove = this.handleOnApprove.bind(this);
         this.handleOnReject = this.handleOnReject.bind(this);

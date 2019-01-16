@@ -45,17 +45,14 @@ class NewBudget extends Component {
             // esto se cambiara si es que se elimina la tabla
             estados:[
                 {
-                    idItemState:7,
+                
                     name:"cotizado"
                 },
                 {
-                    idItemState:2,
+                 
                     name:"pendiente"
                 },
-                {
-                    idItemState:3,
-                    name:"pendiente de entrega"
-                },
+               
                 
             ],
 
@@ -219,7 +216,7 @@ class NewBudget extends Component {
         copiaItem[i].totalWeight=this.state.pesototal;
         copiaItem[i].comment=this.state.comments;
         copiaItem[i].distributor= this.state.provider;
-        copiaItem[i].itemState=this.state.estados[this.state.estado]
+        copiaItem[i].state=this.state.estados[this.state.estado].name
         let editItems= [...this.state.editItems]
         editItems[i]=true;
 

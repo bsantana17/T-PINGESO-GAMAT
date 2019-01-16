@@ -106,10 +106,10 @@ public class RequestService {
          
             nuevaRequest = Request.filterItems(itemAprobados, itemPendientes, request,"autorizado","pendiente");
             if(nuevaRequest != null) {
-            	Log log2 = new Log(nuevaRequest.getState(), nuevaRequest);
             	nuevaRequest.setState("Pendiente por revisar");
+            	nuevaRequest=serviceBD.saveRequest(nuevaRequest);
+            	Log log2 = new Log(nuevaRequest.getState(), nuevaRequest);
                 serviceBD.saveLog(log2);
-                serviceBD.saveRequest(nuevaRequest);
             }
             request.setItems(itemAprobados);
            
@@ -196,20 +196,21 @@ public class RequestService {
     //Aprobar request
     @PostMapping("/budget/approve")
     public HttpStatus aprobarBudget(@RequestBody Request request) throws CloneNotSupportedException {
-//		Request request1 = serviceBD.getRequestById(request.getIdRequest());
+		Request request1 = serviceBD.getRequestById(request.getIdRequest());
         Request nuevaRequest = null;
         List<Item> itemPendientes = new ArrayList<>();
         List<Item> itemAprobados = new ArrayList<>();
         if (request != null) {
-//        	request.setBuilding(request1.getBuilding());
-//        	request.setManager(request1.getManager());
+        	request.setBuilding(request1.getBuilding());
+        	request.setManager(request1.getManager());
             request.setState("Autorizada");
          
             nuevaRequest = Request.filterItems(itemAprobados, itemPendientes, request,"autorizado","no autorizado");
             if(nuevaRequest != null) {
+            	nuevaRequest.setState("Cotizacion");
+            	nuevaRequest=serviceBD.saveRequest(nuevaRequest);
             	Log log2 = new Log(nuevaRequest.getState(), nuevaRequest);
                 serviceBD.saveLog(log2);
-                serviceBD.saveRequest(nuevaRequest);
             }
             request.setItems(itemAprobados);
             Log log = new Log(request.getState(), request);
@@ -220,14 +221,14 @@ public class RequestService {
             	
             	
             	
-            	/*mailService.sendMailNotification(
+            	mailService.sendMailNotification(
             			buyer.getEmail(),"Cotizacion aprobada",
             			"Se aprobo la siguiente cotizacion.\n"
             					+ "Datos:\n"
             					+ "Obra:"+request.getBuilding().getAddress()+"\n"
             					+ "Compañia:"+request.getBuilding().getCompany().getName()+"\n"
             					+ "Jefe de Obra:"+request.getManager().getName()+"\n",
-            					"assing-driver/"+request.getIdRequest()+"/notf");*/
+            					"assing-driver/"+request.getIdRequest()+"/notf");
             	
             }
             
@@ -250,12 +251,24 @@ public class RequestService {
     }
     //Cotizar request
     @PostMapping("/budget/{idRequest}")
-    public HttpStatus cotizarRequest(@PathVariable("idRequest") Integer id,@RequestBody Request request) {
+    public HttpStatus cotizarRequest(@PathVariable("idRequest") Integer id,@RequestBody Request request) throws CloneNotSupportedException {
+    	  Request nuevaRequest = null;
+          List<Item> itemPendientes = new ArrayList<>();
+          List<Item> itemAprobados = new ArrayList<>();
 		Request request1 = serviceBD.getRequestById(request.getIdRequest());
         if (request != null) {
             request.setState("Cotizacion");
+            
+            nuevaRequest = Request.filterItems(itemAprobados, itemPendientes, request,"cotizado","pendiente");
+            if(nuevaRequest != null) {
+            	nuevaRequest.setState("Aprobado");
+            	nuevaRequest=serviceBD.saveRequest(nuevaRequest);;
+            	Log log2 = new Log(nuevaRequest.getState(), nuevaRequest);
+                serviceBD.saveLog(log2);
+            }
             request.setBuilding(request1.getBuilding());
             request.setManager(request1.getManager());
+            request.setItems(itemAprobados);
             Log log = new Log(request.getState(), request);
             serviceBD.saveLog(log);
             serviceBD.saveRequest(request);
