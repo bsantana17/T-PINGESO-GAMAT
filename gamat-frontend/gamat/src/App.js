@@ -19,7 +19,8 @@ import testingQR from './containers/QRTest/testingQR';
 import AssingRequest from './containers/Request/AssingRequest/AssingRequest';
 import generadorQr from './containers/Qr/generadorQr';
 import Users from './containers/Administration/Users'
-import Companies from './containers/Administration/Companies'
+import Companies from './containers/Administration/Companies';
+import Providers from './containers/Administration/Providers';
 import NewBudget from './containers/Budget/NewBudget';
 
 
@@ -103,6 +104,9 @@ class App extends Component {
 
           <Route path="/companies" exact
             render={(props) => VerificarRuta({...props},Companies, this.props.uType, ['Buyer'])}></Route>
+
+          <Route path="/providers" exact
+            render={(props) => VerificarRuta({...props},Providers, this.props.uType, ['Buyer'])}></Route>
         </Layout>
       </div>
     );

@@ -22,6 +22,9 @@ import {
               <NavItem>
                 <NavLink href='/companies'>Empresas</NavLink>
               </NavItem>
+              <NavItem>
+                <NavLink href='/providers'>Proveedores</NavLink>
+              </NavItem>
               {/* <UncontrolledDropdown nav inNavbar>
                 <DropdownMenu left="true" >
                   <DropdownItem>
