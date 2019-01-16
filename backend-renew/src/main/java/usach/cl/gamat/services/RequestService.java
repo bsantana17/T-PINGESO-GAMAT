@@ -232,14 +232,14 @@ public class RequestService {
             	
             	
             	
-            	mailService.sendMailNotification(
+            	/*mailService.sendMailNotification(
             			buyer.getEmail(),"Cotizacion aprobada",
             			"Se aprobo la siguiente cotizacion.\n"
             					+ "Datos:\n"
             					+ "Obra:"+request.getBuilding().getAddress()+"\n"
             					+ "Compañia:"+request.getBuilding().getCompany().getName()+"\n"
             					+ "Jefe de Obra:"+request.getManager().getName()+"\n",
-            					"assing-driver/"+request.getIdRequest()+"/notf");
+            					"assing-driver/"+request.getIdRequest()+"/notf");*/
             	
             }
             

@@ -2,6 +2,7 @@ package usach.cl.gamat.entities;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
@@ -27,13 +28,13 @@ public class Log {
         date = new Date();
     }
 
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch=FetchType.LAZY)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idRequest")
-    @JsonIdentityReference(alwaysAsId = true)
-    @JoinColumn(name = "idRequest")
+    @JoinColumn(name = "request_id")
     private Request request;
 
     public Log() {
+        this.request = null;
     }
 
     public Log(@NotNull String details, Request request) {

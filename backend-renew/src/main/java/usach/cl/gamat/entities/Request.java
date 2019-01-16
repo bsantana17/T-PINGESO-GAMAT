@@ -79,6 +79,11 @@ public class Request {
     @JoinColumn(name="request_id")
     private List<Item> items;
 
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @OneToMany(fetch=FetchType.LAZY)
+    @JoinColumn(name="request_id")
+    private List<Log> logs;
+
     //@JsonBackReference
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)
