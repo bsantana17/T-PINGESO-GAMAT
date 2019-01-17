@@ -174,7 +174,7 @@ public class FilePlantillaPdf implements Serializable {
     	acroForm.getField("cantidad"+i).setValue(Integer.toString(item.getQuantity()));
     	acroForm.getField("medida"+i).setValue(item.getMeasure());
     	acroForm.getField("descripcion"+i).setValue(item.getDescription());
-    	acroForm.getField("direccion"+i).setValue(item.getDistributor());
+    	acroForm.getField("direccion"+i).setValue(item.getDistributor().getAddress());
 		
 	}
 

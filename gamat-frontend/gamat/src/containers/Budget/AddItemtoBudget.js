@@ -71,7 +71,18 @@ const AddItemtoBudget = props => {
                                     <InputGroupAddon addonType="prepend">
                                         <InputGroupText>Proveedor</InputGroupText>
                                     </InputGroupAddon>
-                                    <Input name="provider" id="provider" value={props.provider} onChange={props.inputHandler}></Input>
+                                    <Input name="provider" type="select" id="provider" value={props.provider} onChange={props.inputHandler}>
+                                    
+                                            {!props.loadingProvider? 
+                                            props.providers.map((provider,i)=>(
+
+                                            <option key={i} value={i}>{provider.name}</option>
+
+                                            )):
+                                            <option key={0} value={0}>Cargando....</option>
+                                            }
+                                    
+                                    </Input>
                                 </InputGroup>
                             </div>
 

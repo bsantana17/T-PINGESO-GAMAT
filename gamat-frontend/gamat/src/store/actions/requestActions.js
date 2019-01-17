@@ -121,6 +121,18 @@ export const dismissAlert= ()=>{
     }
 }
 
+export const fetchLogStart= ()=>{
+    return {
+        type:actionTypes.FETCH_LOGS_START
+    }
+}
+export const fetchLogSuccess= (logs)=>{
+    return {
+        type:actionTypes.FETCH_LOGS_SUCCESS,
+        logsData:logs
+    }
+}
+
 export const addRequest = (requestData, userId) => {
 
     return dispatch => {
@@ -344,5 +356,19 @@ export const removedFalse = () => {
 export const onDismissAlert = () =>{
     return dispatch =>{
         dispatch(dismissAlert())
+    }
+}
+
+
+export const fetchLogs= (idRequest) =>{
+    return dispatch=>{
+        dispatch(fetchLogStart())
+        axios.get(`logs/${idRequest}/requests`)
+        .then(res=>{
+            dispatch(fetchLogSuccess(res.data))
+        })
+        .catch(err=>{
+
+        })
     }
 }

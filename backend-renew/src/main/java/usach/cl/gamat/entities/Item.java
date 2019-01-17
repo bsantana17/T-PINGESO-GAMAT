@@ -37,11 +37,12 @@ public class Item implements Cloneable {
 //    @JoinColumn(name ="user_id")
 //    private Driver driver;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "distributor_id")
-//    private Distributor distributor;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @JoinColumn(name = "distributor_id")
+    private Distributor distributor;
     
-    private String distributor;
+//    private String distributor;
     
     public Item clone() throws CloneNotSupportedException{
         Item clon = (Item) super.clone();
@@ -152,21 +153,21 @@ public class Item implements Cloneable {
         this.state = state;
     }
 
-	public String getDistributor() {
-		return distributor;
-	}
-
-	public void setDistributor(String distributor) {
-		this.distributor = distributor;
-	}
-
-//    public Distributor getDistributor() {
-//        return distributor;
-//    }
+//	public String getDistributor() {
+//		return distributor;
+//	}
 //
-//    public void setDistributor(Distributor distributor) {
-//        this.distributor = distributor;
-//    }
+//	public void setDistributor(String distributor) {
+//		this.distributor = distributor;
+//	}
+
+    public Distributor getDistributor() {
+        return distributor;
+    }
+
+    public void setDistributor(Distributor distributor) {
+        this.distributor = distributor;
+    }
 
 
     public String getMeasure() {

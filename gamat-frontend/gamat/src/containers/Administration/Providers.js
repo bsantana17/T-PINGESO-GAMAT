@@ -48,9 +48,9 @@ class Providers extends Component {
     handlerOnChangeForm(e) {
         const value = e.target.value;
         const name = e.target.name;
-        if(name==='rol' && (value==1 || value==0)) this.props.onFecthCompanies();
-        if(name==='rol' && value == 0) this.props.onFetchBuildings(this.props.companies[0].idCompany);
-        if(name==='companySelect' && this.state.rol == 0) this.props.onFetchBuildings(this.props.companies[value].idCompany)
+        // if(name==='rol' && (value==1 || value==0)) this.props.onFecthCompanies();
+        // if(name==='rol' && value == 0) this.props.onFetchBuildings(this.props.companies[0].idCompany);
+        // if(name==='companySelect' && this.state.rol == 0) this.props.onFetchBuildings(this.props.companies[value].idCompany)
         this.setState({
             [name]: value
         })
@@ -72,7 +72,7 @@ class Providers extends Component {
         res && (this.props.onDeleteProvider(idProvider));
     }
     componentDidMount() {
-        // this.props.onFetchProvider();
+        this.props.onFetchProviders();
     }
     render() {
 
@@ -111,16 +111,16 @@ class Providers extends Component {
 
  const mapStateToProps = state => {
     return {
-//         providers: state.provider.providers,
-//         loading: state.provider.loading,
+        providers: state.provider.providers,
+        loading: state.provider.loading,
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-//         onFetchProviders: () => dispatch(actions.fetchProviders()),
-//         onAddProviderr: (newUser) => dispatch(actions.addUProvider(newUser)),
-//         onDeleteProvider: (idUser) => dispatch(actions.deleteUProvider(idUser)),
+        onFetchProviders: () => dispatch(actions.fetchProvider()),
+        onAddProvider: (newProvider) => dispatch(actions.addProvider(newProvider)),
+        onDeleteProvider: (idProvider) => dispatch(actions.deleteProvider(idProvider)),
     };
 };
 

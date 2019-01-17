@@ -1,4 +1,4 @@
-package usach.cl.gamat.services;
+	package usach.cl.gamat.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,10 +24,14 @@ public class LogService {
     @ResponseBody
     public Iterable<Log> getLogsByRequest(@PathVariable Integer idRequest){
         List<Log> logs = new ArrayList<>();
+        System.out.println(idRequest);
         for (Log log:serviceBdImp.findAllLog()) {
-            if(log.getRequest().getIdRequest() == idRequest){
-                logs.add(log);
-            }
+        	
+        		if( log.getRequest().getIdRequest() == idRequest){
+        			logs.add(log);
+        		}
+        		
+        	
         }
         return logs;
     }

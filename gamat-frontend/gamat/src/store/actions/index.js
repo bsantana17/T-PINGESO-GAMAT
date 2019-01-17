@@ -12,7 +12,8 @@ export {
     fetchDriver,
     assingDriver,
     updateItems,
-    onDismissAlert
+    onDismissAlert,
+    fetchLogs
 } from './requestActions';
 export {
     logout,
@@ -35,3 +36,9 @@ export {
     addBuilding,
     deleteBuilding
 } from './buildingActions'
+
+export {
+    fetchProvider,
+    addProvider,
+    deleteProvider
+}from './providerActions'

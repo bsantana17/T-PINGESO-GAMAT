@@ -1,6 +1,7 @@
 import * as actionTypes from '../actions/actionTypes';
 import { updateObject } from '../utility';
 import { removedToFalseRequest, fetchDriverSuccess } from '../actions/requestActions';
+import { loginStart, loginSuccess } from '../actions/loginActions';
 
 const initialState = {
     requests: [],
@@ -23,7 +24,9 @@ const initialState = {
     successAction: false,
     typeAlert:'',
     textAlert:'',
-    errorAction:false
+    errorAction:false,
+    loadingLog:false,
+    logs:[]
 };
 
 const addRequestsStart = ( state, action ) => {
@@ -172,6 +175,19 @@ const closeAlert = (state,action) =>{
     return updateObject(state,{successAction:false})
 }
 
+const logStart= (state,action)=>{
+    return updateObject(state,{
+        loadingLog:true
+    })
+}
+
+const logSuccess= (state,action)=>{
+    return updateObject(state,{
+        logs:action.logsData,
+        loadingLog:false
+    })
+}
+
 const reducer = ( state = initialState, action ) => {
     switch ( action.type ) {
         case actionTypes.FETCH_REQUESTS_START: return fetchRequestsStart( state, action );
@@ -194,6 +210,8 @@ const reducer = ( state = initialState, action ) => {
         case actionTypes.ASSING_DRIVER_SUCCESS: return assingDriverSuccess(state,action);
         case actionTypes.UPDATE_ITEMS_SUCCESS: return updateItemsOk(state,action);
         case actionTypes.DISMISS_ALERT: return closeAlert(state,action);
+        case actionTypes.FETCH_LOGS_START: return logStart(state,action);
+        case actionTypes.FETCH_LOGS_SUCCESS:return logSuccess(state,action);
         default: return state;
     }
 };

@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import usach.cl.gamat.entities.Distributor;
 import usach.cl.gamat.facadeBD.IServiceBD;
 
+import java.util.List;
 import java.util.Set;
 
 @CrossOrigin
@@ -18,8 +19,8 @@ public class DistributorService {
 
     @GetMapping
     @ResponseBody
-    public Set<Distributor> getAll(){
-        return serviceBd.getDistributor();
+    public List<Distributor> getAll(){
+        return (List<Distributor>) serviceBd.getDistributor();
     }
 
     @PostMapping
@@ -43,7 +44,7 @@ public class DistributorService {
     @DeleteMapping("/{id}")
     @ResponseBody
     public HttpStatus deleteDistributor(@PathVariable("id") Integer idBuilding) {
-        if(serviceBd.deleteBuilding(idBuilding))
+        if(serviceBd.deleteDistributor(idBuilding))
             return HttpStatus.OK;
         return HttpStatus.INTERNAL_SERVER_ERROR;
     }

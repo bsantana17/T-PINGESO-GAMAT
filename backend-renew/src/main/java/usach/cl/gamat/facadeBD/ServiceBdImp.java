@@ -168,9 +168,9 @@ public class ServiceBdImp implements IServiceBD {
     // Distributor
 
     @Override
-    public Set<Distributor> getDistributor() {
+    public List<Distributor> getDistributor() {
         // TODO Auto-generated method stub
-        return (Set<Distributor>) distributorRepository.findAll();
+        return (List<Distributor>) distributorRepository.findAll();
     }
 
     @Override

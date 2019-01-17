@@ -11,6 +11,7 @@ import requestReducer from './store/reducers/requestReducer';
 import loginReducer from './store/reducers/loginReducer';
 import userReducer from './store/reducers/userReducer';
 import buildingReducer from './store/reducers/buildingReducer';
+import providerReducer from './store/reducers/providerReducer'
 import {persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2'
@@ -22,7 +23,8 @@ const rootReducer = combineReducers({
     request: requestReducer,
     login: loginReducer,
     user: userReducer,
-    building: buildingReducer
+    building: buildingReducer,
+    provider: providerReducer
 });
 
 const persistConfig={

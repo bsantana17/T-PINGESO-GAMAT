@@ -15,7 +15,7 @@ class ApproveBudget extends Component {
             indiceRequest:0,
             items:[],
             states:[],
-            disabled:true
+            disabled:false
 
         }
 

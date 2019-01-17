@@ -7,8 +7,22 @@ import * as actions from '../../../store/actions/index';
 import axios from '../../../axios-config';
 import FileDownload from 'js-file-download'
 import DownIcon from '@material-ui/icons/CloudDownload'
+import LogModal from './LogModal';
 
  class ViewRequest extends Component {
+
+    // constructor(props){
+    //   super(props);
+    //   this.state={
+    //     openLogs=false,
+
+    //   }
+
+    //   this
+    // }
+    state={
+      open:false
+    }
   
 
   componentDidMount(){
@@ -17,6 +31,13 @@ import DownIcon from '@material-ui/icons/CloudDownload'
       this.props.onFetchRequests(this.props.userId, this.props.userType, 0);
   }
 
+  }
+
+  onToggleModal=()=>{
+    this.setState({
+      open:!this.state.open
+    },()=>{if(this.state.open)   this.props.onFetchLogs(this.props.match.params.idRequest)})
+   
   }
 
   onDownloadExcel= ()=>{
@@ -93,6 +114,15 @@ import DownIcon from '@material-ui/icons/CloudDownload'
         <Link to={'/requests'}>
            <Button color="secondary">Volver </Button>
         </Link>
+        <Button  onClick={this.onToggleModal} color="info">Ver Historial </Button>
+
+        <LogModal
+          toggle={this.onToggleModal}
+          open={this.state.open}
+          logs={this.props.logs}
+          loading={this.props.loadingLog}
+        
+        />
       </div>
     )
   }
@@ -102,6 +132,8 @@ import DownIcon from '@material-ui/icons/CloudDownload'
 const mapStateToProps = state => {
   return {
       requests: state.request.requests,
+      logs:state.request.logs,
+      loadingLog:state.request.loadinglog,
       userId: state.login.userId,
     userType: state.login.userType,
   };
@@ -110,6 +142,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onFetchRequests: (userId, userType, state) => dispatch(actions.fetchRequests(userId, userType, state)),
+    onFetchLogs:(idRequest) => dispatch(actions.fetchLogs(idRequest))
   };
 };
 

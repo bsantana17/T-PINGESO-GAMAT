@@ -31,7 +31,7 @@ const TableItem = props => {
                         <td>{item.quantity}</td>
                         <td>{item.urgency ? "Si":"No"}</td>
                         <td>{item.description}</td>
-                        <td>{item.distributor}</td>
+                        <td>{item.distributor? item.distributor.name:'---'}</td>
                         <td>{item.price}</td>
                         <td>{item.totalPrice}</td>
                         <td>{item.state}</td>

@@ -35,7 +35,7 @@ const ListBuildingApprover = (props) => {
              </th>
              <td>
 
-              <CustomInput type="checkbox"  onChange={(e)=>props.onChangeCheck(e,i)} checked={props.checks[i]} id={i} />
+              <CustomInput type="checkbox" disabled={!building.approver}  onChange={(e)=>props.onChangeCheck(e,i)} checked={props.checks[i]} id={i} />
              </td>
              <td>
                {building.address}

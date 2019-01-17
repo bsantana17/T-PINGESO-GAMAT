@@ -58,7 +58,7 @@ public interface IServiceBD {
 
     // operaciones bistributor
 
-    public Set<Distributor> getDistributor();
+    public List<Distributor> getDistributor();
 
     public Distributor createDistributor(Distributor distributor);
 

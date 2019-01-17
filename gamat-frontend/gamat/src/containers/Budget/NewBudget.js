@@ -62,7 +62,7 @@ class NewBudget extends Component {
             weight: 0,
             measure: "",
             totalweight: 0,
-            provider: '',
+            provider: 0,
             estado: 0,
             comments: '',
             // },
@@ -102,6 +102,7 @@ class NewBudget extends Component {
     componentDidMount() {
         //Carga los elementos de una request
         // this.props.onFetchRequest();
+       
         if(this.props.match.params.update === "notf"){
             // console.log("vengo de notificacion");
             this.props.onFetchRequests(this.props.userId, this.props.userType, 0);
@@ -141,6 +142,7 @@ class NewBudget extends Component {
                 })
                 
             }
+
     }
 
     toggleInfo(){
@@ -198,7 +200,8 @@ class NewBudget extends Component {
 
     handlerOpenAddItem(index) {       
         // console.log("abirnedo item",index)
-        this.setState({ indiceItem: index }, ()=>{this.toggleAddItem()})
+        this.setState({ indiceItem: index }, ()=>{this.toggleAddItem() })
+        this.props.onFetchProviders();
     }
 
     /* Esta función deberia agregar a la budget los valores de cada item!*/
@@ -215,7 +218,7 @@ class NewBudget extends Component {
         copiaItem[i].weight=this.state.weight;
         copiaItem[i].totalWeight=this.state.pesototal;
         copiaItem[i].comment=this.state.comments;
-        copiaItem[i].distributor= this.state.provider;
+        copiaItem[i].distributor= this.props.providers[this.state.provider];
         copiaItem[i].state=this.state.estados[this.state.estado].name
         let editItems= [...this.state.editItems]
         editItems[i]=true;
@@ -241,7 +244,7 @@ class NewBudget extends Component {
                     weight:0,
                     pesototal:0,
                     comments:0,
-                    provider:'',
+                    provider:0,
                     indiceItem:0
                 })
             }
@@ -254,7 +257,7 @@ class NewBudget extends Component {
                     weight:item.weight,
                     pesototal:item.totalWeight,
                     comments:item.comment,
-                    provider:item.distributor,
+                    provider:0,
                     
                 })
             }
@@ -364,6 +367,8 @@ class NewBudget extends Component {
                             open={this.state.openAddItem}
                             inputHandler={this.inputHandler}
                             quantity={this.state.items[this.state.indiceItem].quantity}
+                            providers={this.props.providers}
+                            loadingProvider={this.props.loadingProvider}
                         />
                         }
                         {/* {this.state.items.length > 0  &&
@@ -426,15 +431,17 @@ const mapStateToProps = state => {
         successBudget:state.request.budgetSuccess,
         loading: state.loading,
         userId:state.login.userId,
+        providers:state.provider.providers,
+        loadingProvider:state.provider.loading,
        
-    userType: state.login.userType,
+     userType: state.login.userType,
     };
 }
 const mapDispatchToProps = dispatch => {
     return {
         onBudgetAdded: (userId,budgetData) => dispatch(actions.addBudget(userId,budgetData)),
         onFetchRequests: (userId, userType, state) => dispatch(actions.fetchRequests(userId, userType, state)),
-        
+        onFetchProviders: ()=>dispatch(actions.fetchProvider())
     }
 }
 

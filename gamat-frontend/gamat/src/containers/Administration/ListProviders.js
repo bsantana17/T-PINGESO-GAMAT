@@ -15,7 +15,7 @@ const ListProvider = (props) => {
             <th>Acciones</th>
           </tr>
         </thead>
-        {/* <tbody>
+        <tbody>
             {props.providers.map((provider,i)=>(
 
           <tr key={i}>
@@ -26,13 +26,13 @@ const ListProvider = (props) => {
             <td>{provider.schedule}</td>
             <td>
               <button className="btn btn-sm btn-info">Editar</button>{' '}
-              <button onClick={(e)=>props.onDelete(provider.idProvider)} className="btn btn-sm btn-danger">Borrar</button>
+              <button onClick={(e)=>props.onDelete(provider.idDistributor)} className="btn btn-sm btn-danger">Borrar</button>
             </td>
 
           </tr>
 
             ))}
-        </tbody> */}
+        </tbody>
       </table>
         </div>
     );

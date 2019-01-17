@@ -14,7 +14,7 @@ const ItemToApproveDeliver = (props) => {
                     <div className="col-12">
                     <hr/>
                     <strong>Descripción: </strong> {props.description}</div>
-                    <div className="col-12"><strong>Proveedor: </strong>{props.distributor} </div>
+                    <div className="col-12"><strong>Proveedor: </strong>{props.distributor.address} </div>
                 </div>
                 <div className="row">
                     <div className="col-12 my-2">    
