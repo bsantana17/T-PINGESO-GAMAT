@@ -33,7 +33,7 @@ public class Building {
     private Company company;
 
     @JsonIgnore
-    @OneToMany(mappedBy="building",fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+    @OneToMany(mappedBy="building",fetch=FetchType.LAZY)
     private List<Request> requests;
 
     @JsonIgnore

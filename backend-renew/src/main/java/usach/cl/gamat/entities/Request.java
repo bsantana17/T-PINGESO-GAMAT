@@ -79,8 +79,8 @@ public class Request  implements Cloneable{
     @JoinColumn(name="request_id")
     private List<Item> items;
 
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @OneToMany(fetch=FetchType.LAZY)
+    @JsonIgnore
+    @OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
     @JoinColumn(name="request_id")
     private List<Log> logs;
 

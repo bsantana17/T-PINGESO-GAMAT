@@ -26,12 +26,11 @@ public class LogService {
         List<Log> logs = new ArrayList<>();
         System.out.println(idRequest);
         for (Log log:serviceBdImp.findAllLog()) {
-        	
+            if(log.getRequest() != null){
         		if( log.getRequest().getIdRequest() == idRequest){
         			logs.add(log);
         		}
-        		
-        	
+            }
         }
         return logs;
     }
