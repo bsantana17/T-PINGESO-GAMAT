@@ -133,7 +133,7 @@ const mapStateToProps = state => {
   return {
       requests: state.request.requests,
       logs:state.request.logs,
-      loadingLog:state.request.loadinglog,
+      loadingLog:state.request.loadingLog,
       userId: state.login.userId,
     userType: state.login.userType,
   };

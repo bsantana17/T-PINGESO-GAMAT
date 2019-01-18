@@ -56,10 +56,12 @@ public class RequestService {
             
             request.setBuilding(building);
             request.setManager(user);
+         
             request.setState("Pendiente por revisar");
-            Log log = new Log(request.getState(), request);
-            serviceBD.saveLog(log);
             Request newRequest= serviceBD.saveRequest(request);
+            
+            Log log = new Log(newRequest.getState(), newRequest);
+            serviceBD.saveLog(log);
             String emailAprobador = building.getApprover().getEmail();
             Integer idRequest= newRequest.getIdRequest();
 
@@ -97,13 +99,14 @@ public class RequestService {
     //Aprobar request
     @PostMapping("/approve/{idRequest}")
     public HttpStatus aprobarRequest(@PathVariable("idRequest") Integer id,@RequestBody Request request) throws CloneNotSupportedException, IOException {
-		
+    	Request request1 = serviceBD.getRequestById(request.getIdRequest());
         if (request != null) {
         	Request nuevaRequest = null;
         	List<Item> itemPendientes = new ArrayList<>();
         	List<Item> itemAprobados = new ArrayList<>();
-//        	request.setBuilding(request1.getBuilding());
-//        	request.setManager(request1.getManager());
+        	request.setBuilding(request1.getBuilding());
+        	request.setManager(request1.getManager());
+        	request.setLogs(request1.getLogs());
            
          
             nuevaRequest = Request.filterItems(itemAprobados, itemPendientes, request,"autorizado","pendiente");
@@ -117,10 +120,10 @@ public class RequestService {
            
 
             request.setState("Aprobado");
+            request=serviceBD.saveRequest(request);
           
             Log log = new Log(request.getState(), request);
             serviceBD.saveLog(log);
-            serviceBD.saveRequest(request);
             
            List<Buyer> compradores= serviceBD.findAllBuyer();
            
@@ -146,7 +149,7 @@ public class RequestService {
     
     @PostMapping("/update-items/{idUser}/{type}")
     public HttpStatus updateItems(@PathVariable("idUser") Integer id,@PathVariable("type") Integer type,@RequestBody Request request) throws IOException {
-//		Request request1 = serviceBD.getRequestById(request.getIdRequest());
+		Request request1 = serviceBD.getRequestById(request.getIdRequest());
     	Driver driver=serviceBD.getDriverById(id);
     	String state="Retirada";
     	String email ="";
@@ -175,11 +178,13 @@ public class RequestService {
         if (request != null) {
             request.setState(state);
             request.setDriver(driver);
-//            request.setBuilding(request1.getBuilding());
-//        	request.setManager(request1.getManager());
+            request.setDriver(driver);
+            request.setLogs(request1.getLogs());
+        	request.setManager(request1.getManager());
+            request=serviceBD.saveRequest(request);
+            
             Log log = new Log(request.getState(), request);
             serviceBD.saveLog(log);
-            serviceBD.saveRequest(request);
             
             mailService.sendMailNotification(
      			   email,"Actualizacion de solicitud en proceso",
@@ -205,6 +210,7 @@ public class RequestService {
         if (request != null) {
         	request.setBuilding(request1.getBuilding());
         	request.setManager(request1.getManager());
+        	request.setLogs(request1.getLogs());
             request.setState("Autorizada");
          
             nuevaRequest = Request.filterItems(itemAprobados, itemPendientes, request,"autorizado","no autorizado");
@@ -215,9 +221,10 @@ public class RequestService {
                 serviceBD.saveLog(log2);
             }
             request.setItems(itemAprobados);
+            request=serviceBD.saveRequest(request);
+            
             Log log = new Log(request.getState(), request);
             serviceBD.saveLog(log);
-            serviceBD.saveRequest(request);
             List<Buyer> compradores= serviceBD.findAllBuyer();
             for (Buyer buyer : compradores) {
             	
@@ -260,6 +267,9 @@ public class RequestService {
 		Request request1 = serviceBD.getRequestById(request.getIdRequest());
         if (request != null) {
             request.setState("Cotizacion");
+            request.setBuilding(request1.getBuilding());
+        	request.setManager(request1.getManager());
+        	request.setLogs(request1.getLogs());
             
             nuevaRequest = Request.filterItems(itemAprobados, itemPendientes, request,"cotizado","pendiente");
             if(nuevaRequest != null) {
@@ -271,9 +281,10 @@ public class RequestService {
             request.setBuilding(request1.getBuilding());
             request.setManager(request1.getManager());
             request.setItems(itemAprobados);
+            request=serviceBD.saveRequest(request);
+            
             Log log = new Log(request.getState(), request);
             serviceBD.saveLog(log);
-            serviceBD.saveRequest(request);
             
             
 
@@ -491,9 +502,10 @@ public class RequestService {
     	Driver driver =serviceBD.getDriverById(idDriver);
         budget.setDriver(driver);
         budget.setState("Asignada");
+        budget=serviceBD.saveRequest(budget);
+        
         Log log = new Log(budget.getState(), budget);
         serviceBD.saveLog(log);
-        serviceBD.saveRequest(budget);
         
 
     	mailService.sendMailNotification(
@@ -545,9 +557,10 @@ public class RequestService {
         if(request.getDriverValidation() || request.getManagerValidation()){
             if(!request.getState().equals("Recibida") && !request.getState().equals("Disconforme")){
                 request.setState("Recibida");
+                request=serviceBD.saveRequest(request);
+                
                 Log log = new Log(request.getState(), request);
                 serviceBD.saveLog(log);
-                serviceBD.saveRequest(request);
             }
             return 1;
         }

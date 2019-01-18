@@ -79,7 +79,7 @@ public class Request  implements Cloneable{
     @JoinColumn(name="request_id")
     private List<Item> items;
 
-    @JsonIgnore
+    
     @OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
     @JoinColumn(name="request_id")
     private List<Log> logs;
@@ -225,7 +225,17 @@ public class Request  implements Cloneable{
         this.managerValidation = managerValidation;
     }
     
-    public static Request filterItems(List<Item> itemAprobados,List<Item>itemPendientes,Request request,String aprobado, String pendiente) throws CloneNotSupportedException{
+    
+    
+    public List<Log> getLogs() {
+		return logs;
+	}
+
+	public void setLogs(List<Log> logs) {
+		this.logs = logs;
+	}
+
+	public static Request filterItems(List<Item> itemAprobados,List<Item>itemPendientes,Request request,String aprobado, String pendiente) throws CloneNotSupportedException{
     	Request nuevaRequest= null;
     	Integer idNull= null;
     	for (Item item:request.getItems()){
@@ -254,11 +264,17 @@ public class Request  implements Cloneable{
             }
         }
         if(itemPendientes.size() > 0){
-            nuevaRequest= request.clone();
-            nuevaRequest.setIdRequest(0);
-        	nuevaRequest.setItems(itemPendientes);
-            nuevaRequest.setState("Aprobado");
+          
+            
+        	
             nuevaRequest.setObservation("Solicitud creada de: " + request.getObservation());
+        	nuevaRequest.setItems(itemPendientes); 
+            nuevaRequest.setState("Aprobado"); 
+            nuevaRequest.setManager(request.getManager()); 
+            nuevaRequest.setDriver(request.getDriver()); 
+            nuevaRequest.setBuilding(request.getBuilding()); 
+          
+            nuevaRequest.setPayCondition(request.getPayCondition()); 
            
         }
         return  nuevaRequest;
