@@ -47,7 +47,7 @@ public class RequestService {
     //Crear Request
     @PostMapping("/create/{idUser}")
     @ResponseBody
-    public Request createRequest(@RequestBody Request request, @PathVariable("idUser") Integer idUser) {
+    public Request createRequest(@RequestBody Request request, @PathVariable("idUser") Integer idUser) throws IOException {
         if(request != null) {
             Manager user = serviceBD.getManagerById(idUser);
             Building building = user.getBuilding();
@@ -94,7 +94,7 @@ public class RequestService {
     }
     //Aprobar request
     @PostMapping("/approve/{idRequest}")
-    public HttpStatus aprobarRequest(@PathVariable("idRequest") Integer id,@RequestBody Request request) throws CloneNotSupportedException {
+    public HttpStatus aprobarRequest(@PathVariable("idRequest") Integer id,@RequestBody Request request) throws CloneNotSupportedException, IOException {
 		
         if (request != null) {
         	Request nuevaRequest = null;
@@ -143,7 +143,7 @@ public class RequestService {
     
     
     @PostMapping("/update-items/{idUser}/{type}")
-    public HttpStatus updateItems(@PathVariable("idUser") Integer id,@PathVariable("type") Integer type,@RequestBody Request request) {
+    public HttpStatus updateItems(@PathVariable("idUser") Integer id,@PathVariable("type") Integer type,@RequestBody Request request) throws IOException {
 //		Request request1 = serviceBD.getRequestById(request.getIdRequest());
     	Driver driver=serviceBD.getDriverById(id);
     	String state="Retirada";
@@ -195,7 +195,7 @@ public class RequestService {
 
     //Aprobar request
     @PostMapping("/budget/approve")
-    public HttpStatus aprobarBudget(@RequestBody Request request) throws CloneNotSupportedException {
+    public HttpStatus aprobarBudget(@RequestBody Request request) throws CloneNotSupportedException, IOException {
 		Request request1 = serviceBD.getRequestById(request.getIdRequest());
         Request nuevaRequest = null;
         List<Item> itemPendientes = new ArrayList<>();
@@ -251,7 +251,7 @@ public class RequestService {
     }
     //Cotizar request
     @PostMapping("/budget/{idRequest}")
-    public HttpStatus cotizarRequest(@PathVariable("idRequest") Integer id,@RequestBody Request request) throws CloneNotSupportedException {
+    public HttpStatus cotizarRequest(@PathVariable("idRequest") Integer id,@RequestBody Request request) throws CloneNotSupportedException, IOException {
     	  Request nuevaRequest = null;
           List<Item> itemPendientes = new ArrayList<>();
           List<Item> itemAprobados = new ArrayList<>();
@@ -483,7 +483,7 @@ public class RequestService {
     //asignar chofer a items
     @RequestMapping(value = "/driver/{idDriver}/{idRequest}", method = RequestMethod.PUT)
     @ResponseBody
-    public void sendBudget(@PathVariable("idDriver") Integer idDriver, @PathVariable("idRequest") Integer idRequest){
+    public void sendBudget(@PathVariable("idDriver") Integer idDriver, @PathVariable("idRequest") Integer idRequest) throws IOException{
 //        List<Item> items = budget.getItems();
     	Request budget = serviceBD.getRequestById(idRequest);
     	Driver driver =serviceBD.getDriverById(idDriver);

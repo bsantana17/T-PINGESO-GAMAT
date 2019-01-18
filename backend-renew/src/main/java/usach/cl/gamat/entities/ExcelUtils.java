@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -22,6 +21,18 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+//import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+//import org.apache.poi.ss.usermodel.BorderStyle;
+//import org.apache.poi.ss.usermodel.Cell;
+//import org.apache.poi.ss.usermodel.CellStyle;
+//import org.apache.poi.ss.usermodel.FillPatternType;
+//import org.apache.poi.ss.usermodel.IndexedColors;
+//import org.apache.poi.ss.usermodel.Row;
+//import org.apache.poi.ss.usermodel.Sheet;
+//import org.apache.poi.ss.usermodel.Workbook;
+//import org.apache.poi.xssf.usermodel.XSSFFont;
+//import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 
 
@@ -34,29 +45,29 @@ public class ExcelUtils {
 		Workbook workbook = new XSSFWorkbook();
 		Sheet pagina = workbook.createSheet("Request");
 				   
-//        XSSFFont defaultFont= (XSSFFont) workbook.createFont();
-//        defaultFont.setFontHeightInPoints((short)10);
-//        defaultFont.setFontName("Arial");
-//        defaultFont.setColor(IndexedColors.BLACK.getIndex());
-//        defaultFont.setBold(false);
-//        defaultFont.setItalic(false);
+		 XSSFFont defaultFont= (XSSFFont) workbook.createFont();
+	        defaultFont.setFontHeightInPoints((short)10);
+	        defaultFont.setFontName("Arial");
+	        defaultFont.setColor(IndexedColors.BLACK.getIndex());
+	        defaultFont.setBold(false);
+	        defaultFont.setItalic(false);
 
-        XSSFFont font= (XSSFFont) workbook.createFont();
-        font.setFontHeightInPoints((short)10);
-        font.setFontName("Arial");
-//        font.setColor(IndexedColors.WHITE.getIndex());
-        font.setBold(true);
-        font.setItalic(false);
-	    
-        CellStyle styleHeader = workbook.createCellStyle();
-        CellStyle styleTableHeader = workbook.createCellStyle();
-        CellStyle styleBody = workbook.createCellStyle();
-        
-        styleHeader.setFont(font);
-        // Indicamos que tendra un fondo azul aqua
-        // con patron solido del color indicado
-        styleTableHeader.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.index);
-        styleTableHeader.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+	        XSSFFont font= (XSSFFont) workbook.createFont();
+	        font.setFontHeightInPoints((short)10);
+	        font.setFontName("Arial");
+//	        font.setColor(IndexedColors.WHITE.getIndex());
+	        font.setBold(true);
+	        font.setItalic(false);
+		    
+	        CellStyle styleHeader = workbook.createCellStyle();
+	        CellStyle styleTableHeader = workbook.createCellStyle();
+	        CellStyle styleBody = workbook.createCellStyle();
+	        
+	        styleHeader.setFont(font);
+	        // Indicamos que tendra un fondo azul aqua
+	        // con patron solido del color indicado
+	        styleTableHeader.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.index);
+	        styleTableHeader.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 //        style.setAlignment();
         styleTableHeader.setFont(font);
         styleTableHeader.setBorderBottom(BorderStyle.HAIR);
@@ -153,32 +164,32 @@ public class ExcelUtils {
 	    	celda=fila.createCell(0);
 	    	celda.setCellValue(Integer.toString(item.getIdItem()));
 	    	 celda.setCellStyle(styleBody);
-	    	 pagina.autoSizeColumn(0);
+	    	
 	    	 
         	 celda=fila.createCell(1);
         	 celda.setCellValue(item.getName());
         	 celda.setCellStyle(styleBody);
-        	  pagina.autoSizeColumn(1);
+        	
         	 
              celda=fila.createCell(2);
              celda.setCellValue(item.getDescription());
              celda.setCellStyle(styleBody);
-             pagina.autoSizeColumn(2);
+           
              
              celda=fila.createCell(3);
              celda.setCellValue(item.getMeasure());
              celda.setCellStyle(styleBody);
-             pagina.autoSizeColumn(3);
+       
              
              celda=fila.createCell(4);
              celda.setCellValue(item.getQuantity());
              celda.setCellStyle(styleBody);
-             pagina.autoSizeColumn(4);
+            
              
              celda=fila.createCell(5);
 //             celda.setCellValue(item.getQuantity());
              celda.setCellStyle(styleBody);
-             pagina.autoSizeColumn(5);
+            
 	 
 	 	    i++;
 		}
