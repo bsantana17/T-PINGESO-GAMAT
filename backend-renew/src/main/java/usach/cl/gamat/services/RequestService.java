@@ -57,10 +57,12 @@ public class RequestService {
             request.setBuilding(building);
             request.setManager(user);
             request.setState("Pendiente por revisar");
+            Log log = new Log(request.getState(), request);
+            serviceBD.saveLog(log);
             Request newRequest= serviceBD.saveRequest(request);
             String emailAprobador = building.getApprover().getEmail();
             Integer idRequest= newRequest.getIdRequest();
-            
+
             mailService.sendMailNotification(
             		emailAprobador,"Nueva solicitud para aprobar",
             		"Se creo una nueva solicitud para aprobar.\n"
