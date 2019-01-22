@@ -85,7 +85,7 @@ import LogModal from './LogModal';
         
         </div>
 
-
+  
         <h4>Items Solicitados: </h4>
         <table className="table table-primary table-responsive-lg table-sm">
           <thead>
@@ -93,6 +93,7 @@ import LogModal from './LogModal';
             <th>Nombre</th>
             <th>Cantidad</th>
             <th>Urgencia</th>
+            <th>Estado</th>
             <th>Descripción</th>
             <th>Observación</th>
             </tr>
@@ -104,6 +105,7 @@ import LogModal from './LogModal';
                         <td>{item.name}</td>
                         <td>{item.quantity}</td>
                         <td>{item.urgency === false ? 'No' : 'Si' }</td>
+                        <td>{item.state   }</td>
                         <td>{item.description}</td>
                         <td>{item.observation}</td>
                       </tr>

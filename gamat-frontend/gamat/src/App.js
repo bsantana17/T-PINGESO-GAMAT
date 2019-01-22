@@ -91,7 +91,7 @@ class App extends Component {
             render={(props) => VerificarRuta({...props},RequestToPickUp, this.props.uType, ['Driver'])}></Route>
 
           <Route path="/request-to-deliver/:idRequest/:update?" exact
-            render={(props) => VerificarRuta({...props},RequestToDeliver, this.props.uType, ['Driver'])}></Route>
+            render={(props) => VerificarRuta({...props},RequestToDeliver, this.props.uType, ['Manager'])}></Route>
 
           <Route path="/deliver-to-approve/:idRequest/:update?" exact
             render={(props) => VerificarRuta({...props},DeliverToApprove, this.props.uType, ['Approver'])}></Route>
