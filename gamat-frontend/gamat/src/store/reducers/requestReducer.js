@@ -1,6 +1,6 @@
 import * as actionTypes from '../actions/actionTypes';
 import { updateObject } from '../utility';
-import { removedToFalseRequest, fetchDriverSuccess } from '../actions/requestActions';
+import { removedToFalseRequest, fetchDriverSuccess, fetchOptionsSuccess } from '../actions/requestActions';
 import { loginStart, loginSuccess } from '../actions/loginActions';
 
 const initialState = {
@@ -26,7 +26,11 @@ const initialState = {
     textAlert:'',
     errorAction:false,
     loadingLog:false,
-    logs:[]
+    logs:[],
+    options:{
+        administracion:6,
+        despacho:6
+    }
 };
 
 const addRequestsStart = ( state, action ) => {
@@ -187,6 +191,11 @@ const logSuccess= (state,action)=>{
         loadingLog:false
     })
 }
+const optionsSuccess=(state,action)=>{
+    return updateObject(state,{
+        options:action.options[0]
+    })
+}
 
 const reducer = ( state = initialState, action ) => {
     switch ( action.type ) {
@@ -212,6 +221,7 @@ const reducer = ( state = initialState, action ) => {
         case actionTypes.DISMISS_ALERT: return closeAlert(state,action);
         case actionTypes.FETCH_LOGS_START: return logStart(state,action);
         case actionTypes.FETCH_LOGS_SUCCESS:return logSuccess(state,action);
+        case actionTypes.FETCH_OPTIONS_SUCCESS: return optionsSuccess(state,action);
         default: return state;
     }
 };

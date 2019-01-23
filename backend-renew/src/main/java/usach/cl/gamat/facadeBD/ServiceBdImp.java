@@ -46,6 +46,9 @@ public class ServiceBdImp implements IServiceBD {
     
     @Autowired
     private FilePlantillaPdfRepository plantillaRepository;
+    
+    @Autowired
+    private OptionRepository optionRepository;
 
 
 
@@ -327,6 +330,21 @@ public class ServiceBdImp implements IServiceBD {
 	public FilePlantillaPdf findPlantillaById(Integer id) {
 		
 		return plantillaRepository.findById(id).orElse(null);
+	}
+
+
+	@Override
+	public List<Options> getoptions() {
+		return (List<Options>) optionRepository.findAll();
+		
+	}
+
+
+	@Override
+	public Options updateOptions(Options option) {
+		// TODO Auto-generated method stub
+		
+		return optionRepository.save(option);
 	}
 
 

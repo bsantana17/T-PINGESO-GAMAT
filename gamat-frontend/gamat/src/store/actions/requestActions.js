@@ -190,6 +190,13 @@ export const updateItemSuccess=() =>{
     }
 }
 
+export const fetchOptionsSuccess = (data) =>{
+    return {
+        type:actionTypes.FETCH_OPTIONS_SUCCESS,
+        options:data
+    }
+}
+
 export const fetchRequests = (userId, userType,state) => {
     return dispatch => {
         let ruta = ''
@@ -368,6 +375,31 @@ export const fetchLogs= (idRequest) =>{
             dispatch(fetchLogSuccess(res.data))
         })
         .catch(err=>{
+
+        })
+    }
+}
+
+export const fetchOptions= ()=>{
+    return dispatch=>{
+        console.log("llegue")
+        axios.get('/options')
+        .then(res=>{
+            dispatch(fetchOptionsSuccess(res.data))
+        })
+        .catch(err =>{
+
+        })
+    }
+}
+
+export const updateOptions=(option)=>{
+    return dispatch =>{
+        axios.post('/options',option)
+        .then(res=>{
+            dispatch(fetchOptions())
+        })
+        .catch(err =>{
 
         })
     }

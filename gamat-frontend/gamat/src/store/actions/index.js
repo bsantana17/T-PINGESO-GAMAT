@@ -13,7 +13,9 @@ export {
     assingDriver,
     updateItems,
     onDismissAlert,
-    fetchLogs
+    fetchLogs,
+    fetchOptions,
+    updateOptions
 } from './requestActions';
 export {
     logout,

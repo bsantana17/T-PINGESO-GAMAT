@@ -587,8 +587,8 @@ public class RequestService {
 			@PathVariable("id")Integer idRequest
 			) throws IOException {
 		Request request = serviceBD.getRequestById(idRequest);
-		FilePlantillaPdf plantilla = serviceBD.findPlantillaById(1);
-		FilePlantillaPdf plantilla2 = serviceBD.findPlantillaById(2);
+		FilePlantillaPdf plantilla = serviceBD.findPlantillaById(3);
+		FilePlantillaPdf plantilla2 = serviceBD.findPlantillaById(4);
 //		byte[] data = FilePlantilla.rellenarCertificado(plantilla, nombre, nombreTaller);
 		byte[] data=FilePlantillaPdf.rellenarCertificado(plantilla.getData(),plantilla2.getData(),request);
 		String contentType = "application/pdf";

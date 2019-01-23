@@ -77,7 +77,8 @@ class NewBudget extends Component {
             shipping_price: 0,
             true_price: 0,
             openEditInfo:false,
-            openEditRequestInfo:false
+            openEditRequestInfo:false,
+       
 
 
         };
@@ -102,7 +103,7 @@ class NewBudget extends Component {
     componentDidMount() {
         //Carga los elementos de una request
         // this.props.onFetchRequest();
-       
+       this.props.onFetchOptions();
         if(this.props.match.params.update === "notf"){
             // console.log("vengo de notificacion");
             this.props.onFetchRequests(this.props.userId, this.props.userType, 0);
@@ -288,9 +289,9 @@ class NewBudget extends Component {
             totalWeight: pesototal,
             total_price: preciototal,
             //El precio de despacho sera un 10% del precio total.
-            shipping_price: preciototal * 0.1,
+            shipping_price: preciototal * (this.props.options.despacho/100),
             //El precio de administracion sera un 1% del precio total.
-            administration_price: preciototal * 0.01,
+            administration_price: preciototal * (this.props.options.administracion/100),
             //El VALOR TOTAL sera el precio total + un 19% (IVA)
             true_price: preciototal + (preciototal * 0.19)
         });
@@ -435,13 +436,15 @@ const mapStateToProps = state => {
         loadingProvider:state.provider.loading,
        
      userType: state.login.userType,
+     options:state.request.options
     };
 }
 const mapDispatchToProps = dispatch => {
     return {
         onBudgetAdded: (userId,budgetData) => dispatch(actions.addBudget(userId,budgetData)),
         onFetchRequests: (userId, userType, state) => dispatch(actions.fetchRequests(userId, userType, state)),
-        onFetchProviders: ()=>dispatch(actions.fetchProvider())
+        onFetchProviders: ()=>dispatch(actions.fetchProvider()),
+        onFetchOptions: ()=>dispatch(actions.fetchOptions())
     }
 }
 

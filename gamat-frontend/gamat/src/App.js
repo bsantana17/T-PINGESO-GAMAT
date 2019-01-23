@@ -22,6 +22,7 @@ import Users from './containers/Administration/Users'
 import Companies from './containers/Administration/Companies';
 import Providers from './containers/Administration/Providers';
 import NewBudget from './containers/Budget/NewBudget';
+import Options from './containers/Administration/Options/Options';
 
 
 
@@ -107,6 +108,8 @@ class App extends Component {
 
           <Route path="/providers" exact
             render={(props) => VerificarRuta({...props},Providers, this.props.uType, ['Buyer'])}></Route>
+            <Route path="/options" exact
+            render={(props) => VerificarRuta({...props},Options, this.props.uType, ['Buyer'])}></Route>
         </Layout>
       </div>
     );

@@ -149,6 +149,12 @@ public interface IServiceBD {
 
 	// plantillas pdf
 	public FilePlantillaPdf findPlantillaById(Integer id);
+	
+	//options
+	
+	public List<Options> getoptions();
+	
+	public Options updateOptions(Options option);
 
 
 }

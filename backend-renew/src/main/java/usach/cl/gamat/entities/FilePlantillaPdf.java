@@ -108,55 +108,59 @@ public class FilePlantillaPdf implements Serializable {
         fieldDireccion.setValue(request.getBuilding().getAddress());
         
         PDField fieldFecha = acroForm.getField("fecha");
-        fieldFecha.setValue("------");
+        fieldFecha.setValue(df.format(request.getDate()));
         
         PDField fieldEstado = acroForm.getField("estado");
         fieldEstado.setValue(request.getState());
+
+        PDField fieldId = acroForm.getField("id");
+        fieldId.setValue(Integer.toString(request.getIdRequest()));
         
         int i=1;
         int slot=1;
         int pag=1;
         PDDocument pdfDocument2= PDDocument.load(plantilla2);;
         for (Item item : request.getItems()) {
-//        	 System.out.println(i);
-//        	 System.out.println(slot);
+        	 System.out.println(i);
+        	 System.out.println(slot);
         	
-        	 if(slot==4) {
+        	 if(slot==13) {
 //        		 System.out.println("entro a 1");
         		 acroForm.getField("pag").setValue(Integer.toString(pag));
         		i=1;
         		docCatalog = pdfDocument2.getDocumentCatalog();
         		acroForm = docCatalog.getAcroForm();
-        		WriteItem(item,acroForm,i);
+        		WriteItem(item,acroForm,i,slot);
             	i++;
             	slot++;
             	pag++;
         		
         	}
-        	else if(i==6) {
-//        		 System.out.println("entro a 2");
+        	else if(i==127) {
+        		 System.out.println("entro a 2");
         		 acroForm.getField("pag").setValue(Integer.toString(pag));
         		i=1;
         		pdfDocument.addPage(pdfDocument2.getPage(0));
         		pdfDocument2 = PDDocument.load(plantilla2);
         		docCatalog = pdfDocument2.getDocumentCatalog();
         		acroForm = docCatalog.getAcroForm();
-        		WriteItem(item,acroForm,i);
-            	i++;
+        		WriteItem(item,acroForm,i,slot);
+            	i+=6;
+            	slot++;
             	pag++;
             	
         		
         	}
         	else {
 //        		 System.out.println("entro a 3");
-        		WriteItem(item,acroForm,i);
-            	i++;
+        		WriteItem(item,acroForm,i,slot);
+            	i+=6;
             	slot++;
         	}
 			
 		}
-        if(i<6 && slot >=4) {
-        	pdfDocument.addPage(pdfDocument2.getPage(0));
+        if(i<73 && slot <=13) {
+//        	pdfDocument.addPage(pdfDocument2.getPage(0));
         	acroForm.getField("pag").setValue(Integer.toString(pag));
         }
         pdfDocument.save(out);
@@ -169,12 +173,22 @@ public class FilePlantillaPdf implements Serializable {
 		
 	}
 	
-	public static void WriteItem(Item item, PDAcroForm acroForm,int i) throws IOException {
-		acroForm.getField("name"+i).setValue(item.getName());
-    	acroForm.getField("cantidad"+i).setValue(Integer.toString(item.getQuantity()));
-    	acroForm.getField("medida"+i).setValue(item.getMeasure());
-    	acroForm.getField("descripcion"+i).setValue(item.getDescription());
-    	acroForm.getField("direccion"+i).setValue(item.getDistributor().getAddress());
+	public static void WriteItem(Item item, PDAcroForm acroForm,int i,int count) throws IOException {
+		System.out.println(i);
+		acroForm.getField("Texto"+i).setValue(Integer.toString(count));
+		acroForm.getField("Texto"+(i+1)).setValue(item.getName());
+		acroForm.getField("Texto"+(i+2)).setValue(item.getDescription());
+    	acroForm.getField("Texto"+(i+3)).setValue(Integer.toString(item.getPrice()));
+    	acroForm.getField("Texto"+(i+4)).setValue(Integer.toString(item.getQuantity()));
+    	Distributor distributor=null;
+    	distributor= item.getDistributor();
+    	if(distributor!=null) {
+    		
+    		acroForm.getField("Texto"+(i+5)).setValue(distributor.getName());
+    	}
+    	else {
+    		acroForm.getField("Texto"+(i+5)).setValue("no asignado");
+    	}
 		
 	}
 
