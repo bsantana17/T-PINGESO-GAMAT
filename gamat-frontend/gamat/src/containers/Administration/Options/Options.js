@@ -17,10 +17,12 @@ class Options extends Component {
         this.state={
             porcentajeDespacho:0,
             porcentajeAdministracion:0,
-            unidades:[]
+            unidades:[],
+            unidad:''
         }
         this.onChangeForm=this.onChangeForm.bind(this);
         this.updateOption=this.updateOption.bind(this);
+        this.updateUnidad=this.updateUnidad.bind(this);
     }
 
  
@@ -28,9 +30,12 @@ class Options extends Component {
     componentDidMount() {
     console.log("AAA")
        this.props.onFetchOptions();
+       console.log(this.props.option)
+
        this.setState({
            porcentajeAdministracion:this.props.option.administracion,
-           porcentajeDespacho:this.props.option.despacho
+           porcentajeDespacho:this.props.option.despacho,
+           unidades:this.props.option.unidades.split(",")
        })
      
 
@@ -48,14 +53,25 @@ class Options extends Component {
        let newOptions={
            id:1,
            administracion:this.state.porcentajeAdministracion,
-           despacho:this.state.porcentajeDespacho
+           despacho:this.state.porcentajeDespacho,
+           unidades:this.state.unidades.toString()
        }
        this.props.onUpdateOptions(newOptions)
+   }
+
+   updateUnidad(){
+       let newUnidades=[...this.state.unidades]
+       newUnidades.push(this.state.unidad)
+       this.setState({
+           unidades:newUnidades,
+           unidad:''
+       })
    }
 
     render() {
         return (
             <div>
+                <h2>Opciones:</h2>
                     <table className="table col-md-5 table-sm table-primary table-responsive-lg w-100">
             <thead>
                 <tr>
@@ -87,6 +103,34 @@ class Options extends Component {
                         
                         </Input></td>
                       
+
+                    </tr>
+
+                    <tr key={2}>
+                    <td>
+                        Unidades de Medida
+                    </td>
+                    <td className="d-flex justify-content-between">
+
+                    <Input style={{width:'180px'}} type="select"  name="measure" >
+                    {this.state.unidades.map((u,i)=>(
+                        
+                        
+                        <option key={i} value={i}>{u}</option>
+                        ))}
+                                           
+                                            
+                                        </Input>   
+                                        <div className="d-flex">
+
+                                        <Input value={this.state.unidad} onChange={this.onChangeForm} style={{width:'50px'}} type="text" name="unidad">
+                                        
+                                        </Input>
+                                         <Button onClick={this.updateUnidad}   color="success">+ </Button>
+                                        </div>
+
+                        </td>
+
 
                     </tr>
                 

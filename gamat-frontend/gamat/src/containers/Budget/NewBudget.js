@@ -370,6 +370,7 @@ class NewBudget extends Component {
                             quantity={this.state.items[this.state.indiceItem].quantity}
                             providers={this.props.providers}
                             loadingProvider={this.props.loadingProvider}
+                            unidades={this.props.options.unidades.split(",")}
                         />
                         }
                         {/* {this.state.items.length > 0  &&

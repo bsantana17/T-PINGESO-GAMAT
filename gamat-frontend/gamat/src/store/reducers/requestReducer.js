@@ -29,7 +29,8 @@ const initialState = {
     logs:[],
     options:{
         administracion:6,
-        despacho:6
+        despacho:6,
+        unidades:''
     }
 };
 

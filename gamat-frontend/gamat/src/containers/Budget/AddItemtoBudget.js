@@ -42,11 +42,12 @@ const AddItemtoBudget = props => {
                                     <InputGroup>
                                         <Input type="number" value={props.weight} min="0" name="weight" id="weight" onChange={props.inputHandler}></Input>
                                         <Input type="select" value={props.measure} name="measure" onChange={props.inputHandler}>
-                                            <option value="g">g</option>
-                                            <option value="m">m</option>
-                                            <option value="m2">m²</option>
-                                            <option value="m3">m³</option>
-                                            <option value="lt">lt</option>
+                                           {props.unidades.map((unid,i)=>(
+
+                                               <option key={i} value={unid}>{unid}</option>
+
+
+                                           ))}
                                             
                                         </Input>   
                                     </InputGroup>

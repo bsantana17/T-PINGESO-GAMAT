@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 //import javax.validation.constraints.NotNull;
 
@@ -28,6 +29,11 @@ public class Options {
 	 @Nullable
 	 @Column(name = "despacho")
 	 	private int despacho;
+	 
+	 @Column
+	 @Lob
+	 private String unidades;
+	 
 	public int getIdOption() {
 		return idOption;
 	}
@@ -49,6 +55,14 @@ public class Options {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	public String getUnidades() {
+		return unidades;
+	}
+	public void setUnidades(String unidades) {
+		this.unidades = unidades;
+	}
+	
+	
 	 	
 //	 	private List<String> unidades;
 
