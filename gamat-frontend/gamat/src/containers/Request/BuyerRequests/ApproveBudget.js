@@ -87,18 +87,32 @@ class ApproveBudget extends Component {
          return true;
  
      }
-    helperRefreshItems(){
+    helperRefreshItems(estado){
        
         
         const states= this.state.states;
         let request= this.props.requests[this.state.indiceRequest]
-       let newItems = request.items.map((item,i)=>{
-           let state;
-            states[i] ? state='autorizado':
-            state='no autorizado';
+        let newItems;
+        if(estado){
 
-            return {...item,state:state}
-        })
+            newItems = request.items.map((item,i)=>{
+                let state;
+                 states[i] ? state='autorizado':
+                 state='no autorizado';
+     
+                 return {...item,state:state}
+             })
+        }
+        else{
+            newItems = request.items.map((item,i)=>{
+                let state;
+                 
+                 state='no autorizado';
+     
+                 return {...item,state:state}
+             })
+
+        }
         let newStateRequest={...request,items:newItems}
 
         return newStateRequest
@@ -107,7 +121,7 @@ class ApproveBudget extends Component {
 
     handleOnApprove(){
         const idRequest= this.props.requests[this.state.indiceRequest].idRequest;
-        let newStateRequest = this.helperRefreshItems();
+        let newStateRequest = this.helperRefreshItems(true);
         console.log(newStateRequest)
         this.props.onApproveBudget(idRequest,newStateRequest);
 
@@ -115,7 +129,7 @@ class ApproveBudget extends Component {
 
     handleOnReject(){
         const idRequest= this.props.requests[this.state.indiceRequest].idRequest;
-        let newStateRequest = this.helperRefreshItems();
+        let newStateRequest = this.helperRefreshItems(false);
         this.props.onRejectBudget(idRequest,newStateRequest);
     }
 

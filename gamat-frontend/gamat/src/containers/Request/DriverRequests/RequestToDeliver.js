@@ -115,6 +115,7 @@ import LectorQr from '../../Qr/LectorQr';
           <h4>Items a Entregar:</h4>
           <div className="row">
             { this.props.requests[this.state.indice].items.map((item,i)=>(
+              item.state=="Retirado" &&
               <ItemToDeliver
               key={i}
               picked={this.state.itemStates[i]} 

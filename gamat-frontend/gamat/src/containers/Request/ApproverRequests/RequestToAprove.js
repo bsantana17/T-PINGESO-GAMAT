@@ -79,31 +79,42 @@ class RequestoToAprove extends Component {
         })
 
     }
-    helperRefreshItems(){
+    helperRefreshItems(estado){
        
         const observations= this.state.observations;
         const states= this.state.states;
         let newStateRequest= this.props.requests[this.state.indice]
-        newStateRequest.items.map((item,i)=>{
-            item.observation=observations[i];
-           
-            // esto se modificara despues, cuando se hagan cambios en la bd
-         
-            item.state=states[i]
-        })
+        if(estado){
+
+            newStateRequest.items.map((item,i)=>{
+                item.observation=observations[i];
+               
+                // esto se modificara despues, cuando se hagan cambios en la bd
+             
+                item.state=states[i]
+            })
+        }else{
+            newStateRequest.items.map((item,i)=>{
+                item.observation=observations[i];
+               
+                // esto se modificara despues, cuando se hagan cambios en la bd
+             
+                item.state='rechazado'
+            })
+        }
 
         return newStateRequest
     }
 
     handleOnApprove() {
         const idRequest= this.props.requests[this.state.indice].idRequest;
-        let newStateRequest = this.helperRefreshItems();
+        let newStateRequest = this.helperRefreshItems(true);
         this.props.onApproveRequest(idRequest,newStateRequest)
     }
 
     handleOnReject() {
         const idRequest= this.props.requests[this.state.indice].idRequest;
-        let newStateRequest = this.helperRefreshItems()
+        let newStateRequest = this.helperRefreshItems(false)
         this.props.onRejectRequest(idRequest, newStateRequest)
     }
 

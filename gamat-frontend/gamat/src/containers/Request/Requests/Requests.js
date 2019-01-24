@@ -46,7 +46,10 @@ class Requests extends Component {
         'Todas',
        'Aprobados',
        'Autorizados',
-       'Asignadas'
+       'Cotizados',
+       'Asignadas',
+       'Canceladas',
+       'Rechazadas'
       ]
        
    } 
@@ -56,6 +59,8 @@ class Requests extends Component {
       'Pendientes por revisar',
       'Aprobados',
       'Cotizados',
+      'Canceladas',
+      'Rechazadas'
     
     ]
 

@@ -120,7 +120,7 @@ render() {
             <h4>Items Entregados:</h4>
             <div className="row">
               { this.props.requests[this.state.indice].items.map((item,i)=>(
-                
+                item.state=="Entregado" &&
                 
                 <ItemToApproveDeliver
                 key={i}

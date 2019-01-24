@@ -154,21 +154,29 @@ public class RequestService {
     	String state="Retirada";
     	String email ="";
     	String ruta="";
+    	String asunto="";
+    	String msje="";
     	switch (type) {
 		case 0:
 			state="Retirada";
 			email = request.getManager().getEmail();
 			ruta = "view-request/";
+			asunto="Solicitud en proceso";
+			msje="Se retiraron los items de la solicitud";
 			break;
 		case 1:
 			state="Entregada";
 			email = request.getManager().getEmail();
 			ruta= "deliver-to-approve/";
+			asunto="Solicitud Entregada";
+			msje="Se entregaron los item de la solicitud";
 			break;
 		case 2:
 			state="Recibida";
 			// se debe definir coo se hara par aavisar al comprador
-			email = request.getManager().getEmail();
+			email = request.getBuilding().getApprover().getEmail();
+			asunto="Solicitud Recibida";
+			msje="Se completo la  solicitud";
 			ruta = "view-request/";
 			break;	
 
@@ -187,13 +195,32 @@ public class RequestService {
             serviceBD.saveLog(log);
             
             mailService.sendMailNotification(
-     			   email,"Actualizacion de solicitud en proceso",
-     			   "Se actualizo el estado de la siguiente solicitud.\n"
+     			   email,asunto,
+     			   msje+"\n"
      					   + "Datos:\n"
      					   + "Obra:"+request.getBuilding().getAddress()+"\n"
      					   + "Compañia:"+request.getBuilding().getCompany().getName()+"\n"
      					   + "Jefe de Obra:"+request.getManager().getName()+"\n",
      					   ruta+request.getIdRequest()+"/notf");
+            
+            if(type==2) {
+            	List<Buyer> compradores= serviceBD.findAllBuyer();
+                
+                
+                for (Buyer buyer : compradores) {
+     			
+             	   mailService.sendMailNotification(
+             			   buyer.getEmail(),"Solicitud Finalizada",
+             			   "Se completo la solicitudS.\n"
+             					   + "Datos:\n"
+             					   + "Obra:"+request.getBuilding().getAddress()+"\n"
+             					   + "Compañia:"+request.getBuilding().getCompany().getName()+"\n"
+             					   + "Jefe de Obra:"+request.getManager().getName()+"\n",
+             					   "view-request/"+request.getIdRequest()+"/notf");
+     		}
+            	
+            }
+            
             
             return HttpStatus.OK;
         }
@@ -359,6 +386,12 @@ public class RequestService {
             case 3:
                 nameState="Cotizacion";
                 break;
+            case 4:
+            	nameState="Cancelada";
+            	break;
+            case 5:
+            	nameState="Rechazada";
+            	break;
 //            case 3:
 //            	nameState="Entregada";
 //            	break;
@@ -388,7 +421,8 @@ public class RequestService {
                 	
                 	
                     if (request.getState().equals("Aprobado") || request.getState().equals("Cotizacion")
-                    		|| request.getState().equals("Pendiente por revisar")){
+                    		|| request.getState().equals("Pendiente por revisar")|| request.getState().equals("Cancelada")
+                    		||request.getState().equals("Rechazada")){
                     	
                         requests.add(request);
                     }
@@ -424,6 +458,12 @@ public class RequestService {
             case 4:
             	nameState="Asignada";
             	break;
+            case 5:
+            	nameState="Cancelada";
+            	break;
+            case 6:
+            	nameState="Rechazada";
+            	break;
         
 
             default:
@@ -454,7 +494,8 @@ public class RequestService {
         Iterable<Request> requests = serviceBD.findAllRequest();
         for (Request request:requests){
             if (request.getState().equals("Aprobado") || request.getState().equals("Autorizada") ||
-                    request.getState().equals("Cotizacion") || request.getState().equals("Asignada")){
+                    request.getState().equals("Cotizacion") || request.getState().equals("Asignada")
+                    || request.getState().equals("Cancelada") ||  request.getState().equals("Rechazada")){
                 buyerRequests.add(request);
             }
         }
